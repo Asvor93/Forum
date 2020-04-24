@@ -1,6 +1,6 @@
 package com.example.forum.models;
 
-public class user {
+public class User {
 private String uid;
 private String username;
 private String name;
