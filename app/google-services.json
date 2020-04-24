@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "589329325613",
+    "firebase_url": "https://at-forum.firebaseio.com",
+    "project_id": "at-forum",
+    "storage_bucket": "at-forum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589329325613:android:154238d060afe575e722a4",
+        "android_client_info": {
+          "package_name": "dk.easv.ATForum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589329325613-6fnp9vlps1kf6e9l0ur8qc4r4tmmru82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQjp2AM7zqRhAru06x43fbXcHP-T1uj4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589329325613-6fnp9vlps1kf6e9l0ur8qc4r4tmmru82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
