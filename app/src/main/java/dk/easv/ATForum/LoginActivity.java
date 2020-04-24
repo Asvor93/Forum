@@ -1,8 +1,10 @@
-package com.example.forum;
+package dk.easv.ATForum;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.forum.R;
 
 public class LoginActivity extends AppCompatActivity {
 

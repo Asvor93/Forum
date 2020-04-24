@@ -1,4 +1,4 @@
-package com.example.forum.models;
+package dk.easv.ATForum.Models;
 
 public class User {
         private String uid;
