@@ -53,12 +53,12 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "Login successful " + task.getResult().getUser().getEmail());
 
                         }
+                        else{
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error on login", e);
-            }
-        });
+                });
+        }
     }
-}
