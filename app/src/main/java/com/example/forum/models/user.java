@@ -1,4 +1,4 @@
-package models;
+package com.example.forum.models;
 
 public class user {
 private String uid;
