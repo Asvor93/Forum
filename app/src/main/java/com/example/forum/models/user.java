@@ -8,5 +8,18 @@ private String email;
 private String photoURL;
 private String role;
 
+    public User(String username, String name, String email, String role) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
 
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
 }
