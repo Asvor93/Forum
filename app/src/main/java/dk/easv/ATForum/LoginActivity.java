@@ -42,13 +42,34 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         Button loginSubmit = findViewById(R.id.btnLogin);
-
         loginSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
+
+        Button btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSignUpActivity();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            User currentUser = (User) data.getExtras().getSerializable("currentUser");
+        }
+    }
+
+    private void startSignUpActivity() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivityForResult(intent, 2);
+        //startActivity(intent);
     }
 
     private void login() {

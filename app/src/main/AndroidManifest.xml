@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="dk.easv.ATForum.MainActivity"></activity>
-        <activity android:name="dk.easv.ATForum.LoginActivity">
+        <activity android:name="dk.easv.ATForum.SignUpActivity"></activity>
+        <activity android:name="dk.easv.ATForum.LoginActivity" />
+        <activity android:name="dk.easv.ATForum.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
