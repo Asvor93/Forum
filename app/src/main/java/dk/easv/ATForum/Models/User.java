@@ -29,11 +29,12 @@ public class User implements Serializable {
         return role;
     }
 
-    public User(String username, String name, String email, String role) {
+    public User(String username, String name, String email, String role, String photoURL) {
             this.username = username;
             this.name = name;
             this.email = email;
             this.role = role;
+            this.photoURL = photoURL;
         }
 
         public String getPhotoURL() {
