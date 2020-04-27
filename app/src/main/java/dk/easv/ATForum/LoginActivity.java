@@ -38,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         loginEmail = findViewById(R.id.txtEmail);
+        loginEmail.setHint("Email");
         loginPassword = findViewById(R.id.txtPassword);
+        loginPassword.setHint("Password");
         loginPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         Button loginSubmit = findViewById(R.id.btnLogin);

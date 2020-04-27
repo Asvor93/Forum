@@ -12,26 +12,22 @@
         android:layout_centerInParent="true"
         android:id="@+id/txtEmailSignUp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email"/>
+        android:layout_height="wrap_content"/>
     <EditText
         android:layout_below="@id/txtEmailSignUp"
         android:id="@+id/txtNameSignUp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name"/>
+        android:layout_height="wrap_content"/>
     <EditText
         android:id="@+id/txtUserNameSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtNameSignUp"
-        android:text="User Name"/>
+        android:layout_below="@+id/txtNameSignUp"/>
     <EditText
         android:id="@+id/txtPasswordSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtUserNameSignUp"
-        android:text="Password"/>
+        android:layout_below="@+id/txtUserNameSignUp"/>
     <Button
         android:id="@+id/btnConfirmSignUp"
         android:layout_width="wrap_content"

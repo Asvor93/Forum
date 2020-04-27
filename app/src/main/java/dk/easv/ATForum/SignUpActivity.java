@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -64,9 +65,14 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         nameSignUp = findViewById(R.id.txtNameSignUp);
+        nameSignUp.setHint("Name");
         emailSignUp = findViewById(R.id.txtEmailSignUp);
+        emailSignUp.setHint("Email");
         usernameSignUp = findViewById(R.id.txtUserNameSignUp);
+        usernameSignUp.setHint("Username");
         passwordSignUp = findViewById(R.id.txtPasswordSignUp);
+        passwordSignUp.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        passwordSignUp.setHint("Password");
 
         Button btnConfirm = findViewById(R.id.btnConfirmSignUp);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
