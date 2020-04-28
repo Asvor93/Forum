@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 import dk.easv.ATForum.Models.User;
 
@@ -142,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void uploadPicture() {
         StorageReference storageRef = fbStorage.getReference();
-        final StorageReference imageRef = storageRef.child("images");
+        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID());
         // Get the data from an ImageView as bytes
         image.setDrawingCacheEnabled(true);
         image.buildDrawingCache();
