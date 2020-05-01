@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.forum.R;
 
-public class profileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

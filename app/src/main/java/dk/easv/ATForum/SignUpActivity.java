@@ -34,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -106,21 +107,36 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    final User newUser = new User(userNameString, nameString, emailString, "user", url);
+                    final User newUser = new User(userNameString, nameString, emailString, url);
                     db.collection("users").add(newUser).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
+                                String uid = task.getResult().getId();
+                                newUser.setUid(uid);
                                 Intent intent = new Intent();
+                                Log.d(TAG, "onComplete: User " + newUser.toString());
                                 intent.putExtra("currentUser", newUser);
+                                Role role = new Role("user");
+                                db.collection("roles").document(uid).set(role).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful())
+                                        {
+                                            Log.d(TAG, "SignUp: " + "Role successfully added");
+                                        } else {
+                                            Log.d(TAG, "SignUp: " + " Failed to add Role with error: " + task.getException());
+                                        }
+                                    }
+                                });
                                 finish();
                             } else {
-                                Log.d(TAG, "failed adding user to database");
+                                Log.d(TAG, "failed adding user to database with error: " + task.getException());
                             }
                         }
                     });
                 } else {
-                    Log.d(TAG, "failed to create auth user");
+                    Log.d(TAG, "failed to create auth user with error: " + task.getException());
                 }
             }
         });
@@ -156,7 +172,7 @@ public class SignUpActivity extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
+                Log.d(TAG, "failed to upload image to storage, got message: " + exception.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -170,7 +186,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 url = downloadUri.toString();
                             }
                         } else {
-                            // handle failures
+                            Log.d(TAG, "failed to get the download url with error: " + task.getException());
                         }
 
                     }

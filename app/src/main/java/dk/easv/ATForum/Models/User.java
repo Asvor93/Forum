@@ -8,7 +8,6 @@ public class User implements Serializable {
         private String name;
         private String email;
         private String photoURL;
-        private String role;
 
     public User() {
     }
@@ -25,15 +24,14 @@ public class User implements Serializable {
         return email;
     }
 
-    public String getRole() {
-        return role;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public User(String username, String name, String email, String role, String photoURL) {
+    public User(String username, String name, String email, String photoURL) {
             this.username = username;
             this.name = name;
             this.email = email;
-            this.role = role;
             this.photoURL = photoURL;
         }
 
@@ -49,7 +47,6 @@ public class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", photoURL='" + photoURL + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 
