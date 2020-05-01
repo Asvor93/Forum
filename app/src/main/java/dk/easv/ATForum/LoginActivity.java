@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -87,35 +88,52 @@ public class LoginActivity extends AppCompatActivity {
                             db.collection("users").document(task.getResult()
                                     .getUser().getUid()).get()
                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        User user = null;
-                                        if (document != null) {
-                                            user = document.toObject(User.class);
-                                            if (user != null) {
-                                                Intent result = new Intent();
-                                                result.putExtra("currentUser", user);
-                                                setResult(RESULT_OK, result);
-                                                Log.d(TAG, "Document: " + user.toString());
-                                                finish();
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                User user = null;
+                                                if (document != null) {
+                                                    user = document.toObject(User.class);
+                                                    if (user != null) {
+                                                        final Intent result = new Intent();
+                                                        result.putExtra("currentUser", user);
+                                                        setResult(RESULT_OK, result);
+                                                        Log.d(TAG, "Document: " + user.toString());
+                                                        db.collection("roles")
+                                                                .document(task.getResult().getId()).get()
+                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            Role role = null;
+                                                                            DocumentSnapshot doc = task.getResult();
+                                                                            if (doc != null) {
+                                                                                role = doc.toObject(Role.class);
+                                                                                result.putExtra("role", role);
+                                                                                Log.d(TAG, "login role: " + role.getRoleName());
+                                                                                finish();
+                                                                            }
+                                                                        } else {
+                                                                            Log.d(TAG, "Failed with message: ", task.getException());
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "No such user", task.getException());
+                                                }
+                                            } else {
+                                                Log.d(TAG, "Failed with message: ", task.getException());
                                             }
-                                        } else {
-                                            Log.d(TAG, "No such user");
                                         }
-                                    } else {
-                                        Log.d(TAG, "Failed with message: ", task.getException());
-                                    }
-                                }
-                            });
-                        }
-                        else{
+                                    });
+                        } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        }
     }
+}

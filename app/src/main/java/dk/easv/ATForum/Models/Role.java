@@ -1,11 +1,15 @@
 package dk.easv.ATForum.Models;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
    private String roleName;
 
     public Role(String roleName) {
         this.roleName = roleName;
     }
+
+    public Role() {}
 
     public String getRoleName() {
         return roleName;
