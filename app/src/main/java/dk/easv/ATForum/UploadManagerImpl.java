@@ -31,7 +31,7 @@ public class UploadManagerImpl implements IUploadManager {
     }
 
     @Override
-    public void uploadPicture(ImageView img) {
+    public void uploadPicture(ImageView img, final IONResult callback) {
         StorageReference storageRef = fbStorage.getReference();
         final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID());
         // Get the data from an ImageView as bytes
@@ -59,6 +59,7 @@ public class UploadManagerImpl implements IUploadManager {
                             if (downloadUri != null) {
                                 url = downloadUri.toString();
                                 Log.d(TAG, "URL IMPL " + url);
+                                callback.onResult(url);
                             }
                         } else {
                             Log.d(TAG, "failed to get the download url with error: " + task.getException());

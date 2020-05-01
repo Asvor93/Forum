@@ -141,8 +141,13 @@ public class SignUpActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);
-            uploadImg.uploadPicture(image);
-            Log.d(TAG,"PhotoURL " + url);
+            uploadImg.uploadPicture(image, new IUploadManager.IONResult() {
+                @Override
+                public void onResult(String res) {
+                    url = res;
+                    Log.d(TAG,"PhotoURL " + url);
+                }
+            });
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
         } else {
