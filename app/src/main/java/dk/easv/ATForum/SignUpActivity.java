@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -20,20 +18,13 @@ import android.widget.Toast;
 
 import com.example.forum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.util.UUID;
-
+import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -44,9 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
     EditText nameSignUp, emailSignUp, usernameSignUp, passwordSignUp;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
-    FirebaseStorage fbStorage;
     ImageView image;
     String url;
+    IUploadManager uploadImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +46,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        fbStorage = FirebaseStorage.getInstance();
+
+        uploadImg = new UploadManagerImpl();
 
         image = findViewById(R.id.ivProfilePicture);
         image.setImageResource(R.drawable.qmark);
@@ -85,7 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-
     private void openCameraUsingBitmap() {
         // create Intent to take a picture
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -108,6 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     final User newUser = new User(userNameString, nameString, emailString, url);
+                    Log.d(TAG,"New user photoURL " + url);
                     db.collection("users").add(newUser).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -149,49 +141,12 @@ public class SignUpActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);
-            uploadPicture();
+            uploadImg.uploadPicture(image);
+            Log.d(TAG,"PhotoURL " + url);
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void uploadPicture() {
-        StorageReference storageRef = fbStorage.getReference();
-        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID());
-        // Get the data from an ImageView as bytes
-        image.setDrawingCacheEnabled(true);
-        image.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = imageRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d(TAG, "failed to upload image to storage, got message: " + exception.getMessage());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            if (downloadUri != null) {
-                                url = downloadUri.toString();
-                            }
-                        } else {
-                            Log.d(TAG, "failed to get the download url with error: " + task.getException());
-                        }
-
-                    }
-                });
-            }
-        });
     }
 }

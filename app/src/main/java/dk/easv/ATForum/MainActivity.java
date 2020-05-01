@@ -12,6 +12,7 @@ import com.example.forum.R;
 import dk.easv.ATForum.Models.User;
 
 public class MainActivity extends AppCompatActivity {
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
                 startSignUpActivity();
             }
         });
+
+        Button btnProfile = findViewById(R.id.btnProfile);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startProfileActivity();
+            }
+        });
+    }
+
+    private void startProfileActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("user", currentUser);
+        startActivityForResult(intent, 3);
     }
 
     private void startLoginActivity() {
@@ -44,13 +59,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            User currentUser = (User) data.getExtras().getSerializable("currentUser");
+            currentUser = (User) data.getExtras().getSerializable("currentUser");
         }
     }
 
     private void startSignUpActivity() {
         Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-        //startActivityForResult(intent, 2);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
     }
 }
