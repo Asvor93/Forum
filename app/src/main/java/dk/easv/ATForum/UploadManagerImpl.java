@@ -31,7 +31,7 @@ public class UploadManagerImpl implements IUploadManager {
     }
 
     @Override
-    public String uploadPicture(ImageView img) {
+    public void uploadPicture(ImageView img) {
         StorageReference storageRef = fbStorage.getReference();
         final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID());
         // Get the data from an ImageView as bytes
@@ -67,6 +67,5 @@ public class UploadManagerImpl implements IUploadManager {
                 });
             }
         });
-        return url;
     }
 }

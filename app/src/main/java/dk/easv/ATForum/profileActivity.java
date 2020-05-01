@@ -65,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
                 openCameraUsingBitmap();
             }
         });
+        setGUI();
     }
 
     private void setGUI() {
@@ -72,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         email.setText(user.getEmail());
         username.setText(user.getUsername());
         name.setText(user.getName());
+        imgProfile
     }
 
     private void openCameraUsingBitmap() {
