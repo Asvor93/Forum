@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Forum</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="signUp">Sign Up</string>
+    <string name="editProfile">Edit</string>
+    <string name="submit">Ok</string>
+
 </resources>
