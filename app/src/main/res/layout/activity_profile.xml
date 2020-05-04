@@ -10,10 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profileImage"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        />
 
     <EditText
-        android:inputType="none"
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +23,6 @@
         />
 
     <EditText
-        android:inputType="none"
         android:id="@+id/txtProfileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,11 +32,28 @@
 
     <EditText
         android:id="@+id/txtProfileEmail"
-        android:inputType="none"
+        android:inputType="textEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
         android:layout_below="@+id/txtProfileUsername"
+        />
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="Edit"
+        />
+
+    <Button
+        android:id="@+id/btnEditOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Ok"
         />
 
 </RelativeLayout>

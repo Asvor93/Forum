@@ -9,10 +9,12 @@ import android.widget.Button;
 
 import com.example.forum.R;
 
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class MainActivity extends AppCompatActivity {
     User currentUser;
+    Role role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             currentUser = (User) data.getExtras().getSerializable("currentUser");
+            role = (Role) data.getExtras().getSerializable("role");
         }
     }
 

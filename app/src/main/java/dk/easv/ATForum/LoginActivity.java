@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 if (document != null) {
                                                     user = document.toObject(User.class);
                                                     if (user != null) {
+                                                        user.setUid(task.getResult().getId());
                                                         final Intent result = new Intent();
                                                         result.putExtra("currentUser", user);
                                                         setResult(RESULT_OK, result);
