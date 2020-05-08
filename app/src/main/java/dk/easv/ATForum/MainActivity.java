@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.forum.R;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "XYZ";
     User currentUser;
     Role role;
-
+    MenuItem profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu1, menu);
+        profile = menu.findItem(R.id.profileMenu);
+        if (currentUser == null) {
+            if (profile != null) {
+                profile.setVisible(false);
+            }
+        }
         return true;
     }
 
@@ -109,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             currentUser = (User) data.getExtras().getSerializable("currentUser");
             role = (Role) data.getExtras().getSerializable("role");
-            Log.d(TAG, "onActivityResult main activity: " + currentUser.getUsername() + " "
-            + currentUser.getName());
+            profile.setVisible(true);
+        } else if (resultCode == RESULT_CANCELED) {
+            profile.setVisible(false);
+            Log.d(TAG, "main activity on activity result canceled");
         }
+
     }
 
     /*
