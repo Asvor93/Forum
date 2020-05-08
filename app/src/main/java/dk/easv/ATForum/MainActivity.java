@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "XYZ";
     User currentUser;
     Role role;
-    MenuItem profile;
+    MenuItem profile, admin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +65,14 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu1, menu);
         profile = menu.findItem(R.id.profileMenu);
+        admin = menu.findItem(R.id.adminPageMenu);
         if (currentUser == null) {
             if (profile != null) {
                 profile.setVisible(false);
+            }
+
+            if (admin != null) {
+                admin.setVisible(false);
             }
         }
         return true;
@@ -117,6 +123,13 @@ public class MainActivity extends AppCompatActivity {
             currentUser = (User) data.getExtras().getSerializable("currentUser");
             role = (Role) data.getExtras().getSerializable("role");
             profile.setVisible(true);
+
+            if (role != null) {
+                if (role.getRoleName().equals("admin") || role.getRoleName().equals("superAdmin")) {
+                    admin.setVisible(true);
+                }
+            }
+
         } else if (resultCode == RESULT_CANCELED) {
             profile.setVisible(false);
             Log.d(TAG, "main activity on activity result canceled");
