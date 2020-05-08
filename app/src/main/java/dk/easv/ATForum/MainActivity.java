@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,7 @@ import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "XYZ";
     User currentUser;
     Role role;
 
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             currentUser = (User) data.getExtras().getSerializable("currentUser");
             role = (Role) data.getExtras().getSerializable("role");
+            Log.d(TAG, "onActivityResult main activity: " + currentUser.getUsername() + " "
+            + currentUser.getName());
         }
     }
 

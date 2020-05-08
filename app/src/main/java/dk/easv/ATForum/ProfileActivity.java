@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -18,21 +16,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.forum.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
@@ -62,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SubmitEdit();
+                submitEdit();
             }
         });
         Button editButton = findViewById(R.id.btnEditProfile);
@@ -74,11 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
         editing = false;
         username = findViewById(R.id.txtProfileUsername);
-     //   username.setEnabled(false);
+        //   username.setEnabled(false);
         username.setFocusable(false);
         username.setFocusableInTouchMode(false);
         email = findViewById(R.id.txtProfileEmail);
-      //  email.setEnabled(false);
+        //  email.setEnabled(false);
         email.setFocusable(false);
         email.setFocusableInTouchMode(false);
         name = findViewById(R.id.txtName);
@@ -95,17 +84,16 @@ public class ProfileActivity extends AppCompatActivity {
         setGUI();
     }
 
-    private void SubmitEdit() {
+    private void submitEdit() {
         String newUsername = username.getText().toString();
         String newName = name.getText().toString();
         String newPhotoURL = url;
-        Map<String, Object> updatedUser = new HashMap<>();
-        updatedUser.put("username", newUsername);
-        updatedUser.put("name", newName);
-        updatedUser.put("photoURL", newPhotoURL);
+
         String uid = user.getUid();
+        final User changedUser = new User(newUsername, newName, user.getEmail(), newPhotoURL);
+        changedUser.setUid(uid);
         db.collection("users").document(uid)
-                .set(updatedUser, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+                .set(changedUser, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
@@ -113,38 +101,43 @@ public class ProfileActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                Intent editResult = new Intent();
+                editResult.putExtra("currentUser", changedUser);
+                setResult(RESULT_OK, editResult);
+                toggleEditable((Button) findViewById(R.id.btnEditOk), (Button) findViewById(R.id.btnEditProfile));
                 Log.d(TAG, "Successfully updated the user");
+
             }
         });
 
     }
 
     private void toggleEditable(Button okButton, Button v) {
-       if (!editing) {
-           editing = true;
-           okButton.setVisibility(View.VISIBLE);
-           v.setText("Cancel");
-           username.setFocusable(true);
-           //  username.setEnabled(true);
-           username.setFocusableInTouchMode(true);
-           name.setFocusable(true);
-           name.setFocusableInTouchMode(true);
-       } else {
-           editing = false;
-           okButton.setVisibility(View.INVISIBLE);
-           v.setText("Edit");
-           username.setFocusable(false);
-           //  username.setEnabled(true);
-           username.setFocusableInTouchMode(false);
-           name.setFocusable(false);
-           name.setFocusableInTouchMode(false);
-       }
+        if (!editing) {
+            editing = true;
+            okButton.setVisibility(View.VISIBLE);
+            v.setText("Cancel");
+            username.setFocusable(true);
+            //  username.setEnabled(true);
+            username.setFocusableInTouchMode(true);
+            name.setFocusable(true);
+            name.setFocusableInTouchMode(true);
+        } else {
+            editing = false;
+            okButton.setVisibility(View.INVISIBLE);
+            v.setText("Edit");
+            username.setFocusable(false);
+            //  username.setEnabled(true);
+            username.setFocusableInTouchMode(false);
+            name.setFocusable(false);
+            name.setFocusableInTouchMode(false);
+        }
     }
 
 
     private void setGUI() {
         user = (User) getIntent().getSerializableExtra("user");
-        Log.d(TAG, "setGUI: UserID: " + user.getUid());
+
         email.setText(user.getEmail());
         username.setText(user.getUsername());
         name.setText(user.getName());
@@ -174,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onResult(String res) {
                     url = res;
-                    Log.d(TAG,"Profile PhotoURL " + url);
+                    Log.d(TAG, "Profile PhotoURL " + url);
                 }
             });
         } else if (resultCode == RESULT_CANCELED) {
@@ -183,4 +176,5 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
