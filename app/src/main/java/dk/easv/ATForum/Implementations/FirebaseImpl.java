@@ -37,6 +37,7 @@ public class FirebaseImpl implements IDataAccess {
                     List<User> users = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         User user = document.toObject(User.class);
+                        user.setUid(document.getId());
                         users.add(user);
                     }
                     callback.onResult(users);

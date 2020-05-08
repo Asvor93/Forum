@@ -9,7 +9,8 @@
         android:id="@+id/listUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnBack"/>
+        android:layout_above="@+id/btnBack"
+        android:layout_alignParentTop="true"/>
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"

@@ -41,21 +41,18 @@ public class AdminActivity extends AppCompatActivity {
                 userList = users;
                 userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList);
                 userListView.setAdapter(userAdapter);
-
-                userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        userListView.setLongClickable(true);
-                        /*User user = userList.get(position);
-                        String uid = user.getUid();
-                        dataAccess.deleteUser(uid);*/
-                        Log.d(TAG, "onItemLongClick: " + userList);
-                        return true;
-                    }
-                });
             }
         });
 
-
+        userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                userListView.setLongClickable(true);
+                User user = userList.get(position);
+                String uid = user.getUid();
+                dataAccess.deleteUser(uid);
+                return true;
+            }
+        });
     }
 }
