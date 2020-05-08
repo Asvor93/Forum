@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/grayTheme</item>
         <item name="colorPrimaryDark">@color/grayTheme</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/textColor</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@style/TextAppearance.AppCompat">
