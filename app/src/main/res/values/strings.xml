@@ -7,5 +7,6 @@
     <string name="signUp">Sign Up</string>
     <string name="editProfile">Edit</string>
     <string name="submit">Ok</string>
+    <string name="back">Back</string>
 
 </resources>

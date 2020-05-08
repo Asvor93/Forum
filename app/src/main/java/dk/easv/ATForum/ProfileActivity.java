@@ -23,6 +23,7 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
+import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
 

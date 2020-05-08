@@ -1,4 +1,4 @@
-package dk.easv.ATForum;
+package dk.easv.ATForum.Implementations;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;

@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;

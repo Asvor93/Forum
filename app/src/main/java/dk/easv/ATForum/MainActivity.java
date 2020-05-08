@@ -31,32 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        Button btnLoginMain = findViewById(R.id.btnMainLogin);
-        btnLoginMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startLoginActivity();
-            }
-        });
-
-        Button btnSignUp = findViewById(R.id.btnMainSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSignUpActivity();
-            }
-        });
-
-        Button btnProfile = findViewById(R.id.btnProfile);
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startProfileActivity();
-            }
-        });
-        */
-
     }
 
     // Creates the options menu.
@@ -94,27 +68,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.signUpMenu:
                 Intent signUpIntent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivityForResult(signUpIntent, 2);
+            case R.id.adminPageMenu:
+                Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+                startActivity(adminIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    /*
-    private void startProfileActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra("user", currentUser);
-        startActivityForResult(intent, 3);
-    }
-
-     */
-
-    /*
-    private void startLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, 1);
-    }
-
-     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -136,11 +96,4 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    /*
-    private void startSignUpActivity() {
-        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-        startActivityForResult(intent, 2);
-    }
-     */
 }
