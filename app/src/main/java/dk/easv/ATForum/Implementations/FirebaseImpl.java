@@ -1,5 +1,7 @@
 package dk.easv.ATForum.Implementations;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,6 +17,7 @@ import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.User;
 
 public class FirebaseImpl implements IDataAccess {
+    private static final String TAG = "XYZ";
     private FirebaseFirestore db;
     public FirebaseImpl() {
     db = FirebaseFirestore.getInstance();
@@ -37,6 +40,8 @@ public class FirebaseImpl implements IDataAccess {
                         users.add(user);
                     }
                     callback.onResult(users);
+                } else {
+                    Log.d(TAG, "get users failed " + task.getException());
                 }
             }
         });
@@ -48,7 +53,16 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void deleteUser(User user) {
-
+    public void deleteUser(String id) {
+        db.collection("users").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "user deleted ");
+                } else {
+                    Log.d(TAG, "delete user failed" + task.getException());
+                }
+            }
+        });
     }
 }
