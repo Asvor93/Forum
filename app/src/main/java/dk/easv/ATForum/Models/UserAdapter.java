@@ -36,8 +36,10 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
         User user = userList.get(position);
-        TextView txtUser = view.findViewById(R.id.tvUser);
-        txtUser.setText("Username: " + user.getUsername() + "Email: " + user.getEmail());
+        TextView txtUsername = view.findViewById(R.id.tvUsername);
+        txtUsername.setText("Username: " + user.getUsername());
+        TextView txtEmail = view.findViewById(R.id.tvUserEmail);
+        txtEmail.setText("Email: " + user.getEmail());
         ImageView imgUserPic = view.findViewById(R.id.imgUserPicture);
         Picasso.get().load(user.getPhotoURL()).into(imgUserPic);
 

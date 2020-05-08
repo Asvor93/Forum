@@ -7,9 +7,13 @@ import dk.easv.ATForum.Models.User;
 public interface IDataAccess {
     User createUser(User user);
 
-    List<User> getAllUsers();
+    void getAllUsers(IONUsersResult callback);
 
     User updateUser(User user);
 
     void deleteUser(User user);
+
+    interface IONUsersResult {
+        void onResult(List<User> users);
+    }
 }
