@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.forum.R;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import dk.easv.ATForum.Models.UserAdapter;
 
 public class AdminActivity extends AppCompatActivity {
 
+    private static final String TAG = "XYZ";
     UserAdapter userAdapter;
 
     List<User> userList;
@@ -37,7 +41,21 @@ public class AdminActivity extends AppCompatActivity {
                 userList = users;
                 userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList);
                 userListView.setAdapter(userAdapter);
+
+                userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        userListView.setLongClickable(true);
+                        /*User user = userList.get(position);
+                        String uid = user.getUid();
+                        dataAccess.deleteUser(uid);*/
+                        Log.d(TAG, "onItemLongClick: " + userList);
+                        return true;
+                    }
+                });
             }
         });
+
+
     }
 }

@@ -11,7 +11,7 @@ public interface IDataAccess {
 
     User updateUser(User user);
 
-    void deleteUser(User user);
+    void deleteUser(String id);
 
     interface IONUsersResult {
         void onResult(List<User> users);
