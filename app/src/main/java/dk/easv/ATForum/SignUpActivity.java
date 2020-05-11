@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.Role;
@@ -93,18 +96,24 @@ public class SignUpActivity extends AppCompatActivity {
         final String emailString = emailSignUp.getText().toString();
         final String passwordString = passwordSignUp.getText().toString();
         final String nameString = nameSignUp.getText().toString();
-        final String userNameString = usernameSignUp.getText().toString();
+        final String usernameString = usernameSignUp.getText().toString();
 
         firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    final User newUser = new User(userNameString, nameString, emailString, url);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("email", emailString);
+                    user.put("name", nameString);
+                    user.put("username", usernameString);
+                    user.put("photoURL", url);
+
                     Log.d(TAG,"New user photoURL " + url);
-                    db.collection("users").add(newUser).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    db.collection("users").add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
+                                final User newUser = new User(usernameString, nameString, emailString, url);
                                 String uid = task.getResult().getId();
                                 newUser.setUid(uid);
                                 final Intent intent = new Intent();

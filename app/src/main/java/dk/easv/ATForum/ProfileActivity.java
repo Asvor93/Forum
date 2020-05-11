@@ -23,6 +23,9 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
@@ -86,15 +89,18 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void submitEdit() {
-        String newUsername = username.getText().toString();
-        String newName = name.getText().toString();
-        String newPhotoURL = url;
+        final String newUsername = username.getText().toString();
+        final String newName = name.getText().toString();
+        final String newPhotoURL = url;
+        Map<String, Object> updatedUser = new HashMap<>();
+        updatedUser.put("email", user.getEmail());
+        updatedUser.put("name", newName);
+        updatedUser.put("username", newUsername);
+        updatedUser.put("photoURL", url);
+        final String uid = user.getUid();
 
-        String uid = user.getUid();
-        final User changedUser = new User(newUsername, newName, user.getEmail(), newPhotoURL);
-        changedUser.setUid(uid);
         db.collection("users").document(uid)
-                .set(changedUser, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+                .set(updatedUser, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
@@ -103,6 +109,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Intent editResult = new Intent();
+                User changedUser = new User(newUsername, newName, user.getEmail(), newPhotoURL);
+                changedUser.setUid(uid);
                 editResult.putExtra("currentUser", changedUser);
                 setResult(RESULT_OK, editResult);
                 toggleEditable((Button) findViewById(R.id.btnEditOk), (Button) findViewById(R.id.btnEditProfile));
