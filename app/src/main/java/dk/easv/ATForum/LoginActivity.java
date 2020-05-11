@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button btnBack = findViewById(R.id.btnBackLogin);
+        Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

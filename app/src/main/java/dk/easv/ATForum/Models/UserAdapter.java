@@ -31,6 +31,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.cell,null);
+
         }else {
             Log.d("XYZ", "Position: " + position + " View recycled");
         }

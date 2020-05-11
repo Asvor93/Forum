@@ -31,7 +31,7 @@ import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends MenuActivity {
 
     private static final String TAG = "XYZ";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
         setGUI();
 
-        Button btnBack = findViewById(R.id.btnBackProfile);
+        Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

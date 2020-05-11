@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.MainActivity">
 
+    <include layout="@layout/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
+
 </RelativeLayout>
