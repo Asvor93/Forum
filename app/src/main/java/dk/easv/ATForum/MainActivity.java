@@ -29,6 +29,12 @@ public class MainActivity extends MenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+       super.onPrepareOptionsMenu(menu);
         if (currentUser != null && role != null) {
             if (profileMenuItem != null) {
                 profileMenuItem.setVisible(true);
@@ -84,11 +90,6 @@ public class MainActivity extends MenuActivity {
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
