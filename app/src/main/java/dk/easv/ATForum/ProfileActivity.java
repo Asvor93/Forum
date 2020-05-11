@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
         setGUI();
 
-        Button btnBack = findViewById(R.id.btnBackProfile);
+        Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,13 +9,11 @@
         android:id="@+id/listUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnBack"
         android:layout_alignParentTop="true"/>
-    <Button
-        android:id="@+id/btnBackAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+
+    <include layout="@layout/footer"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="@string/back"/>
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
 </RelativeLayout>
