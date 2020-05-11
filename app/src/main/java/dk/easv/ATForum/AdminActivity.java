@@ -7,6 +7,7 @@ import com.example.forum.R;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -56,6 +57,14 @@ public class AdminActivity extends AppCompatActivity {
                 String uid = user.getUid();
                 dataAccess.deleteUser(uid);
                 return true;
+            }
+        });
+
+        Button btnBack = findViewById(R.id.btnBackAdmin);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

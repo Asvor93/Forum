@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.forum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +50,14 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        Button btnBack = findViewById(R.id.btnLogin);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     @Override
@@ -59,12 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             User currentUser = (User) data.getExtras().getSerializable("currentUser");
         }
-    }
-
-    private void startSignUpActivity() {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        startActivityForResult(intent, 2);
-        //startActivity(intent);
     }
 
     private void login() {
