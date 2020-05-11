@@ -3,6 +3,7 @@ package dk.easv.ATForum.Implementations;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.MainActivity;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -49,18 +51,17 @@ public class FirebaseImpl implements IDataAccess {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            db.collection("users").add(user)
-                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            final String uid = task.getResult().getUser().getUid();
+                            db.collection("users").document(uid).set(user)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 String photoURL = "";
                                                 if (user.get("photoURL") != null) {
                                                     photoURL = user.get("photoURL").toString();
                                                 }
-                                                Log.d(TAG, "onComplete signup post if statement: " + photoURL);
                                                 User newUser = new User(usernameString, nameString, emailString, photoURL);
-                                                String uid = task.getResult().getId();
                                                 newUser.setUid(uid);
                                                 callback.onResult(newUser);
                                             } else {
@@ -76,7 +77,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllUsers(final IONUsersResult callback) {
+    public void getAllUsers(final String uid, final IONUsersResult callback) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -85,7 +86,9 @@ public class FirebaseImpl implements IDataAccess {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         User user = document.toObject(User.class);
                         user.setUid(document.getId());
-                        users.add(user);
+                        if (!user.getUid().equals(uid)) {
+                            users.add(user);
+                        }
                     }
                     callback.onResult(users);
                 } else {
@@ -144,6 +147,27 @@ public class FirebaseImpl implements IDataAccess {
                     Log.d(TAG, "SignUp: " + "Role successfully added");
                 } else {
                     Log.d(TAG, "SignUp: " + " Failed to add Role with error: " + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getAllRoles(final String uid, final IONRolesResult callback) {
+
+        db.collection("roles").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Role> roles = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Role role = document.toObject(Role.class);
+                        role.setUid(document.getId());
+                        if (!role.getUid().equals(uid)) {
+                            roles.add(role);
+                        }
+                    }
+                    callback.onResult(roles);
                 }
             }
         });

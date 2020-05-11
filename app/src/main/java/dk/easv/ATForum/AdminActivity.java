@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.forum.R;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -40,14 +42,25 @@ public class AdminActivity extends AppCompatActivity {
 
         //get All users
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getAllUsers(new IDataAccess.IONUsersResult() {
+        dataAccess.getAllUsers(user.getUid(), new IDataAccess.IONUsersResult() {
             @Override
             public void onResult(List<User> users) {
                 userList = users;
                 userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList);
                 userListView.setAdapter(userAdapter);
+                Log.d(TAG, "Users: " + userList.get(0));
             }
         });
+
+        //get All roles
+        dataAccess.getAllRoles(user.getUid(), new IDataAccess.IONRolesResult() {
+            @Override
+            public void onResult(List<Role> roles) {
+                roleList = roles;
+                Log.d(TAG, "Roles: " + roleList.get(0));
+            }
+        });
+
 
         userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -55,7 +68,14 @@ public class AdminActivity extends AppCompatActivity {
                 userListView.setLongClickable(true);
                 User user = userList.get(position);
                 String uid = user.getUid();
-                dataAccess.deleteUser(uid);
+                if (!role.getRoleName().equals("user")) {
+                    if (roleList.get(position).getRoleName().equals("user") ||
+                            role.getRoleName().equals("superAdmin")) {
+                        dataAccess.deleteUser(uid);
+                        Toast.makeText(AdminActivity.this, "Deleted user with id: " + uid, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
                 return true;
             }
         });
@@ -68,6 +88,7 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getExtras() {
         user = (User) getIntent().getSerializableExtra("user");
         role = (Role) getIntent().getSerializableExtra("role");
