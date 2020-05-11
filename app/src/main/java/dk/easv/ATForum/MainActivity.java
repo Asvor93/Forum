@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.adminPageMenu:
                 Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+                adminIntent.putExtra("user", currentUser);
+                adminIntent.putExtra("role", role);
                 startActivity(adminIntent);
                 return true;
             default:

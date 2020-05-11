@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.forum.R;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Models.UserAdapter;
 
@@ -20,7 +20,9 @@ public class AdminActivity extends AppCompatActivity {
 
     private static final String TAG = "XYZ";
     UserAdapter userAdapter;
-
+    List<Role> roleList;
+    Role role;
+    User user;
     List<User> userList;
 
     ListView userListView;
@@ -32,7 +34,9 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        getExtras();
         userListView = findViewById(R.id.listUsers);
+
         //get All users
         dataAccess = DataAccessFactory.getInstance();
         dataAccess.getAllUsers(new IDataAccess.IONUsersResult() {
@@ -54,5 +58,9 @@ public class AdminActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    private void getExtras() {
+        user = (User) getIntent().getSerializableExtra("user");
+        role = (Role) getIntent().getSerializableExtra("role");
     }
 }
