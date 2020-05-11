@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginEmail, loginPassword;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db;
+    private IDataAccess dataAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        dataAccess = DataAccessFactory.getInstance();
 
         loginEmail = findViewById(R.id.txtEmail);
         loginEmail.setHint("Email");
@@ -61,74 +64,25 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            User currentUser = (User) data.getExtras().getSerializable("currentUser");
-        }
-    }
-
     private void login() {
         String emailString = loginEmail.getText().toString();
         String passwordString = loginPassword.getText().toString();
 
-        firebaseAuth.signInWithEmailAndPassword(emailString, passwordString)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        dataAccess.login(emailString, passwordString, new IDataAccess.IONUserResult() {
+            @Override
+            public void onResult(User user) {
+                final Intent result = new Intent();
+                result.putExtra("currentUser", user);
+
+                dataAccess.getRole(user.getUid(), new IDataAccess.IONRoleResult() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "Login successful " + task.getResult().getUser().getEmail());
-                            db.collection("users").document(task.getResult()
-                                    .getUser().getUid()).get()
-                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                DocumentSnapshot document = task.getResult();
-                                                User user = null;
-                                                if (document != null) {
-                                                    user = document.toObject(User.class);
-                                                    if (user != null) {
-                                                        user.setUid(task.getResult().getId());
-                                                        final Intent result = new Intent();
-                                                        result.putExtra("currentUser", user);
-                                                        setResult(RESULT_OK, result);
-                                                        Log.d(TAG, "Document: " + user.toString());
-                                                        db.collection("roles")
-                                                                .document(task.getResult().getId()).get()
-                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            Role role = null;
-                                                                            DocumentSnapshot doc = task.getResult();
-                                                                            if (doc != null) {
-                                                                                role = doc.toObject(Role.class);
-                                                                                result.putExtra("role", role);
-                                                                                Log.d(TAG, "login role: " + role.getRoleName());
-                                                                                finish();
-                                                                            }
-                                                                        } else {
-                                                                            Log.d(TAG, "Failed with message: ", task.getException());
-                                                                        }
-                                                                    }
-                                                                });
-                                                    }
-                                                } else {
-                                                    Log.d(TAG, "No such user", task.getException());
-                                                }
-                                            } else {
-                                                Log.d(TAG, "Failed with message: ", task.getException());
-                                            }
-                                        }
-                                    });
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                    public void onResult(Role role) {
+                        result.putExtra("role", role);
+                        setResult(RESULT_OK, result);
+                        finish();
                     }
                 });
+            }
+        });
     }
 }

@@ -19,6 +19,10 @@ public interface IDataAccess {
 
     void getAllRoles(String uid, IONRolesResult callback);
 
+    void login(String email, String password, IONUserResult callback);
+
+    void getRole(String uid, IONRoleResult callback);
+
     void logout();
 
     interface IONUsersResult {
