@@ -17,6 +17,8 @@ public interface IDataAccess {
 
     void createRole(Map<String, Object> role, String uid, IONRoleResult callback);
 
+    void logout();
+
     interface IONUsersResult {
         void onResult(List<User> users);
     }

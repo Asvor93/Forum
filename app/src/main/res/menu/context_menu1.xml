@@ -8,6 +8,9 @@
     <item android:id="@+id/loginMenu" android:title="Login"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/logoutMenu" android:title="Logout"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/signUpMenu" android:title="Sign Up"
         app:showAsAction="never"/>
 

@@ -148,4 +148,9 @@ public class FirebaseImpl implements IDataAccess {
             }
         });
     }
+
+    @Override
+    public void logout() {
+        firebaseAuth.signOut();
+    }
 }

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.example.forum.R;
 
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -19,13 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "XYZ";
     User currentUser;
     Role role;
-    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem;
+    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem;
+    IDataAccess dataAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dataAccess = DataAccessFactory.getInstance();
     }
 
     // Creates the options menu.
@@ -37,22 +40,7 @@ public class MainActivity extends AppCompatActivity {
         adminMenuItem = menu.findItem(R.id.adminPageMenu);
         signUpMenuItem = menu.findItem(R.id.signUpMenu);
         loginMenuItem = menu.findItem(R.id.loginMenu);
-        if (currentUser == null) {
-            if (profileMenuItem != null) {
-                profileMenuItem.setVisible(false);
-                profileMenuItem.setEnabled(false);
-            }
-
-            if (adminMenuItem != null) {
-                adminMenuItem.setVisible(false);
-                adminMenuItem.setEnabled(false);
-            }
-
-            if (signUpMenuItem != null) {
-                signUpMenuItem.setVisible(true);
-                signUpMenuItem.setEnabled(true);
-            }
-        }
+        logoutMenuItem = menu.findItem(R.id.logoutMenu);
 
         return true;
     }
@@ -77,6 +65,42 @@ public class MainActivity extends AppCompatActivity {
                 signUpMenuItem.setVisible(false);
                 signUpMenuItem.setEnabled(false);
             }
+
+            if (logoutMenuItem != null) {
+                logoutMenuItem.setVisible(true);
+                logoutMenuItem.setEnabled(true);
+            }
+
+            if (loginMenuItem != null) {
+                loginMenuItem.setVisible(false);
+                loginMenuItem.setEnabled(false);
+            }
+        }
+        if (currentUser == null) {
+            if (profileMenuItem != null) {
+                profileMenuItem.setVisible(false);
+                profileMenuItem.setEnabled(false);
+            }
+
+            if (adminMenuItem != null) {
+                adminMenuItem.setVisible(false);
+                adminMenuItem.setEnabled(false);
+            }
+
+            if (signUpMenuItem != null) {
+                signUpMenuItem.setVisible(true);
+                signUpMenuItem.setEnabled(true);
+            }
+
+            if (logoutMenuItem != null) {
+                logoutMenuItem.setVisible(false);
+                logoutMenuItem.setEnabled(false);
+            }
+
+            if (loginMenuItem != null) {
+                loginMenuItem.setVisible(true);
+                loginMenuItem.setEnabled(true);
+            }
         }
         return true;
     }
@@ -98,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.loginMenu:
                 Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivityForResult(loginIntent, 1);
+                return true;
+            case R.id.logoutMenu:
+                logout();
                 return true;
             case R.id.signUpMenu:
                 Intent signUpIntent = new Intent(MainActivity.this, SignUpActivity.class);
@@ -129,5 +156,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "main activity on activity result canceled");
         }
 
+    }
+
+    private  void logout() {
+        dataAccess.logout();
+        currentUser = null;
+        role = null;
+        profileMenuItem.setVisible(false);
     }
 }
