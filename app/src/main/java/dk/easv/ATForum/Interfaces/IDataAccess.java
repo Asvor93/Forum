@@ -3,10 +3,11 @@ package dk.easv.ATForum.Interfaces;
 import java.util.List;
 import java.util.Map;
 
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public interface IDataAccess {
-    User createUser(User user);
+    void createUser(final Map<String, Object> user, String password, final IONUserResult callback);
 
     void getAllUsers(IONUsersResult callback);
 
@@ -14,11 +15,17 @@ public interface IDataAccess {
 
     void deleteUser(String id);
 
+    void createRole(Map<String, Object> role, String uid, IONRoleResult callback);
+
     interface IONUsersResult {
         void onResult(List<User> users);
     }
 
     interface IONUserResult {
         void onResult(User user);
+    }
+
+    interface IONRoleResult {
+        void onResult(Role role);
     }
 }

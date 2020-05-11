@@ -11,29 +11,68 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class FirebaseImpl implements IDataAccess {
     private static final String TAG = "XYZ";
     private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
 
     public FirebaseImpl() {
         db = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
-    public User createUser(User user) {
-        return null;
+    public void createUser(final Map<String, Object> user, String password, final IONUserResult callback) {
+        final String emailString = user.get("email").toString();
+        final String nameString = user.get("name").toString();
+        final String usernameString = user.get("username").toString();
+
+        firebaseAuth.createUserWithEmailAndPassword(emailString, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            db.collection("users").add(user)
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            if (task.isSuccessful()) {
+                                                String photoURL = "";
+                                                if (user.get("photoURL") != null) {
+                                                    photoURL = user.get("photoURL").toString();
+                                                }
+                                                Log.d(TAG, "onComplete signup post if statement: " + photoURL);
+                                                User newUser = new User(usernameString, nameString, emailString, photoURL);
+                                                String uid = task.getResult().getId();
+                                                newUser.setUid(uid);
+                                                callback.onResult(newUser);
+                                            } else {
+                                                Log.d(TAG, "failed adding user to database with error: " + task.getException());
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Log.d(TAG, "failed to create auth user with error: " + task.getException());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -89,6 +128,22 @@ public class FirebaseImpl implements IDataAccess {
                     Log.d(TAG, "user deleted ");
                 } else {
                     Log.d(TAG, "delete user failed" + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void createRole(Map<String, Object> role, final String uid, final IONRoleResult callback) {
+        db.collection("roles").document(uid).set(role).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    final Role newRole = new Role("user", uid);
+                    callback.onResult(newRole);
+                    Log.d(TAG, "SignUp: " + "Role successfully added");
+                } else {
+                    Log.d(TAG, "SignUp: " + " Failed to add Role with error: " + task.getException());
                 }
             }
         });

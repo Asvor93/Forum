@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
@@ -42,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     ImageView image;
     String url;
     IUploadManager uploadImg;
+    private IDataAccess dataAccess;
+    private boolean uploadingImg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
+        dataAccess = DataAccessFactory.getInstance();
         uploadImg = new UploadManagerImpl();
 
         image = findViewById(R.id.ivProfilePicture);
@@ -93,62 +96,44 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUp() {
-        final String emailString = emailSignUp.getText().toString();
-        final String passwordString = passwordSignUp.getText().toString();
-        final String nameString = nameSignUp.getText().toString();
-        final String usernameString = usernameSignUp.getText().toString();
+        if (!uploadingImg) {
+            final String emailString = emailSignUp.getText().toString();
+            final String passwordString = passwordSignUp.getText().toString();
+            final String nameString = nameSignUp.getText().toString();
+            final String usernameString = usernameSignUp.getText().toString();
+            Map<String, Object> user = new HashMap<>();
+            user.put("email", emailString);
+            user.put("name", nameString);
+            user.put("username", usernameString);
+            user.put("photoURL", url);
+            dataAccess.createUser(user, passwordString, new IDataAccess.IONUserResult() {
+                @Override
+                public void onResult(User user) {
+                    final Intent result = new Intent();
+                    result.putExtra("currentUser", user);
 
-        firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("email", emailString);
-                    user.put("name", nameString);
-                    user.put("username", usernameString);
-                    user.put("photoURL", url);
-
-                    Log.d(TAG,"New user photoURL " + url);
-                    db.collection("users").add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    Map<String, Object> role = new HashMap<>();
+                    role.put("roleName", "user");
+                    dataAccess.createRole(role, user.getUid(), new IDataAccess.IONRoleResult() {
                         @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                final User newUser = new User(usernameString, nameString, emailString, url);
-                                String uid = task.getResult().getId();
-                                newUser.setUid(uid);
-                                final Intent intent = new Intent();
-                                Log.d(TAG, "onComplete: User " + newUser.toString());
-                                intent.putExtra("currentUser", newUser);
-                                final Role role = new Role("user");
-                                db.collection("roles").document(uid).set(role).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful())
-                                        {
-                                            intent.putExtra("role", role);
-                                            finish();
-                                            Log.d(TAG, "SignUp: " + "Role successfully added");
-                                        } else {
-                                            Log.d(TAG, "SignUp: " + " Failed to add Role with error: " + task.getException());
-                                        }
-                                    }
-                                });
-                            } else {
-                                Log.d(TAG, "failed adding user to database with error: " + task.getException());
-                            }
+                        public void onResult(Role role) {
+                            result.putExtra("role", role);
+                            setResult(RESULT_OK, result);
+                            finish();
                         }
                     });
-                } else {
-                    Log.d(TAG, "failed to create auth user with error: " + task.getException());
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(this, "Currently uploading image", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            uploadingImg = true;
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);
@@ -156,7 +141,8 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void onResult(String res) {
                     url = res;
-                    Log.d(TAG,"PhotoURL " + url);
+                    Log.d(TAG, "PhotoURL " + url);
+                    uploadingImg = false;
                 }
             });
         } else if (resultCode == RESULT_CANCELED) {
