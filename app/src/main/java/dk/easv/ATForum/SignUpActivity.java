@@ -123,11 +123,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                     Map<String, Object> role = new HashMap<>();
                     role.put("roleName", "user");
+
                     dataAccess.createRole(role, user.getUid(), new IDataAccess.IONRoleResult() {
                         @Override
                         public void onResult(Role role) {
                             result.putExtra("role", role);
                             setResult(RESULT_OK, result);
+                            Toast.makeText(SignUpActivity.this, "User successfully created",Toast.LENGTH_LONG ).show();
                             finish();
                         }
                     });

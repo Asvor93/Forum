@@ -7,6 +7,7 @@ import com.example.forum.R;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -47,14 +49,25 @@ public class AdminActivity extends MenuActivity {
 
         //get All users
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getAllUsers(new IDataAccess.IONUsersResult() {
+        dataAccess.getAllUsers(user.getUid(), new IDataAccess.IONUsersResult() {
             @Override
             public void onResult(List<User> users) {
                 userList = users;
                 userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList);
                 userListView.setAdapter(userAdapter);
+                Log.d(TAG, "Users: " + userList.get(0));
             }
         });
+
+        //get All roles
+        dataAccess.getAllRoles(user.getUid(), new IDataAccess.IONRolesResult() {
+            @Override
+            public void onResult(List<Role> roles) {
+                roleList = roles;
+                Log.d(TAG, "Roles: " + roleList.get(0));
+            }
+        });
+
 
         userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -62,7 +75,14 @@ public class AdminActivity extends MenuActivity {
                 userListView.setLongClickable(true);
                 User user = userList.get(position);
                 String uid = user.getUid();
-                dataAccess.deleteUser(uid);
+                if (!role.getRoleName().equals("user")) {
+                    if (roleList.get(position).getRoleName().equals("user") ||
+                            role.getRoleName().equals("superAdmin")) {
+                        dataAccess.deleteUser(uid);
+                        Toast.makeText(AdminActivity.this, "Deleted user with id: " + uid, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
                 return true;
             }
         });
