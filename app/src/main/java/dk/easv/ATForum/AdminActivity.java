@@ -80,4 +80,47 @@ public class AdminActivity extends MenuActivity {
         user = (User) getIntent().getSerializableExtra("user");
         role = (Role) getIntent().getSerializableExtra("role");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if (currentUser != null && role != null) {
+            if (profileMenuItem != null) {
+                profileMenuItem.setVisible(true);
+                profileMenuItem.setEnabled(true);
+            }
+
+            if (adminMenuItem != null) {
+                adminMenuItem.setVisible(false);
+                adminMenuItem.setEnabled(false);
+            }
+
+
+            if (signUpMenuItem != null) {
+                signUpMenuItem.setVisible(false);
+                signUpMenuItem.setEnabled(false);
+            }
+
+            if (logoutMenuItem != null) {
+                logoutMenuItem.setVisible(true);
+                logoutMenuItem.setEnabled(true);
+            }
+
+            if (loginMenuItem != null) {
+                loginMenuItem.setVisible(false);
+                loginMenuItem.setEnabled(false);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void invalidateOptionsMenu() {
+        super.invalidateOptionsMenu();
+    }
 }

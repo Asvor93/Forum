@@ -21,7 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     User currentUser;
     Role role;
     IDataAccess dataAccess;
-    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem;
+    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, mainMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,39 +36,17 @@ public class MenuActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu1, menu);
 
+        profileMenuItem = menu.findItem(R.id.profileMenu);
+        adminMenuItem = menu.findItem(R.id.adminPageMenu);
+        signUpMenuItem = menu.findItem(R.id.signUpMenu);
+        logoutMenuItem = menu.findItem(R.id.logoutMenu);
+        loginMenuItem = menu.findItem(R.id.loginMenu);
+
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (currentUser != null && role != null) {
-            if (profileMenuItem != null) {
-                profileMenuItem.setVisible(true);
-                profileMenuItem.setEnabled(true);
-            }
-
-            if (role.getRoleName().equals("admin") || role.getRoleName().equals("superAdmin")) {
-                if (adminMenuItem != null) {
-                    adminMenuItem.setVisible(true);
-                    adminMenuItem.setEnabled(true);
-                }
-            }
-
-            if (signUpMenuItem != null) {
-                signUpMenuItem.setVisible(false);
-                signUpMenuItem.setEnabled(false);
-            }
-
-            if (logoutMenuItem != null) {
-                logoutMenuItem.setVisible(true);
-                logoutMenuItem.setEnabled(true);
-            }
-
-            if (loginMenuItem != null) {
-                loginMenuItem.setVisible(false);
-                loginMenuItem.setEnabled(false);
-            }
-        }
         if (currentUser == null) {
             if (profileMenuItem != null) {
                 profileMenuItem.setVisible(false);
@@ -129,6 +107,10 @@ public class MenuActivity extends AppCompatActivity {
                 adminIntent.putExtra("role", role);
                 startActivity(adminIntent);
                 return true;
+            case R.id.mainMenu:
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -137,6 +119,7 @@ public class MenuActivity extends AppCompatActivity {
         dataAccess.logout();
         currentUser = null;
         role = null;
+        profileMenuItem.setVisible(false);
     }
 
     @Override
@@ -148,7 +131,7 @@ public class MenuActivity extends AppCompatActivity {
 
         } else if (resultCode == RESULT_CANCELED) {
             if (currentUser == null) {
-                profileMenuItem.setVisible(false);
+                // profileMenuItem.setVisible(false);
             }
             Log.d(TAG, "main activity on activity result canceled");
         }
