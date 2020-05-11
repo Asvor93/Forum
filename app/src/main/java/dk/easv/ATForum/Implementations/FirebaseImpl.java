@@ -1,17 +1,24 @@
 package dk.easv.ATForum.Implementations;
 
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
+import com.example.forum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.User;
@@ -19,8 +26,9 @@ import dk.easv.ATForum.Models.User;
 public class FirebaseImpl implements IDataAccess {
     private static final String TAG = "XYZ";
     private FirebaseFirestore db;
+
     public FirebaseImpl() {
-    db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -30,7 +38,7 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void getAllUsers(final IONUsersResult callback) {
-         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -49,8 +57,27 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public void updateUser(final Map<String, Object> user, final String uid,
+                           final IONUserResult callback) {
+        db.collection("users").document(uid)
+                .set(user, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                String newUsername = user.get("username").toString();
+                String newName = user.get("name").toString();
+                String newPhotoURL = user.get("photoURL").toString();
+                String email = user.get("email").toString();
+                User changedUser = new User(newUsername, newName, email, newPhotoURL);
+                changedUser.setUid(uid);
+                callback.onResult(changedUser);
+                Log.d(TAG, "Successfully updated the user");
+            }
+        });
     }
 
     @Override

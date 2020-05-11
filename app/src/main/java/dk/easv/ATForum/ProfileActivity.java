@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
 
@@ -42,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
     User user;
     IUploadManager uploadImg;
     boolean editing;
+    private IDataAccess dataAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         uploadImg = new UploadManagerImpl();
         fbStorage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
+        dataAccess = DataAccessFactory.getInstance();
         final Button okButton = findViewById(R.id.btnEditOk);
         okButton.setVisibility(View.INVISIBLE);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -91,34 +94,21 @@ public class ProfileActivity extends AppCompatActivity {
     private void submitEdit() {
         final String newUsername = username.getText().toString();
         final String newName = name.getText().toString();
-        final String newPhotoURL = url;
         Map<String, Object> updatedUser = new HashMap<>();
         updatedUser.put("email", user.getEmail());
         updatedUser.put("name", newName);
         updatedUser.put("username", newUsername);
         updatedUser.put("photoURL", url);
         final String uid = user.getUid();
-
-        db.collection("users").document(uid)
-                .set(updatedUser, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+        dataAccess.updateUser(updatedUser, uid, new IDataAccess.IONUserResult() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+            public void onResult(User user) {
                 Intent editResult = new Intent();
-                User changedUser = new User(newUsername, newName, user.getEmail(), newPhotoURL);
-                changedUser.setUid(uid);
-                editResult.putExtra("currentUser", changedUser);
+                editResult.putExtra("currentUser", user);
                 setResult(RESULT_OK, editResult);
                 toggleEditable((Button) findViewById(R.id.btnEditOk), (Button) findViewById(R.id.btnEditProfile));
-                Log.d(TAG, "Successfully updated the user");
-
             }
         });
-
     }
 
     private void toggleEditable(Button okButton, Button v) {
