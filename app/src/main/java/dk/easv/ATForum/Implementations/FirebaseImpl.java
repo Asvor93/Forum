@@ -2,31 +2,28 @@ package dk.easv.ATForum.Implementations;
 
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.forum.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.MainActivity;
+import dk.easv.ATForum.LoginActivity;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -171,6 +168,66 @@ public class FirebaseImpl implements IDataAccess {
                 }
             }
         });
+    }
+
+    @Override
+    public void login(String email, String password, final IONUserResult callback) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Login successful " + task.getResult().getUser().getEmail());
+                            db.collection("users").document(task.getResult()
+                                    .getUser().getUid()).get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                User user = null;
+                                                if (document != null) {
+                                                    user = document.toObject(User.class);
+                                                    if (user != null) {
+                                                        user.setUid(task.getResult().getId());
+                                                        callback.onResult(user);
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "No such document", task.getException());
+                                                }
+                                            } else {
+                                                Log.d(TAG, "Failed with message: ", task.getException());
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Log.w(TAG, "createUserWithEmail failure: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getRole(final String uid, final IONRoleResult callback) {
+        db.collection("roles")
+                .document(uid).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Role role;
+                            DocumentSnapshot doc = task.getResult();
+                            if (doc != null) {
+                                role = doc.toObject(Role.class);
+                                role.setUid(uid);
+                                callback.onResult(role);
+                                Log.d(TAG, "login role: " + role.getRoleName());
+                            }
+                        } else {
+                            Log.d(TAG, "Failed with message: ", task.getException());
+                        }
+                    }
+                });
     }
 
     @Override

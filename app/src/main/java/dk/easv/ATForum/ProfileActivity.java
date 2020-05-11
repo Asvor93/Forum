@@ -116,6 +116,7 @@ public class ProfileActivity extends MenuActivity {
                 editResult.putExtra("currentUser", user);
                 setResult(RESULT_OK, editResult);
                 toggleEditable((Button) findViewById(R.id.btnEditOk), (Button) findViewById(R.id.btnEditProfile));
+                Toast.makeText(ProfileActivity.this, "User successfully updated",Toast.LENGTH_LONG ).show();
             }
         });
     }
