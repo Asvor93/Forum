@@ -31,7 +31,7 @@ import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;
 import dk.easv.ATForum.Models.User;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends MenuActivity {
 
     private static final String TAG = "XYZ";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
