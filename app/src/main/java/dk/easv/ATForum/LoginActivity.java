@@ -51,14 +51,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
-        Button btnSignUp = findViewById(R.id.btnSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSignUpActivity();
-            }
-        });
     }
 
     @Override
