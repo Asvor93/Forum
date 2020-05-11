@@ -31,10 +31,7 @@ public class AdminActivity extends MenuActivity {
     private static final String TAG = "XYZ";
     UserAdapter userAdapter;
     List<Role> roleList;
-    Role role;
-    User user;
     List<User> userList;
-    User currentUser;
     ListView userListView;
 
     private IDataAccess dataAccess;
@@ -49,7 +46,7 @@ public class AdminActivity extends MenuActivity {
 
         //get All users
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getAllUsers(user.getUid(), new IDataAccess.IONUsersResult() {
+        dataAccess.getAllUsers(currentUser.getUid(), new IDataAccess.IONUsersResult() {
             @Override
             public void onResult(List<User> users) {
                 userList = users;
@@ -60,7 +57,7 @@ public class AdminActivity extends MenuActivity {
         });
 
         //get All roles
-        dataAccess.getAllRoles(user.getUid(), new IDataAccess.IONRolesResult() {
+        dataAccess.getAllRoles(currentUser.getUid(), new IDataAccess.IONRolesResult() {
             @Override
             public void onResult(List<Role> roles) {
                 roleList = roles;
@@ -97,7 +94,7 @@ public class AdminActivity extends MenuActivity {
     }
 
     private void getExtras() {
-        user = (User) getIntent().getSerializableExtra("user");
+        currentUser = (User) getIntent().getSerializableExtra("user");
         role = (Role) getIntent().getSerializableExtra("role");
     }
 
