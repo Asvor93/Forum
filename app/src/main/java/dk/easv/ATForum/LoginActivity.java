@@ -51,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button btnBack = findViewById(R.id.btnLogin);
+        Button btnBack = findViewById(R.id.btnBackLogin);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                setResult(RESULT_CANCELED);
+                finish();
             }
         });
     }

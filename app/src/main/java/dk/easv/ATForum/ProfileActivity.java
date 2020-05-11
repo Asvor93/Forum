@@ -89,6 +89,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         setGUI();
+
+        Button btnBack = findViewById(R.id.btnBackProfile);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
     }
 
     private void submitEdit() {

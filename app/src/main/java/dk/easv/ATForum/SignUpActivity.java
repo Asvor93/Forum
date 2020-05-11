@@ -82,6 +82,15 @@ public class SignUpActivity extends AppCompatActivity {
                 signUp();
             }
         });
+
+        Button btnBack = findViewById(R.id.btnBackSignUp);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
     }
 
     private void openCameraUsingBitmap() {
