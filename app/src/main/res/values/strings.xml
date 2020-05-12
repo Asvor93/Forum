@@ -8,5 +8,7 @@
     <string name="editProfile">Edit</string>
     <string name="submit">Ok</string>
     <string name="back">Back</string>
+    <string name="demote">Demote</string>
+    <string name="promote">Promote</string>
 
 </resources>
