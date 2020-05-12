@@ -24,6 +24,7 @@ import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.LoginActivity;
+import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -233,5 +234,27 @@ public class FirebaseImpl implements IDataAccess {
     @Override
     public void logout() {
         firebaseAuth.signOut();
+    }
+
+    @Override
+    public void getAllCategories(final String uid, final IONCategoriesResult callback) {
+        db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Category> categories = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Category category = document.toObject(Category.class);
+                        category.setUid(document.getId());
+                        if (!category.getUid().equals(uid)) {
+                            categories.add(category);
+                        }
+                    }
+                    callback.onResult(categories);
+                } else {
+                    Log.d(TAG, "get categories failed " + task.getException());
+                }
+            }
+        });
     }
 }

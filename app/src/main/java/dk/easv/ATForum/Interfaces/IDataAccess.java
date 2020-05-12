@@ -3,6 +3,7 @@ package dk.easv.ATForum.Interfaces;
 import java.util.List;
 import java.util.Map;
 
+import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
@@ -25,6 +26,8 @@ public interface IDataAccess {
 
     void logout();
 
+    void getAllCategories(String uid, IONCategoriesResult callback);
+
     interface IONUsersResult {
         void onResult(List<User> users);
     }
@@ -39,6 +42,10 @@ public interface IDataAccess {
 
     interface IONRolesResult {
         void onResult(List<Role> roles);
+    }
+
+    interface IONCategoriesResult {
+        void onResult(List<Category> categories);
     }
 
 }
