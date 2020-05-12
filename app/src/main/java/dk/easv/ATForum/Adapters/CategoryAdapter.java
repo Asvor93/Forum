@@ -14,6 +14,7 @@ import com.example.forum.R;
 
 import java.util.List;
 
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
@@ -30,17 +31,17 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = li.inflate(R.layout.fragment_category, null);
+            view = li.inflate(R.layout.category_Cell, null);
 
         } else {
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
         Category cat = categoryList.get(position);
-        TextView txtUsername = view.findViewById(R.id.tvCategoryName);
-        txtUsername.setText("Username: " + cat.getCategoryName());
-        TextView txtEmail = view.findViewById(R.id.tvCatDescription);
-        txtEmail.setText("Email: " + cat.getDescription());
+        TextView txtCatName = view.findViewById(R.id.tvCategoryName);
+        txtCatName.setText("Username: " + cat.getCategoryName());
+        TextView txtCatDescription = view.findViewById(R.id.tvCatDescription);
+        txtCatDescription.setText("Email: " + cat.getDescription());
 
         return view;
     }
