@@ -71,7 +71,7 @@ public class AdminActivity extends MenuActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 userListView.setLongClickable(true);
                 User user = userList.get(position);
-                String uid = user.getUid();
+                String uid = user.getUid(); 
                 if (!role.getRoleName().equals("user")) {
                     if (roleList.get(position).getRoleName().equals("user") ||
                             role.getRoleName().equals("superAdmin")) {
