@@ -87,7 +87,7 @@ public class MenuActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.profileMenu:
                 Intent intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("user", currentUser);
+                intent.putExtra("currentUser", currentUser);
                 startActivityForResult(intent, 3);
                 return true;
             case R.id.loginMenu:
@@ -103,7 +103,7 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             case R.id.adminPageMenu:
                 Intent adminIntent = new Intent(this, AdminActivity.class);
-                adminIntent.putExtra("user", currentUser);
+                adminIntent.putExtra("currentUser", currentUser);
                 adminIntent.putExtra("role", role);
                 startActivity(adminIntent);
                 return true;
@@ -116,6 +116,7 @@ public class MenuActivity extends AppCompatActivity {
         currentUser = null;
         role = null;
         profileMenuItem.setVisible(false);
+        profileMenuItem.setEnabled(false);
     }
 
     @Override
@@ -124,10 +125,14 @@ public class MenuActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             currentUser = (User) data.getExtras().getSerializable("currentUser");
             role = (Role) data.getExtras().getSerializable("role");
+            profileMenuItem.setVisible(true);
+            profileMenuItem.setEnabled(true);
+            Log.d(TAG, "onActivityResult Main: " + currentUser.getUid());
 
         } else if (resultCode == RESULT_CANCELED) {
             if (currentUser == null) {
-                // profileMenuItem.setVisible(false);
+                profileMenuItem.setVisible(false);
+                profileMenuItem.setEnabled(false);
             }
             Log.d(TAG, "main activity on activity result canceled");
         }
