@@ -26,7 +26,7 @@ public interface IDataAccess {
 
     void logout();
 
-    void getAllCategories(String uid, IONCategoriesResult callback);
+    void getAllCategories(IONCategoriesResult callback);
 
     interface IONUsersResult {
         void onResult(List<User> users);

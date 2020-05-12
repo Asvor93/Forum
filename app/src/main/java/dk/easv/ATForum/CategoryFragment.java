@@ -17,8 +17,6 @@ import java.util.List;
 import dk.easv.ATForum.Adapters.CategoryAdapter;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
-import dk.easv.ATForum.Models.User;
-import dk.easv.ATForum.Models.UserAdapter;
 
 
 public class CategoryFragment extends ListFragment {
@@ -48,12 +46,12 @@ public class CategoryFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         dataAccess = DataAccessFactory.getInstance();
         categoryListView = getListView();
-        dataAccess.getAllCategories(currentCat.getUid(), new IDataAccess.IONCategoriesResult() {
+        dataAccess.getAllCategories(new IDataAccess.IONCategoriesResult() {
             @Override
             public void onResult(List<Category> categories) {
                 categoryList = categories;
-                categoryAdapter = new CategoryAdapter(getActivity(), R.layout.category_Cell, categoryList);
-                categoryListView.setAdapter(categoryAdapter);
+                categoryAdapter = new CategoryAdapter(getActivity(), R.layout.category_cell, categoryList);
+                //categoryListView.setAdapter(categoryAdapter);
                 setListAdapter(categoryAdapter);
                 Log.d(TAG, "Users: " + categoryList.get(0));
             }

@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.forum.R;
 
 import java.util.List;
 
-import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
@@ -29,9 +26,10 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         if (view == null) {
-            LayoutInflater li = (LayoutInflater)
-                    getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = li.inflate(R.layout.category_Cell, null);
+
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+
+            view = inflater.inflate(R.layout.category_cell, parent, false);
 
         } else {
             Log.d("XYZ", "Position: " + position + " View recycled");
@@ -39,9 +37,9 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
         Category cat = categoryList.get(position);
         TextView txtCatName = view.findViewById(R.id.tvCategoryName);
-        txtCatName.setText("Username: " + cat.getCategoryName());
+        txtCatName.setText("Category Name: " + cat.getCategoryName());
         TextView txtCatDescription = view.findViewById(R.id.tvCatDescription);
-        txtCatDescription.setText("Email: " + cat.getDescription());
+        txtCatDescription.setText("Description: " + cat.getDescription());
 
         return view;
     }

@@ -237,7 +237,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllCategories(final String uid, final IONCategoriesResult callback) {
+    public void getAllCategories(final IONCategoriesResult callback) {
         db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -246,9 +246,8 @@ public class FirebaseImpl implements IDataAccess {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Category category = document.toObject(Category.class);
                         category.setUid(document.getId());
-                        if (!category.getUid().equals(uid)) {
-                            categories.add(category);
-                        }
+                        categories.add(category);
+
                     }
                     callback.onResult(categories);
                 } else {
