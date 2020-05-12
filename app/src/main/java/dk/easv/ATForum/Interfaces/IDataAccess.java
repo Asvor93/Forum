@@ -18,7 +18,7 @@ public interface IDataAccess {
 
     void createRole(Map<String, Object> role, String uid, IONRoleResult callback);
 
-    void getAllRoles(String uid, IONRolesResult callback);
+    void getAllRoles(IONRolesResult callback);
 
     void login(String email, String password, IONUserResult callback);
 

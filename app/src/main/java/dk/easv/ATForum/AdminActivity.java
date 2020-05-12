@@ -52,7 +52,7 @@ public class AdminActivity extends MenuActivity {
                 userList = users;
 
                 //get All roles
-                dataAccess.getAllRoles(currentUser.getUid(), new IDataAccess.IONRolesResult() {
+                dataAccess.getAllRoles(new IDataAccess.IONRolesResult() {
                     @Override
                     public void onResult(List<Role> roles) {
                         roleList = roles;
@@ -71,7 +71,7 @@ public class AdminActivity extends MenuActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 userListView.setLongClickable(true);
                 User user = userList.get(position);
-                String uid = user.getUid(); 
+                String uid = user.getUid();
                 if (!role.getRoleName().equals("user")) {
                     if (roleList.get(position).getRoleName().equals("user") ||
                             role.getRoleName().equals("superAdmin")) {

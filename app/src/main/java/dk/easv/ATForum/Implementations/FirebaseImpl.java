@@ -32,6 +32,7 @@ public class FirebaseImpl implements IDataAccess {
     private static final String TAG = "XYZ";
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
+    private String userUid;
 
     public FirebaseImpl() {
         db = FirebaseFirestore.getInstance();
@@ -151,7 +152,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllRoles(final String uid, final IONRolesResult callback) {
+    public void getAllRoles(final IONRolesResult callback) {
 
         db.collection("roles").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -161,7 +162,7 @@ public class FirebaseImpl implements IDataAccess {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Role role = document.toObject(Role.class);
                         role.setUid(document.getId());
-                        if (!role.getUid().equals(uid)) {
+                        if (!role.getUid().equals(userUid)) {
                             roles.add(role);
                         }
                     }
@@ -190,7 +191,8 @@ public class FirebaseImpl implements IDataAccess {
                                                 if (document != null) {
                                                     user = document.toObject(User.class);
                                                     if (user != null) {
-                                                        user.setUid(task.getResult().getId());
+                                                        userUid = task.getResult().getId();
+                                                        user.setUid(userUid);
                                                         callback.onResult(user);
                                                     }
                                                 } else {
@@ -256,4 +258,5 @@ public class FirebaseImpl implements IDataAccess {
             }
         });
     }
+
 }
