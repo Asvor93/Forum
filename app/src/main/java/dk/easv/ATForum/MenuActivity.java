@@ -18,8 +18,8 @@ import dk.easv.ATForum.Models.User;
 
 public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "XYZ";
-    User currentUser;
-    Role role;
+    static User currentUser;
+    static Role role;
     IDataAccess dataAccess;
     MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem;
 
@@ -74,6 +74,36 @@ public class MenuActivity extends AppCompatActivity {
                 loginMenuItem.setEnabled(true);
             }
         }
+
+        if (currentUser != null) {
+            if (profileMenuItem != null) {
+                profileMenuItem.setVisible(true);
+                profileMenuItem.setEnabled(true);
+            }
+
+            if (role.getRoleName().equals("admin") || role.getRoleName().equals("superAdmin")) {
+                if (adminMenuItem != null) {
+                    adminMenuItem.setVisible(true);
+                    adminMenuItem.setEnabled(true);
+                }
+
+            }
+
+            if (signUpMenuItem != null) {
+                signUpMenuItem.setVisible(false);
+                signUpMenuItem.setEnabled(false);
+            }
+
+            if (logoutMenuItem != null) {
+                logoutMenuItem.setVisible(true);
+                logoutMenuItem.setEnabled(true);
+            }
+
+            if (loginMenuItem != null) {
+                loginMenuItem.setVisible(false);
+                loginMenuItem.setEnabled(false);
+            }
+        }
         return true;
     }
 
@@ -115,7 +145,8 @@ public class MenuActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private  void logout() {
+
+    private void logout() {
         dataAccess.logout();
         currentUser = null;
         role = null;

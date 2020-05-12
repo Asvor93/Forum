@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,6 +99,14 @@ public class ProfileActivity extends MenuActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        profileMenuItem.setVisible(false);
+        profileMenuItem.setEnabled(false);
+        return true;
     }
 
     private void submitEdit() {

@@ -62,7 +62,7 @@ public class AdminActivity extends MenuActivity {
                 });
             }
         });
-        
+
         userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,33 +104,9 @@ public class AdminActivity extends MenuActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (currentUser != null && role != null) {
-            if (profileMenuItem != null) {
-                profileMenuItem.setVisible(true);
-                profileMenuItem.setEnabled(true);
-            }
+        adminMenuItem.setEnabled(false);
+        adminMenuItem.setVisible(false);
 
-            if (adminMenuItem != null) {
-                adminMenuItem.setVisible(false);
-                adminMenuItem.setEnabled(false);
-            }
-
-
-            if (signUpMenuItem != null) {
-                signUpMenuItem.setVisible(false);
-                signUpMenuItem.setEnabled(false);
-            }
-
-            if (logoutMenuItem != null) {
-                logoutMenuItem.setVisible(true);
-                logoutMenuItem.setEnabled(true);
-            }
-
-            if (loginMenuItem != null) {
-                loginMenuItem.setVisible(false);
-                loginMenuItem.setEnabled(false);
-            }
-        }
         return true;
     }
 

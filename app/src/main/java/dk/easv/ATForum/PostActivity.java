@@ -29,38 +29,6 @@ public class PostActivity extends MenuActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (currentUser != null && role != null) {
-            if (profileMenuItem != null) {
-                profileMenuItem.setVisible(true);
-                profileMenuItem.setEnabled(true);
-            }
-
-            if (adminMenuItem != null) {
-                adminMenuItem.setVisible(true);
-                adminMenuItem.setEnabled(true);
-            }
-
-
-            if (signUpMenuItem != null) {
-                signUpMenuItem.setVisible(false);
-                signUpMenuItem.setEnabled(false);
-            }
-
-            if (logoutMenuItem != null) {
-                logoutMenuItem.setVisible(true);
-                logoutMenuItem.setEnabled(true);
-            }
-
-            if (loginMenuItem != null) {
-                loginMenuItem.setVisible(false);
-                loginMenuItem.setEnabled(false);
-            }
-
-            if (categoryMenuItem != null) {
-                categoryMenuItem.setVisible(false);
-                categoryMenuItem.setEnabled(false);
-            }
-        }
         categoryMenuItem.setVisible(false);
         categoryMenuItem.setEnabled(false);
         return true;
