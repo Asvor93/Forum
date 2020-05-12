@@ -24,6 +24,12 @@ public class PostActivity extends MenuActivity {
                 finish();
             }
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("currentUser", currentUser);
+        bundle.putSerializable("role", role);
+        CategoryFragment catFrag = new CategoryFragment();
+        catFrag.setArguments(bundle);
     }
 
     @Override

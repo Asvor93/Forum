@@ -28,6 +28,8 @@ public interface IDataAccess {
 
     void getAllCategories(IONCategoriesResult callback);
 
+    void deleteCategory(String id);
+
     interface IONUsersResult {
         void onResult(List<User> users);
     }

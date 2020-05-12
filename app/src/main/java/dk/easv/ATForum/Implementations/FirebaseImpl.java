@@ -259,4 +259,18 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    @Override
+    public void deleteCategory(String id) {
+        db.collection("categories").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "category deleted ");
+                } else {
+                    Log.d(TAG, "delete category failed" + task.getException());
+                }
+            }
+        });
+    }
+
 }
