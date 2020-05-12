@@ -37,25 +37,32 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
+        ViewHolder holder;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.cell, null);
-
+            holder = new ViewHolder();
+            holder.btnEditRole = view.findViewById(R.id.btnEditRole);
+            holder.imgUserPic = view.findViewById(R.id.imgUserPicture);
+            holder.txtEmail = view.findViewById(R.id.tvUserEmail);
+            holder.txtUsername = view.findViewById(R.id.tvUsername);
+            view.setTag(holder);
         } else {
+            holder = (ViewHolder) view.getTag();
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
-        User user = userList.get(position);
-        Role role = roleList.get(position);
+        final User user = userList.get(position);
+        final Role role = roleList.get(position);
         final String uid = user.getUid();
-        Button btnEditRole = view.findViewById(R.id.btnEditRole);
-        btnEditRole.setFocusable(false);
+
+        holder.btnEditRole.setFocusable(false);
         if (role.getRoleName().equals("admin")) {
-            btnEditRole.setEnabled(true);
-            btnEditRole.setVisibility(View.VISIBLE);
-            btnEditRole.setText(R.string.demote);
-            btnEditRole.setOnClickListener(new View.OnClickListener() {
+            holder.btnEditRole.setEnabled(true);
+            holder.btnEditRole.setVisibility(View.VISIBLE);
+            holder.btnEditRole.setText(R.string.demote);
+            holder.btnEditRole.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Map<String, Object> role = new HashMap<>();
@@ -69,10 +76,10 @@ public class UserAdapter extends ArrayAdapter<User> {
                 }
             });
         } else if (role.getRoleName().equals("user")) {
-            btnEditRole.setEnabled(true);
-            btnEditRole.setVisibility(View.VISIBLE);
-            btnEditRole.setText(R.string.promote);
-            btnEditRole.setOnClickListener(new View.OnClickListener() {
+            holder.btnEditRole.setEnabled(true);
+            holder.btnEditRole.setVisibility(View.VISIBLE);
+            holder.btnEditRole.setText(R.string.promote);
+            holder.btnEditRole.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Map<String, Object> role = new HashMap<>();
@@ -86,16 +93,22 @@ public class UserAdapter extends ArrayAdapter<User> {
                 }
             });
         }
-        TextView txtUsername = view.findViewById(R.id.tvUsername);
-        txtUsername.setText("Username: " + user.getUsername());
-        TextView txtEmail = view.findViewById(R.id.tvUserEmail);
-        txtEmail.setText("Email: " + user.getEmail());
-        ImageView imgUserPic = view.findViewById(R.id.imgUserPicture);
+        holder.txtUsername.setText("Username: " + user.getUsername());
+
+        holder.txtEmail.setText("Email: " + user.getEmail());
+
         Picasso.get()
                 .load(user.getPhotoURL())
                 .resize(150, 180)
-                .into(imgUserPic);
+                .into(holder.imgUserPic);
 
         return view;
+    }
+
+    static class ViewHolder {
+        TextView txtUsername;
+        TextView txtEmail;
+        ImageView imgUserPic;
+        Button btnEditRole;
     }
 }

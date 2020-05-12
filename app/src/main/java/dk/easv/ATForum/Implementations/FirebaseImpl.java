@@ -32,7 +32,7 @@ public class FirebaseImpl implements IDataAccess {
     private static final String TAG = "XYZ";
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
-    private String userUid;
+    private static String userUid;
 
     public FirebaseImpl() {
         db = FirebaseFirestore.getInstance();

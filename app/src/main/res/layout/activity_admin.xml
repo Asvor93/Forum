@@ -9,10 +9,13 @@
         android:id="@+id/listUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/footer"/>
 
 
     <include layout="@layout/footer"
+        android:id="@+id/footer"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_height="60dp"
         android:layout_width="match_parent"/>

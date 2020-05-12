@@ -58,14 +58,11 @@ public class AdminActivity extends MenuActivity {
                         roleList = roles;
                         userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList, roleList);
                         userListView.setAdapter(userAdapter);
-                        Log.d(TAG, "Roles: " + roleList.get(0));
                     }
                 });
-                Log.d(TAG, "Users: " + userList.get(0));
             }
         });
-
-
+        
         userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
