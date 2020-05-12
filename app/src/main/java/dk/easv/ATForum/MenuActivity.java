@@ -21,7 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     User currentUser;
     Role role;
     IDataAccess dataAccess;
-    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem;
+    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class MenuActivity extends AppCompatActivity {
         signUpMenuItem = menu.findItem(R.id.signUpMenu);
         logoutMenuItem = menu.findItem(R.id.logoutMenu);
         loginMenuItem = menu.findItem(R.id.loginMenu);
+        categoryMenuItem = menu.findItem(R.id.categoryMenu);
 
         return true;
     }
@@ -107,6 +108,9 @@ public class MenuActivity extends AppCompatActivity {
                 adminIntent.putExtra("role", role);
                 startActivity(adminIntent);
                 return true;
+            case R.id.categoryMenu:
+                Intent postIntent = new Intent(this, PostActivity.class);
+                startActivity(postIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }
