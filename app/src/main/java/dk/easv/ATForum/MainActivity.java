@@ -18,12 +18,10 @@ import dk.easv.ATForum.Models.User;
 
 public class MainActivity extends MenuActivity {
     private static final String TAG = "XYZ";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     @Override
