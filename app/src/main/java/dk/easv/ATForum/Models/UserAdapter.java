@@ -14,20 +14,25 @@ import android.widget.TextView;
 import com.example.forum.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import dk.easv.ATForum.DataAccessFactory;
+import dk.easv.ATForum.Interfaces.IDataAccess;
 
 
 public class UserAdapter extends ArrayAdapter<User> {
 
     private List<User> userList;
     private List<Role> roleList;
+    private IDataAccess dataAccess;
 
     public UserAdapter(Context context, int resource, List<User> userList, List<Role> roleList) {
         super(context, resource, userList);
         this.userList = userList;
         this.roleList = roleList;
-        Log.d("XYZ", "UserAdapter roles: " + roleList);
-        Log.d("XYZ", "UserAdapter users: " + userList);
+        dataAccess = DataAccessFactory.getInstance();
     }
 
     @Override
@@ -43,17 +48,43 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         User user = userList.get(position);
         Role role = roleList.get(position);
-
+        final String uid = user.getUid();
         Button btnEditRole = view.findViewById(R.id.btnEditRole);
         btnEditRole.setFocusable(false);
         if (role.getRoleName().equals("admin")) {
             btnEditRole.setEnabled(true);
             btnEditRole.setVisibility(View.VISIBLE);
             btnEditRole.setText(R.string.demote);
+            btnEditRole.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Map<String, Object> role = new HashMap<>();
+                    role.put("roleName", "user");
+                    dataAccess.createRole(role, uid, new IDataAccess.IONRoleResult() {
+                        @Override
+                        public void onResult(Role role) {
+                            role.setRoleName(role.getRoleName());
+                        }
+                    });
+                }
+            });
         } else if (role.getRoleName().equals("user")) {
             btnEditRole.setEnabled(true);
             btnEditRole.setVisibility(View.VISIBLE);
             btnEditRole.setText(R.string.promote);
+            btnEditRole.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Map<String, Object> role = new HashMap<>();
+                    role.put("roleName", "admin");
+                    dataAccess.createRole(role, uid, new IDataAccess.IONRoleResult() {
+                        @Override
+                        public void onResult(Role role) {
+                            role.setRoleName(role.getRoleName());
+                        }
+                    });
+                }
+            });
         }
         TextView txtUsername = view.findViewById(R.id.tvUsername);
         txtUsername.setText("Username: " + user.getUsername());
