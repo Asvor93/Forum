@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +20,14 @@ import java.util.List;
 public class UserAdapter extends ArrayAdapter<User> {
 
     private List<User> userList;
+    private List<Role> roleList;
 
-    public UserAdapter(Context context, int resource, List<User> userList) {
+    public UserAdapter(Context context, int resource, List<User> userList, List<Role> roleList) {
         super(context, resource, userList);
         this.userList = userList;
+        this.roleList = roleList;
+        Log.d("XYZ", "UserAdapter roles: " + roleList);
+        Log.d("XYZ", "UserAdapter users: " + userList);
     }
 
     @Override
@@ -30,13 +35,26 @@ public class UserAdapter extends ArrayAdapter<User> {
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = li.inflate(R.layout.cell,null);
+            view = li.inflate(R.layout.cell, null);
 
-        }else {
+        } else {
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
         User user = userList.get(position);
+        Role role = roleList.get(position);
+
+        Button btnEditRole = view.findViewById(R.id.btnEditRole);
+        btnEditRole.setFocusable(false);
+        if (role.getRoleName().equals("admin")) {
+            btnEditRole.setEnabled(true);
+            btnEditRole.setVisibility(View.VISIBLE);
+            btnEditRole.setText(R.string.demote);
+        } else if (role.getRoleName().equals("user")) {
+            btnEditRole.setEnabled(true);
+            btnEditRole.setVisibility(View.VISIBLE);
+            btnEditRole.setText(R.string.promote);
+        }
         TextView txtUsername = view.findViewById(R.id.tvUsername);
         txtUsername.setText("Username: " + user.getUsername());
         TextView txtEmail = view.findViewById(R.id.tvUserEmail);
@@ -44,7 +62,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         ImageView imgUserPic = view.findViewById(R.id.imgUserPicture);
         Picasso.get()
                 .load(user.getPhotoURL())
-                .resize(150,180)
+                .resize(150, 180)
                 .into(imgUserPic);
 
         return view;

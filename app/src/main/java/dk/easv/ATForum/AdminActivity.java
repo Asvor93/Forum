@@ -50,18 +50,18 @@ public class AdminActivity extends MenuActivity {
             @Override
             public void onResult(List<User> users) {
                 userList = users;
-                userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList);
-                userListView.setAdapter(userAdapter);
-                Log.d(TAG, "Users: " + userList.get(0));
-            }
-        });
 
-        //get All roles
-        dataAccess.getAllRoles(currentUser.getUid(), new IDataAccess.IONRolesResult() {
-            @Override
-            public void onResult(List<Role> roles) {
-                roleList = roles;
-                Log.d(TAG, "Roles: " + roleList.get(0));
+                //get All roles
+                dataAccess.getAllRoles(currentUser.getUid(), new IDataAccess.IONRolesResult() {
+                    @Override
+                    public void onResult(List<Role> roles) {
+                        roleList = roles;
+                        userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList, roleList);
+                        userListView.setAdapter(userAdapter);
+                        Log.d(TAG, "Roles: " + roleList.get(0));
+                    }
+                });
+                Log.d(TAG, "Users: " + userList.get(0));
             }
         });
 
@@ -101,7 +101,7 @@ public class AdminActivity extends MenuActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-       return true;
+        return true;
     }
 
     @Override
