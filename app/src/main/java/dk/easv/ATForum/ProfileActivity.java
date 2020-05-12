@@ -145,7 +145,7 @@ public class ProfileActivity extends MenuActivity {
 
 
     private void setGUI() {
-        user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("currentUser");
 
         email.setText(user.getEmail());
         username.setText(user.getUsername());

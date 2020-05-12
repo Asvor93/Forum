@@ -94,7 +94,7 @@ public class AdminActivity extends MenuActivity {
     }
 
     private void getExtras() {
-        currentUser = (User) getIntent().getSerializableExtra("user");
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
         role = (Role) getIntent().getSerializableExtra("role");
     }
 
