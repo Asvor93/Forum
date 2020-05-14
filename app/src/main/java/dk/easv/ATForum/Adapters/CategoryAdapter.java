@@ -1,11 +1,13 @@
 package dk.easv.ATForum.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.forum.R;
@@ -35,12 +37,19 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
-        Category cat = categoryList.get(position);
+        final Category cat = categoryList.get(position);
         TextView txtCatName = view.findViewById(R.id.tvCategoryName);
         txtCatName.setText("Category Name: " + cat.getCategoryName());
         TextView txtCatDescription = view.findViewById(R.id.tvCatDescription);
         txtCatDescription.setText("Description: " + cat.getDescription());
-
+        Button editButton = view.findViewById(R.id.submitEdit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("category", getPosition(cat));
+            }
+        });
         return view;
     }
 }

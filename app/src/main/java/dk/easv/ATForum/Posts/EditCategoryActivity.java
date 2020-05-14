@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.forum.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Users.ProfileActivity;
 
 public class EditCategoryActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class EditCategoryActivity extends AppCompatActivity {
 
         txtCatName = findViewById(R.id.etEditCatName);
         txtCatDescription = findViewById(R.id.etEditCatDescription);
+
+        setGUI();
 
         Button btnSubmit = findViewById(R.id.submitNewCat);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -68,5 +72,12 @@ public class EditCategoryActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setGUI() {
+        category = (Category) getIntent().getSerializableExtra("category");
+
+        txtCatName.setText(category.getCategoryName());
+        txtCatDescription.setText(category.getDescription());
     }
 }
