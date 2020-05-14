@@ -1,8 +1,9 @@
 package dk.easv.ATForum.Models;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Category {
+public class Category implements Serializable {
     private String uid;
     private String categoryName;
     private String description;

@@ -37,7 +37,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
         setGUI();
 
-        Button btnSubmit = findViewById(R.id.submitNewCat);
+        Button btnSubmit = findViewById(R.id.submitEditCat);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class EditCategoryActivity extends AppCompatActivity {
         dataAccess.editCategory(mapCategory, id, new IDataAccess.IONCategoryResult() {
             @Override
             public void onResult(Category category) {
-                Toast.makeText(EditCategoryActivity.this, "Category successfully updated",Toast.LENGTH_LONG ).show();
+                Toast.makeText(EditCategoryActivity.this, "Category successfully updated", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
