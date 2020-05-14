@@ -1,4 +1,4 @@
-package dk.easv.ATForum;
+package Posts;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +18,7 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Adapters.CategoryAdapter;
+import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;

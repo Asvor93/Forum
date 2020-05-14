@@ -9,39 +9,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvCatName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Cat Name" />
+        android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/etCatName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="name"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvCatDescription"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="description" />
+            android:id="@+id/etNewCatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"/>
 
         <EditText
-            android:id="@+id/etCatDescription"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="description" />
-    </LinearLayout>
+            android:id="@+id/etNewCatDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"/>
+        <Button
+            android:id="@+id/submitNewCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"/>
 
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,5 @@
-package dk.easv.ATForum;
+package Users;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,16 +16,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.forum.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;

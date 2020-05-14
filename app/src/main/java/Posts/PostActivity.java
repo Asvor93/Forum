@@ -1,11 +1,17 @@
-package dk.easv.ATForum;
+package Posts;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.forum.R;
+
+import dk.easv.ATForum.CategoryFragment;
+import dk.easv.ATForum.MenuActivity;
 
 public class PostActivity extends MenuActivity {
 
@@ -27,6 +33,12 @@ public class PostActivity extends MenuActivity {
         bundle.putSerializable("role", role);
         CategoryFragment catFrag = new CategoryFragment();
         catFrag.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.add(R.id.frameLayout, catFrag);
+        transaction.commit();
     }
 
     @Override

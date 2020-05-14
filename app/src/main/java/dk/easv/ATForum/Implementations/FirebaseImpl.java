@@ -1,8 +1,6 @@
 package dk.easv.ATForum.Implementations;
 
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -24,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.LoginActivity;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;

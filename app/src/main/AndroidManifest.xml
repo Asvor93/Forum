@@ -14,7 +14,7 @@
         <activity android:name="dk.easv.ATForum.MenuActivity" />
         <activity android:name="dk.easv.ATForum.AdminActivity" />
         <activity android:name="dk.easv.ATForum.ProfileActivity" />
-        <activity android:name="dk.easv.ATForum.SignUpActivity" />
+        <activity android:name="Users.SignUpActivity" />
         <activity android:name="dk.easv.ATForum.LoginActivity" />
         <activity android:name="dk.easv.ATForum.MainActivity">
             <intent-filter>

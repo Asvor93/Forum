@@ -12,6 +12,9 @@ import android.view.MenuItem;
 
 import com.example.forum.R;
 
+import Users.LoginActivity;
+import Users.ProfileActivity;
+import Users.SignUpActivity;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
@@ -21,7 +24,7 @@ public class MenuActivity extends AppCompatActivity {
     static User currentUser;
     static Role role;
     IDataAccess dataAccess;
-    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem, createCatMenuItem;
+    public MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem, createCatMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

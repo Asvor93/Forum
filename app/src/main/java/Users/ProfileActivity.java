@@ -1,4 +1,4 @@
-package dk.easv.ATForum;
+package Users;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,9 +27,11 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
+import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Implementations.UploadManagerImpl;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Interfaces.IUploadManager;
+import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.User;
 
 public class ProfileActivity extends MenuActivity {

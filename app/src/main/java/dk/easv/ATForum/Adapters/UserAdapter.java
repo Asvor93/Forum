@@ -1,4 +1,4 @@
-package dk.easv.ATForum.Models;
+package dk.easv.ATForum.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -19,6 +19,8 @@ import java.util.Map;
 
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.Models.Role;
+import dk.easv.ATForum.Models.User;
 
 
 public class UserAdapter extends ArrayAdapter<User> {

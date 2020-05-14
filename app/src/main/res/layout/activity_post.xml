@@ -4,18 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:id="@+id/list"
-            android:name="dk.easv.ATForum.CategoryFragment"
-            class="dk.easv.ATForum.CategoryFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </FrameLayout>
 
     <include
         layout="@layout/footer"
