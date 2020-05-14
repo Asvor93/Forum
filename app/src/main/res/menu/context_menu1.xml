@@ -19,4 +19,7 @@
 
     <item android:id="@+id/adminPageMenu" android:title="Admin Page"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/createCatMenu" android:title="Create Category"
+        app:showAsAction="never"/>
 </menu>

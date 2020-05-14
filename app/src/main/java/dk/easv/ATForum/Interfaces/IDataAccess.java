@@ -30,6 +30,10 @@ public interface IDataAccess {
 
     void deleteCategory(String id);
 
+    void createCategory(final Map<String, Object> category, final IONCategoryResult callback);
+
+    void getCategory(String id);
+
     interface IONUsersResult {
         void onResult(List<User> users);
     }
@@ -48,6 +52,10 @@ public interface IDataAccess {
 
     interface IONCategoriesResult {
         void onResult(List<Category> categories);
+    }
+
+    interface IONCategoryResult {
+        void onResult(Category category);
     }
 
 }

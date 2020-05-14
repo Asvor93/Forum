@@ -21,7 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     static User currentUser;
     static Role role;
     IDataAccess dataAccess;
-    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem;
+    MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem, createCatMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class MenuActivity extends AppCompatActivity {
         logoutMenuItem = menu.findItem(R.id.logoutMenu);
         loginMenuItem = menu.findItem(R.id.loginMenu);
         categoryMenuItem = menu.findItem(R.id.categoryMenu);
+        createCatMenuItem = menu.findItem(R.id.createCatMenu);
 
         return true;
     }
@@ -75,6 +76,11 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
+        if (createCatMenuItem != null) {
+            createCatMenuItem.setVisible(false);
+            createCatMenuItem.setEnabled(false);
+        }
+
         if (currentUser != null) {
             if (profileMenuItem != null) {
                 profileMenuItem.setVisible(true);
@@ -85,6 +91,11 @@ public class MenuActivity extends AppCompatActivity {
                 if (adminMenuItem != null) {
                     adminMenuItem.setVisible(true);
                     adminMenuItem.setEnabled(true);
+                }
+
+                if (createCatMenuItem != null) {
+                    createCatMenuItem.setVisible(true);
+                    createCatMenuItem.setEnabled(true);
                 }
 
             }
@@ -141,6 +152,9 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.categoryMenu:
                 Intent postIntent = new Intent(this, PostActivity.class);
                 startActivity(postIntent);
+            case R.id.createCatMenu:
+                Intent createCatIntent = new Intent(this, PostActivity.class);
+                startActivity(createCatIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }

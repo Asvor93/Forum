@@ -59,7 +59,6 @@ public class CategoryFragment extends ListFragment {
             public void onResult(List<Category> categories) {
                 categoryList = categories;
                 categoryAdapter = new CategoryAdapter(getActivity(), R.layout.category_cell, categoryList);
-                //categoryListView.setAdapter(categoryAdapter);
                 setListAdapter(categoryAdapter);
                 Log.d(TAG, "Users: " + categoryList.get(0));
             }

@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -271,6 +272,32 @@ public class FirebaseImpl implements IDataAccess {
                 }
             }
         });
+    }
+
+    @Override
+    public void createCategory(final Map<String, Object> category, final IONCategoryResult callback) {
+        db.collection("categories").add(category).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    String catNameString = category.get("categoryName").toString();
+                    String catDescription = category.get("description").toString();
+                    String catId = task.getResult().getId();
+
+                    Category newCat = new Category(catNameString, catDescription);
+                    newCat.setUid(catId);
+
+                    callback.onResult(newCat);
+                } else {
+                    Log.d(TAG, "Failed to create a new category with message: \n" + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getCategory(String id) {
+
     }
 
 }
