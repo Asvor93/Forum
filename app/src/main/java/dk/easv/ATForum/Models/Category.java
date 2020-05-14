@@ -31,10 +31,13 @@ public class Category {
         return topic;
     }
 
-    public Category(String categoryName, String description, Topic[] topic) {
+    public void setTopic(Topic[] topic) {
+        this.topic = topic;
+    }
+
+    public Category(String categoryName, String description) {
         this.categoryName = categoryName;
         this.description = description;
-        this.topic = topic;
     }
 
     @Override
