@@ -61,7 +61,7 @@ public class CategoryFragment extends ListFragment {
                 categoryList = categories;
                 categoryAdapter = new CategoryAdapter(getActivity(), R.layout.category_cell, categoryList);
                 setListAdapter(categoryAdapter);
-                Log.d(TAG, "Users: " + categoryList.get(0));
+                Log.d(TAG, "dk.easv.ATForum.Users: " + categoryList.get(0));
             }
         });
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

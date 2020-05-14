@@ -1,4 +1,4 @@
-package Users;
+package dk.easv.ATForum.Users;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
