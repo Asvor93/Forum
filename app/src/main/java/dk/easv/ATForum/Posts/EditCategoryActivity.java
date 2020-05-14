@@ -1,9 +1,12 @@
 package dk.easv.ATForum.Posts;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.forum.R;
 
@@ -12,28 +15,29 @@ import java.util.Map;
 
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Users.ProfileActivity;
 
-public class CreateCategoryActivity extends MenuActivity {
+public class EditCategoryActivity extends AppCompatActivity {
     IDataAccess dataAccess;
     EditText txtCatName, txtCatDescription;
+    Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_category);
+        setContentView(R.layout.activity_edit_category);
 
         dataAccess = DataAccessFactory.getInstance();
 
-        txtCatName = findViewById(R.id.etNewCatName);
-        txtCatDescription = findViewById(R.id.etNewCatDescription);
+        txtCatName = findViewById(R.id.etEditCatName);
+        txtCatDescription = findViewById(R.id.etEditCatDescription);
 
         Button btnSubmit = findViewById(R.id.submitNewCat);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createCategory();
+                editCategory();
             }
         });
 
@@ -46,17 +50,20 @@ public class CreateCategoryActivity extends MenuActivity {
         });
     }
 
-    private void createCategory() {
+    private void editCategory() {
         final String catNameString = txtCatName.getText().toString();
         final String catDescriptionString = txtCatDescription.getText().toString();
 
-        Map<String, Object> category = new HashMap<>();
-        category.put("categoryName", catNameString);
-        category.put("description", catDescriptionString);
+        Map<String, Object> mapCategory = new HashMap<>();
+        mapCategory.put("categoryName", catNameString);
+        mapCategory.put("description", catDescriptionString);
 
-        dataAccess.createCategory(category, new IDataAccess.IONCategoryResult() {
+        final String id = category.getUid();
+
+        dataAccess.editCategory(mapCategory, id, new IDataAccess.IONCategoryResult() {
             @Override
             public void onResult(Category category) {
+                Toast.makeText(EditCategoryActivity.this, "Category successfully updated",Toast.LENGTH_LONG ).show();
                 finish();
             }
         });
