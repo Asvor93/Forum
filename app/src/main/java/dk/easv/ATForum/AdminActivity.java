@@ -1,23 +1,14 @@
 package dk.easv.ATForum;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.forum.R;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.forum.R;
 
 import java.util.List;
 
@@ -41,7 +32,6 @@ public class AdminActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        getExtras();
         userListView = findViewById(R.id.listUsers);
 
         //get All users
@@ -56,7 +46,7 @@ public class AdminActivity extends MenuActivity {
                     @Override
                     public void onResult(List<Role> roles) {
                         roleList = roles;
-                        userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList, roleList);
+                        userAdapter = new UserAdapter(AdminActivity.this, R.layout.cell, userList, roleList, role);
                         userListView.setAdapter(userAdapter);
                     }
                 });
@@ -88,11 +78,6 @@ public class AdminActivity extends MenuActivity {
                 finish();
             }
         });
-    }
-
-    private void getExtras() {
-        currentUser = (User) getIntent().getSerializableExtra("currentUser");
-        role = (Role) getIntent().getSerializableExtra("role");
     }
 
     @Override
