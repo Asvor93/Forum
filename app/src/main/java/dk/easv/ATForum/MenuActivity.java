@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.example.forum.R;
 
-import Posts.PostActivity;
+import dk.easv.ATForum.Posts.CategoryActivity;
 import dk.easv.ATForum.Users.AdminActivity;
 import dk.easv.ATForum.Users.LoginActivity;
 import dk.easv.ATForum.Users.ProfileActivity;
@@ -155,11 +155,13 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(adminIntent);
                 return true;
             case R.id.categoryMenu:
-                Intent postIntent = new Intent(this, PostActivity.class);
-                startActivity(postIntent);
+                Intent categoryIntent = new Intent(this, CategoryActivity.class);
+                startActivity(categoryIntent);
+                return true;
             case R.id.createCatMenu:
-                Intent createCatIntent = new Intent(this, PostActivity.class);
-                startActivity(createCatIntent);
+                //Intent createCatIntent = new Intent(this, PostActivity.class);
+                //startActivity(createCatIntent);
+                //return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
