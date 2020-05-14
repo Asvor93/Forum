@@ -3,6 +3,8 @@ package dk.easv.ATForum.Posts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.forum.R;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
+import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 
 public class CategoryActivity extends AppCompatActivity {
@@ -51,6 +54,17 @@ public class CategoryActivity extends AppCompatActivity {
                 Log.d(TAG, "dk.easv.ATForum.Users: " + categoryList.get(0));
             }
         });
+
+        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String catUid = categoryList.get(position).getUid();
+                Intent topicIntent = new Intent();
+                topicIntent.putExtra("catId", catUid);
+                startActivity(topicIntent);
+            }
+        });
+
         categoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
