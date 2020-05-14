@@ -27,6 +27,7 @@ import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.LoginActivity;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
+import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 
 public class FirebaseImpl implements IDataAccess {
@@ -297,6 +298,35 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void getCategory(String id) {
+
+    }
+
+    @Override
+    public void getTopics(String id, final IONTopicsResult callback) {
+        db.collection("topics").whereEqualTo("categoryId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<DocumentSnapshot> docs = task.getResult().getDocuments();
+                    List<Topic> catTopics = new ArrayList<>();
+
+                    if ( docs.size() > 0) {
+                        for (int i = 0; i < docs.size(); i++) {
+                            Topic topic = docs.get(i).toObject(Topic.class);
+                            catTopics.add(topic);
+                        }
+                    }
+                    callback.onResult(catTopics);
+                } else {
+                    Log.d(TAG, "Unable to get topics from the specified category, got error: \n"
+                            + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTopic(String id, IONTopicResult callback) {
 
     }
 
