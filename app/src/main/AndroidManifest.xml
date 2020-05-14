@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="dk.easv.ATForum.Posts.CreateCategoryActivity"></activity>
+        <activity android:name="dk.easv.ATForum.Posts.EditCategoryActivity"></activity>
+        <activity android:name="dk.easv.ATForum.Posts.CreateCategoryActivity" />
         <activity android:name="dk.easv.ATForum.Posts.CategoryActivity" />
         <activity android:name="dk.easv.ATForum.MenuActivity" />
         <activity android:name="dk.easv.ATForum.Users.AdminActivity" />

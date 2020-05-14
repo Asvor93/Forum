@@ -294,6 +294,29 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
+    public void editCategory(final Map<String, Object> category, final String id, final IONCategoryResult callback) {
+        db.collection("categories").document(id)
+                .set(category, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                String newCategoryName = category.get("categoryName").toString();
+                String newDescription = category.get("Description").toString();
+
+                Category updatedCategory = new Category(newCategoryName, newDescription);
+
+                updatedCategory.setUid(id);
+                callback.onResult(updatedCategory);
+                Log.d(TAG, "Successfully updated the category");
+            }
+        });
+    }
+
+    @Override
     public void getCategory(String id) {
 
     }

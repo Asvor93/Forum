@@ -33,6 +33,8 @@ public interface IDataAccess {
 
     void createCategory(final Map<String, Object> category, final IONCategoryResult callback);
 
+    void editCategory(final Map<String, Object> category, String id, final IONCategoryResult callback);
+
     void getCategory(String id);
 
     void getTopics(String id, IONTopicsResult callback);
