@@ -16,6 +16,9 @@ public class Topic {
         this.categoryId = categoryId;
     }
 
+    public Topic() {
+    }
+
     public String getId() {
         return id;
     }

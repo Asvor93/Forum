@@ -296,22 +296,21 @@ public class FirebaseImpl implements IDataAccess {
     @Override
     public void editCategory(final Map<String, Object> category, final String id, final IONCategoryResult callback) {
         db.collection("categories").document(id)
-                .set(category, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
+                .set(category, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Something went wrong, got error: " + e.getMessage());
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                String newCategoryName = category.get("categoryName").toString();
-                String newDescription = category.get("Description").toString();
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    String newCategoryName = category.get("categoryName").toString();
+                    String newDescription = category.get("description").toString();
 
-                Category updatedCategory = new Category(newCategoryName, newDescription);
+                    Category updatedCategory = new Category(newCategoryName, newDescription);
 
-                updatedCategory.setUid(id);
-                callback.onResult(updatedCategory);
-                Log.d(TAG, "Successfully updated the category");
+                    updatedCategory.setUid(id);
+                    callback.onResult(updatedCategory);
+                    Log.d(TAG, "Successfully updated the category");
+                } else {
+                    Log.d(TAG, "Failed to update category with message: " + task.getException());
+                }
             }
         });
     }

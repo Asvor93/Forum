@@ -59,7 +59,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String catUid = categoryList.get(position).getUid();
-                Intent topicIntent = new Intent();
+                Intent topicIntent = new Intent(CategoryActivity.this, TopicActivity.class);
                 topicIntent.putExtra("catId", catUid);
                 startActivity(topicIntent);
             }
