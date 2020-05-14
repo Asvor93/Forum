@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.example.forum.R;
 
 import dk.easv.ATForum.Posts.CategoryActivity;
+import dk.easv.ATForum.Posts.CreateCategoryActivity;
 import dk.easv.ATForum.Users.AdminActivity;
 import dk.easv.ATForum.Users.LoginActivity;
 import dk.easv.ATForum.Users.ProfileActivity;
@@ -159,9 +160,9 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(categoryIntent);
                 return true;
             case R.id.createCatMenu:
-                //Intent createCatIntent = new Intent(this, PostActivity.class);
-                //startActivity(createCatIntent);
-                //return true;
+                Intent createCatIntent = new Intent(this, CreateCategoryActivity.class);
+                startActivity(createCatIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
