@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.example.forum.R;
 
 import Posts.PostActivity;
+import dk.easv.ATForum.Users.AdminActivity;
 import dk.easv.ATForum.Users.LoginActivity;
 import dk.easv.ATForum.Users.ProfileActivity;
 import dk.easv.ATForum.Users.SignUpActivity;
@@ -22,8 +23,8 @@ import dk.easv.ATForum.Models.User;
 
 public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "XYZ";
-    static User currentUser;
-    static Role role;
+    public static User currentUser;
+    public static Role role;
     IDataAccess dataAccess;
     public MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem, createCatMenuItem;
 

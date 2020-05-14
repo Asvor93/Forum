@@ -1,4 +1,4 @@
-package dk.easv.ATForum;
+package dk.easv.ATForum.Users;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +12,9 @@ import com.example.forum.R;
 
 import java.util.List;
 
+import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Adapters.UserAdapter;

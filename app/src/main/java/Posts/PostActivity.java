@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.forum.R;
 
-import dk.easv.ATForum.CategoryFragment;
+
 import dk.easv.ATForum.MenuActivity;
 
 public class PostActivity extends MenuActivity {

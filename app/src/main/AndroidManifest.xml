@@ -9,13 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="dk.easv.ATForum.PostActivity"></activity>
-        <activity android:name="dk.easv.ATForum.CategoryFragment" />
         <activity android:name="dk.easv.ATForum.MenuActivity" />
-        <activity android:name="dk.easv.ATForum.AdminActivity" />
-        <activity android:name="dk.easv.ATForum.ProfileActivity" />
+        <activity android:name="dk.easv.ATForum.Users.AdminActivity" />
+        <activity android:name="dk.easv.ATForum.Users.ProfileActivity" />
         <activity android:name="dk.easv.ATForum.Users.SignUpActivity" />
-        <activity android:name="dk.easv.ATForum.LoginActivity" />
+        <activity android:name="dk.easv.ATForum.Users.LoginActivity" />
         <activity android:name="dk.easv.ATForum.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
