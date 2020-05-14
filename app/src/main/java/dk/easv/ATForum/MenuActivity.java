@@ -12,9 +12,10 @@ import android.view.MenuItem;
 
 import com.example.forum.R;
 
-import Users.LoginActivity;
-import Users.ProfileActivity;
-import Users.SignUpActivity;
+import Posts.PostActivity;
+import dk.easv.ATForum.Users.LoginActivity;
+import dk.easv.ATForum.Users.ProfileActivity;
+import dk.easv.ATForum.Users.SignUpActivity;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;

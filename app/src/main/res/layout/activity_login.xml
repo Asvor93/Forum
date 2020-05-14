@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Users.LoginActivity">
+    tools:context="dk.easv.ATForum.Users.LoginActivity">
     <EditText
         android:layout_centerInParent="true"
         android:id="@+id/txtEmail"
