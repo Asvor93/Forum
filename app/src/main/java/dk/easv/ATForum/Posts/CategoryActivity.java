@@ -34,12 +34,14 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        categoryListView = findViewById(R.id.catList);
+
         role = (Role) getIntent().getSerializableExtra("role");
         Log.d(TAG, "onCreateView: " + role);
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
         dataAccess = DataAccessFactory.getInstance();
-        categoryListView = findViewById(R.id.listUsers);
+
         dataAccess.getAllCategories(new IDataAccess.IONCategoriesResult() {
             @Override
             public void onResult(List<Category> categories) {
