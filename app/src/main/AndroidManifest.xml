@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="dk.easv.ATForum.Posts.CategoryActivity"></activity>
-        <activity android:name="dk.easv.ATForum.PostActivity" />
         <activity android:name="dk.easv.ATForum.MenuActivity" />
         <activity android:name="dk.easv.ATForum.Users.AdminActivity" />
         <activity android:name="dk.easv.ATForum.Users.ProfileActivity" />
