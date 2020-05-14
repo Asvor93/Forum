@@ -1,4 +1,4 @@
-package dk.easv.ATForum;
+package Users;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;

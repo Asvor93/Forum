@@ -15,7 +15,7 @@ import java.util.List;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
-import dk.easv.ATForum.Models.UserAdapter;
+import dk.easv.ATForum.Adapters.UserAdapter;
 
 public class AdminActivity extends MenuActivity {
 

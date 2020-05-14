@@ -1,7 +1,10 @@
-package dk.easv.ATForum;
+package Posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.forum.R;
@@ -9,6 +12,16 @@ import com.example.forum.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import dk.easv.ATForum.DataAccessFactory;
+import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.Models.Category;
 
 
 /**
@@ -21,6 +34,9 @@ public class CreateCategoryFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    IDataAccess dataAccess;
+    EditText txtCatName, txtCatDescription;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -55,6 +71,7 @@ public class CreateCategoryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dataAccess = DataAccessFactory.getInstance();
     }
 
     @Override
@@ -62,5 +79,37 @@ public class CreateCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_category, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        txtCatName = view.findViewById(R.id.etNewCatName);
+        txtCatDescription = view.findViewById(R.id.etNewCatDescription);
+
+        Button btnSubmit = view.findViewById(R.id.submitNewCat);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createCategory();
+            }
+        });
+    }
+
+    private void createCategory() {
+        final String catNameString = txtCatName.getText().toString();
+        final String catDescriptionString = txtCatDescription.getText().toString();
+
+        Map<String, Object> category = new HashMap<>();
+        category.put("categoryName", catNameString);
+        category.put("description", catDescriptionString);
+
+        dataAccess.createCategory(category, new IDataAccess.IONCategoryResult() {
+            @Override
+            public void onResult(Category category) {
+
+            }
+
+        });
+
     }
 }
