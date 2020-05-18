@@ -53,7 +53,7 @@ public class CreateCommentActivity extends MenuActivity {
         comment.put("message", commentString);
         comment.put("author", currentUser);
         comment.put("topicId", topicId);
-        comment.put("timestamp", null);
+        comment.put("timestamp", FieldValue.serverTimestamp());
 
         dataAccess.createComment(comment, new IDataAccess.IOnResult<Comment>() {
             @Override
