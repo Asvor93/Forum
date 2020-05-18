@@ -4,8 +4,10 @@ package dk.easv.ATForum.Posts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.forum.R;
 
@@ -39,6 +41,20 @@ public class CommentActivity extends MenuActivity {
                 commentList = comments;
                 commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments);
                 commentListView.setAdapter(commentAdapter);
+            }
+        });
+
+        commentListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                commentListView.setLongClickable(true);
+                Comment comment = commentList.get(position);
+                String uid = comment.getId();
+                
+                dataAccess.deleteComment(uid);
+                Toast.makeText(CommentActivity.this, "Deleted comment with id: " + uid, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 

@@ -52,6 +52,10 @@ public interface IDataAccess {
 
     void createComment(final Map<String, Object> comment, final IOnResult<Comment> callback);
 
+    void editComment(final Map<String, Object> comment, String id, final IOnResult<Comment> callback);
+
+    void deleteComment(String id);
+
     interface IOnResult<T> {
         void onResult(T comments);
     }
