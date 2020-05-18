@@ -389,6 +389,28 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
+    public void updateTopic(final Map<String, Object> topic, final String id, final IONTopicResult callback) {
+        db.collection("topics").document(id)
+                .set(topic, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    String updateTopicName = topic.get("categoryName").toString();
+                    String updateDescription = topic.get("description").toString();
+
+                    Topic updatedTopic = new Topic(updateTopicName, updateDescription);
+
+                    updatedTopic.setId(id);
+                    callback.onResult(updatedTopic);
+                    Log.d(TAG, "Successfully updated the topic");
+                } else {
+                    Log.d(TAG, "Failed to update topic with message: " + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
     public void getComments(String id, final IONCommentsResult callback) {
         db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

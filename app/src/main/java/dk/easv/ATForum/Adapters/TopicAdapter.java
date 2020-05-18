@@ -1,6 +1,8 @@
 package dk.easv.ATForum.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +20,17 @@ import com.example.forum.R;
 import java.util.List;
 ;
 import dk.easv.ATForum.Models.Topic;
+import dk.easv.ATForum.Posts.EditCategoryActivity;
+import dk.easv.ATForum.Posts.EditTopicActivity;
 
 public class TopicAdapter extends ArrayAdapter<Topic> {
     private List<Topic> topicList;
+    private Context context;
 
     public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics) {
         super(context, resource, topics);
         topicList = topics;
+        this.context = context;
     }
 
     @NonNull
@@ -45,10 +51,21 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
-        Topic topic = topicList.get(position);
-        holder.txtAuthorName.setText(topic.getAuthor().getUsername());
-        holder.txtTopicDesc.setText(topic.getDescription());
-        holder.txtTopicName.setText(topic.getTopicName());
+        final Topic topicToEdit = topicList.get(position);
+        holder.txtAuthorName.setText(topicToEdit.getAuthor().getUsername());
+        holder.txtTopicDesc.setText(topicToEdit.getDescription());
+        holder.txtTopicName.setText(topicToEdit.getTopicName());
+
+        Button editButton = view.findViewById(R.id.goToEditTopic);
+        editButton.setFocusable(false);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditTopicActivity.class);
+                intent.putExtra("topic", topicToEdit);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 

@@ -2,6 +2,7 @@ package dk.easv.ATForum.Posts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -21,6 +22,7 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class TopicActivity extends MenuActivity {
+    private static final String TAG = "XYZ";
     private IDataAccess dataAccess;
     private TopicAdapter topicAdapter;
     private List<Topic> topicList;
@@ -41,8 +43,10 @@ public class TopicActivity extends MenuActivity {
                 topicList = topics;
                 topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList);
                 topicListView.setAdapter(topicAdapter);
+                Log.d(TAG, "onResult: " + topicList);
             }
         });
+
 
         Button btnCreateTopic = findViewById(R.id.createTopic);
         btnCreateTopic.setOnClickListener(new View.OnClickListener() {

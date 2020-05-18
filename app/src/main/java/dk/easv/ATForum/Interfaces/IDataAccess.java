@@ -46,6 +46,8 @@ public interface IDataAccess {
 
     void deleteTopic(String id);
 
+    void updateTopic(final Map<String, Object> topic, String id, final IONTopicResult callback);
+
     void getComments(String id, IONCommentsResult callback);
 
     interface IONCommentsResult {

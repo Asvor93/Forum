@@ -1,8 +1,9 @@
 package dk.easv.ATForum.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Topic {
+public class Topic implements Serializable {
     private String id;
     private String topicName;
     private String description;
@@ -23,6 +24,11 @@ public class Topic {
         this.description = description;
         this.author = author;
         this.categoryId = categoryId;
+    }
+
+    public Topic(String topicName, String description) {
+        this.topicName = topicName;
+        this.description = description;
     }
 
     public void setCategoryId(String categoryId) {
@@ -74,5 +80,17 @@ public class Topic {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id='" + id + '\'' +
+                ", topicName='" + topicName + '\'' +
+                ", description='" + description + '\'' +
+                ", author=" + author +
+                ", categoryId='" + categoryId + '\'' +
+                ", comments=" + comments +
+                '}';
     }
 }
