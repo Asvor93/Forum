@@ -423,6 +423,7 @@ public class FirebaseImpl implements IDataAccess {
                     if (!docs.isEmpty()) {
                         for (int i = 0; i < docs.size(); i++) {
                             Comment comment = docs.get(i).toObject(Comment.class);
+                            comment.setId(docs.get(i).getId());
                             topicComments.add(comment);
                         }
                     }
