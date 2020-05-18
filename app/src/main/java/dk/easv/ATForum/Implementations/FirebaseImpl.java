@@ -459,4 +459,25 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    @Override
+    public void editComment(final Map<String, Object> comment, final String id, final IOnResult<Comment> callback) {
+        db.collection("topics").document(id)
+                .set(comment, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    String editMessage = comment.get("message").toString();
+
+                    Comment updatedComment = new Comment(editMessage);
+
+                    updatedComment.setId(id);
+                    callback.onResult(updatedComment);
+                    Log.d(TAG, "Successfully updated the comment");
+                } else {
+                    Log.d(TAG, "Failed to update message with message: " + task.getException());
+                }
+            }
+        });
+    }
+
 }

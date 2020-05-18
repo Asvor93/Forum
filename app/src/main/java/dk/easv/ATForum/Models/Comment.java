@@ -13,6 +13,10 @@ public class Comment {
     public Comment() {
     }
 
+    public Comment(String message) {
+        this.message = message;
+    }
+
     public Comment(String message, User author) {
         this.message = message;
         this.author = author;
