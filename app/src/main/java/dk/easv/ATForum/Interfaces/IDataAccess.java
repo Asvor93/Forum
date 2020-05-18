@@ -54,6 +54,8 @@ public interface IDataAccess {
 
     void editComment(final Map<String, Object> comment, String id, final IOnResult<Comment> callback);
 
+    void deleteComment(String id);
+
     interface IOnResult<T> {
         void onResult(T comments);
     }
