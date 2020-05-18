@@ -18,6 +18,8 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Comment;
+import dk.easv.ATForum.Posts.EditCommentActivity;
+import dk.easv.ATForum.Posts.EditTopicActivity;
 
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
@@ -27,6 +29,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments) {
         super(context, resource, comments);
         commentList = comments;
+        this.context = context;
     }
 
 
@@ -52,6 +55,14 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             txtTimestamp.setText(comment.getTimestamp().toString());
         }
         Button editButton = view.findViewById(R.id.btnSubmit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditCommentActivity.class);
+                intent.putExtra("comment", comment);
+                context.startActivity(intent);
+            }
+        });
         editButton.setFocusable(false);
 
         return view;

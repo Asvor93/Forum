@@ -10,16 +10,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.forum.R;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Comment;
 import dk.easv.ATForum.Models.Topic;
 
-public class EditCommentActivity extends AppCompatActivity {
+public class EditCommentActivity extends MenuActivity {
 
     IDataAccess dataAccess;
     EditText txtMessage;
@@ -48,15 +50,16 @@ public class EditCommentActivity extends AppCompatActivity {
     private void editComment() {
         final String messageString = txtMessage.getText().toString();
 
-        Map<String, Object> topicMap = new HashMap<>();
-        topicMap.put("message", messageString);
+        Map<String, Object> commentMap = new HashMap<>();
+        commentMap.put("message", messageString);
+        commentMap.put("timestamp", FieldValue.serverTimestamp());
 
         final String id = comment.getId();
         Log.d("XYZ", "editComment: " + id);
 
-        dataAccess.updateTopic(topicMap, id, new IDataAccess.IOnResult<Topic>() {
+        dataAccess.editComment(commentMap, id, new IDataAccess.IOnResult<Comment>() {
             @Override
-            public void onResult(Topic topic) {
+            public void onResult(Comment comment) {
                 Toast.makeText(EditCommentActivity.this, "Comment successfully updated", Toast.LENGTH_LONG).show();
                 finish();
             }

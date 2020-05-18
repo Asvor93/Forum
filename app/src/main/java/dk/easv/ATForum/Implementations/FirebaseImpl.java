@@ -462,7 +462,7 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void editComment(final Map<String, Object> comment, final String id, final IOnResult<Comment> callback) {
-        db.collection("topics").document(id)
+        db.collection("comments").document(id)
                 .set(comment, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
