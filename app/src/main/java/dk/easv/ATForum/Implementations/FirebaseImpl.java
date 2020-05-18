@@ -435,4 +435,27 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    @Override
+    public void createComment(final Map<String, Object> comment, final IOnResult<Comment> callback) {
+        db.collection("comments").add(comment).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    String commentMessageString = comment.get("message").toString();
+                    User commentAuthor = (User) comment.get("author");
+                    String topicId = comment.get("topicId").toString();
+
+                    String commentId = task.getResult().getId();
+
+                    Comment newComment = new Comment(commentMessageString, commentAuthor, topicId);
+                    newComment.setId(commentId);
+
+                    callback.onResult(newComment);
+                } else {
+                    Log.d(TAG, "Failed to create a new comment with message: \n" + task.getException());
+                }
+            }
+        });
+    }
+
 }

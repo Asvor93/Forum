@@ -1,7 +1,10 @@
 package dk.easv.ATForum.Posts;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.forum.R;
@@ -39,9 +42,22 @@ public class CommentActivity extends MenuActivity {
             }
         });
 
+        Button btnGoToCreateComment = findViewById(R.id.createComment);
+        btnGoToCreateComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCreateComment();
+            }
+        });
+    }
+
+    private void goToCreateComment() {
+        Intent createCommentIntent = new Intent(CommentActivity.this, CreateCommentActivity.class);
+        createCommentIntent.putExtra("topicId", topicId);
+        startActivity(createCommentIntent);
     }
 
     private void GetExtras() {
-        topicId = getIntent().getStringExtra("topicUid");
+        topicId = getIntent().getStringExtra("topicId");
     }
 }

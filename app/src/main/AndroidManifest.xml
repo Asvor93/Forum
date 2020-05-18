@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="dk.easv.ATForum.Posts.EditTopicActivity"></activity>
+        <activity android:name="dk.easv.ATForum.Posts.CreateCommentActivity"></activity>
+        <activity android:name="dk.easv.ATForum.Posts.EditTopicActivity" />
         <activity android:name="dk.easv.ATForum.Posts.CreateTopicActivity" />
         <activity android:name="dk.easv.ATForum.Posts.CommentActivity" />
         <activity android:name="dk.easv.ATForum.Posts.TopicActivity" />

@@ -18,6 +18,12 @@ public class Comment {
         this.author = author;
     }
 
+    public Comment(String message, User author, String topicId) {
+        this.message = message;
+        this.author = author;
+        this.topicId = topicId;
+    }
+
     public String getId() {
         return id;
     }

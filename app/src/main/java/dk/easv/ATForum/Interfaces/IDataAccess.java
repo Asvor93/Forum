@@ -50,6 +50,8 @@ public interface IDataAccess {
 
     void getComments(String id, IOnResult<List<Comment>> callback);
 
+    void createComment(final Map<String, Object> comment, final IOnResult<Comment> callback);
+
     interface IOnResult<T> {
         void onResult(T comments);
     }
