@@ -385,7 +385,8 @@ public class FirebaseImpl implements IDataAccess {
                     Log.d(TAG, "delete topic failed" + task.getException());
 				}
 			}
-		}
+		});
+    }
 
     public void getComments(String id, final IONCommentsResult callback) {
         db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

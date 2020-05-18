@@ -8,12 +8,12 @@ import com.example.forum.R;
 
 import java.util.List;
 
-import dk.easv.ATForum.Adapters.TopicAdapter;
+import dk.easv.ATForum.Adapters.CommentAdapter;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Models.Topic;
+
 
 public class CommentActivity extends MenuActivity {
     private String topicId;
@@ -34,7 +34,8 @@ public class CommentActivity extends MenuActivity {
             @Override
             public void onResult(List<Comment> comments) {
                 commentList = comments;
-                
+                commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments);
+                commentListView.setAdapter(commentAdapter);
             }
         });
 
