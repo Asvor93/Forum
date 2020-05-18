@@ -30,7 +30,7 @@ public class CommentActivity extends MenuActivity {
         commentListView = findViewById(R.id.comList);
         GetExtras();
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getComments(topicId, new IDataAccess.IONCommentsResult() {
+        dataAccess.getComments(topicId, new IDataAccess.IOnResult<List<Comment>>() {
             @Override
             public void onResult(List<Comment> comments) {
                 commentList = comments;

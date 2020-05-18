@@ -40,7 +40,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void createUser(final Map<String, Object> user, String password, final IONUserResult callback) {
+    public void createUser(final Map<String, Object> user, String password, final IOnResult<User> callback) {
         final String emailString = user.get("email").toString();
         final String nameString = user.get("name").toString();
         final String usernameString = user.get("username").toString();
@@ -76,7 +76,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllUsers(final String uid, final IONUsersResult callback) {
+    public void getAllUsers(final String uid, final IOnResult<List<User>> callback) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -99,7 +99,7 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void updateUser(final Map<String, Object> user, final String uid,
-                           final IONUserResult callback) {
+                           final IOnResult<User> callback) {
         db.collection("users").document(uid)
                 .set(user, SetOptions.merge()).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -136,7 +136,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void createRole(Map<String, Object> role, final String uid, final IONRoleResult callback) {
+    public void createRole(Map<String, Object> role, final String uid, final IOnResult<Role> callback) {
         db.collection("roles").document(uid).set(role).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -152,7 +152,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllRoles(final IONRolesResult callback) {
+    public void getAllRoles(final IOnResult<List<Role>> callback) {
 
         db.collection("roles").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -173,7 +173,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void login(String email, String password, final IONUserResult callback) {
+    public void login(String email, String password, final IOnResult<User> callback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -211,7 +211,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getRole(final String uid, final IONRoleResult callback) {
+    public void getRole(final String uid, final IOnResult<Role> callback) {
         db.collection("roles")
                 .document(uid).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -239,7 +239,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getAllCategories(final IONCategoriesResult callback) {
+    public void getAllCategories(final IOnResult<List<Category>> callback) {
         db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -274,7 +274,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void createCategory(final Map<String, Object> category, final IONCategoryResult callback) {
+    public void createCategory(final Map<String, Object> category, final IOnResult<Category> callback) {
         db.collection("categories").add(category).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -295,7 +295,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void editCategory(final Map<String, Object> category, final String id, final IONCategoryResult callback) {
+    public void editCategory(final Map<String, Object> category, final String id, final IOnResult<Category> callback) {
         db.collection("categories").document(id)
                 .set(category, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -322,7 +322,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getTopics(String id, final IONTopicsResult callback) {
+    public void getTopics(String id, final IOnResult<List<Topic>> callback) {
         db.collection("topics").whereEqualTo("categoryId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -346,12 +346,12 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getTopic(String id, IONTopicResult callback) {
+    public void getTopic(String id, IOnResult<Topic> callback) {
 
     }
 
     @Override
-    public void createTopic(final Map<String, Object> topic, final IONTopicResult callback) {
+    public void createTopic(final Map<String, Object> topic, final IOnResult<Topic> callback) {
         db.collection("topics").add(topic).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -389,7 +389,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void getComments(String id, final IONCommentsResult callback) {
+    public void getComments(String id, final IOnResult<List<Comment>> callback) {
         db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

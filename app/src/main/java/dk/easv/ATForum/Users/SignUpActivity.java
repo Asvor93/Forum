@@ -111,7 +111,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.put("name", nameString);
             user.put("username", usernameString);
             user.put("photoURL", url);
-            dataAccess.createUser(user, passwordString, new IDataAccess.IONUserResult() {
+            dataAccess.createUser(user, passwordString, new IDataAccess.IOnResult<User>() {
                 @Override
                 public void onResult(User user) {
                     final Intent result = new Intent();
@@ -120,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Map<String, Object> role = new HashMap<>();
                     role.put("roleName", "user");
 
-                    dataAccess.createRole(role, user.getUid(), new IDataAccess.IONRoleResult() {
+                    dataAccess.createRole(role, user.getUid(), new IDataAccess.IOnResult<Role>() {
                         @Override
                         public void onResult(Role role) {
                             result.putExtra("role", role);

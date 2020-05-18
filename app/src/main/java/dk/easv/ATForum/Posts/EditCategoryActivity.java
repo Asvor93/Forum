@@ -64,7 +64,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
         final String id = category.getUid();
 
-        dataAccess.editCategory(mapCategory, id, new IDataAccess.IONCategoryResult() {
+        dataAccess.editCategory(mapCategory, id, new IDataAccess.IOnResult<Category>() {
             @Override
             public void onResult(Category category) {
                 Toast.makeText(EditCategoryActivity.this, "Category successfully updated", Toast.LENGTH_LONG).show();

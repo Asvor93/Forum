@@ -52,7 +52,7 @@ public class CreateTopicActivity extends MenuActivity {
         topic.put("author", currentUser);
         topic.put("categoryId", catId);
 
-        dataAccess.createTopic(topic, new IDataAccess.IONTopicResult() {
+        dataAccess.createTopic(topic, new IDataAccess.IOnResult<Topic>() {
             @Override
             public void onResult(Topic topic) {
                 finish();

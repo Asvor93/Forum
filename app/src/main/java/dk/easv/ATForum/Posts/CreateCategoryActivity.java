@@ -54,7 +54,7 @@ public class CreateCategoryActivity extends MenuActivity {
         category.put("categoryName", catNameString);
         category.put("description", catDescriptionString);
 
-        dataAccess.createCategory(category, new IDataAccess.IONCategoryResult() {
+        dataAccess.createCategory(category, new IDataAccess.IOnResult<Category>() {
             @Override
             public void onResult(Category category) {
                 finish();
