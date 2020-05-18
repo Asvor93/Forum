@@ -43,8 +43,8 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         }
 
         final Comment comment = commentList.get(position);
-        TextView txtCommentHeader = view.findViewById(R.id.tvCommentHeader);
-        txtCommentHeader.setText(comment.getHeader());
+        // Need to add author bits
+        
         TextView txtMessage = view.findViewById(R.id.tvCommentMessage);
         txtMessage.setText(comment.getMessage());
 

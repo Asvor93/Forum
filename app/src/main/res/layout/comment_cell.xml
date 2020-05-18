@@ -3,15 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tvCommentHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/ivUserPicture"/>
-    <TextView
         android:id="@+id/tvCommentMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCommentHeader"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivUserPicture"/>
     <ImageView
         android:id="@+id/ivUserPicture"

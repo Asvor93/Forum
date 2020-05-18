@@ -1,18 +1,20 @@
 package dk.easv.ATForum.Models;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
 public class Comment {
     private String id;
     private String message;
-    private String header;
     private User author;
     private String topicId;
-
+    @ServerTimestamp Date timestamp;
     public Comment() {
     }
 
-    public Comment(String message, String header, User author) {
+    public Comment(String message, User author) {
         this.message = message;
-        this.header = header;
         this.author = author;
     }
 
@@ -32,12 +34,12 @@ public class Comment {
         this.message = message;
     }
 
-    public String getHeader() {
-        return header;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public User getAuthor() {
