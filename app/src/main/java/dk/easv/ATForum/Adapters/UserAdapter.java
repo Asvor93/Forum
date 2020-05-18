@@ -73,7 +73,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                     public void onClick(View v) {
                         Map<String, Object> role = new HashMap<>();
                         role.put("roleName", "user");
-                        dataAccess.createRole(role, uid, new IDataAccess.IONRoleResult() {
+                        dataAccess.createRole(role, uid, new IDataAccess.IOnResult<Role>() {
                             @Override
                             public void onResult(Role role) {
                                 role.setRoleName(role.getRoleName());
@@ -90,7 +90,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                     public void onClick(View v) {
                         Map<String, Object> role = new HashMap<>();
                         role.put("roleName", "admin");
-                        dataAccess.createRole(role, uid, new IDataAccess.IONRoleResult() {
+                        dataAccess.createRole(role, uid, new IDataAccess.IOnResult<Role>() {
                             @Override
                             public void onResult(Role role) {
                                 role.setRoleName(role.getRoleName());

@@ -37,7 +37,7 @@ public class TopicActivity extends MenuActivity {
         topicListView = findViewById(R.id.list);
 
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getTopics(catId, new IDataAccess.IONTopicsResult() {
+        dataAccess.getTopics(catId, new IDataAccess.IOnResult<List<Topic>>() {
             @Override
             public void onResult(List<Topic> topics) {
                 topicList = topics;

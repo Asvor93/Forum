@@ -47,7 +47,7 @@ public class CategoryActivity extends MenuActivity {
 
         dataAccess = DataAccessFactory.getInstance();
 
-        dataAccess.getAllCategories(new IDataAccess.IONCategoriesResult() {
+        dataAccess.getAllCategories(new IDataAccess.IOnResult<List<Category>>() {
             @Override
             public void onResult(List<Category> categories) {
                 categoryList = categories;

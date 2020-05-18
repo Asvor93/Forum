@@ -38,13 +38,13 @@ public class AdminActivity extends MenuActivity {
 
         //get All users
         dataAccess = DataAccessFactory.getInstance();
-        dataAccess.getAllUsers(currentUser.getUid(), new IDataAccess.IONUsersResult() {
+        dataAccess.getAllUsers(currentUser.getUid(), new IDataAccess.IOnResult<List<User>>() {
             @Override
             public void onResult(List<User> users) {
                 userList = users;
 
                 //get All roles
-                dataAccess.getAllRoles(new IDataAccess.IONRolesResult() {
+                dataAccess.getAllRoles(new IDataAccess.IOnResult<List<Role>>() {
                     @Override
                     public void onResult(List<Role> roles) {
                         roleList = roles;

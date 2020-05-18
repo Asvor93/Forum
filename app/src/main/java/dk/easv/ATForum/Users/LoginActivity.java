@@ -62,13 +62,13 @@ public class LoginActivity extends AppCompatActivity {
         String emailString = loginEmail.getText().toString();
         String passwordString = loginPassword.getText().toString();
 
-        dataAccess.login(emailString, passwordString, new IDataAccess.IONUserResult() {
+        dataAccess.login(emailString, passwordString, new IDataAccess.IOnResult<User>() {
             @Override
             public void onResult(User user) {
                 final Intent result = new Intent();
                 result.putExtra("currentUser", user);
 
-                dataAccess.getRole(user.getUid(), new IDataAccess.IONRoleResult() {
+                dataAccess.getRole(user.getUid(), new IDataAccess.IOnResult<Role>() {
                     @Override
                     public void onResult(Role role) {
                         result.putExtra("role", role);

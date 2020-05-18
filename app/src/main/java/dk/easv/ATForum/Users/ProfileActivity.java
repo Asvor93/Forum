@@ -115,7 +115,7 @@ public class ProfileActivity extends MenuActivity {
         updatedUser.put("username", newUsername);
         updatedUser.put("photoURL", url);
         final String uid = user.getUid();
-        dataAccess.updateUser(updatedUser, uid, new IDataAccess.IONUserResult() {
+        dataAccess.updateUser(updatedUser, uid, new IDataAccess.IOnResult<User>() {
             @Override
             public void onResult(User user) {
                 Intent editResult = new Intent();
