@@ -1,12 +1,14 @@
 package dk.easv.ATForum.Models;
 
+import java.util.List;
+
 public class Topic {
     private String id;
     private String topicName;
     private String description;
     private User author;
     private String categoryId;
-    private Comment[] comments;
+    private List<Comment> comments;
 
     public Topic(String id, String topicName, String description, User author, String categoryId) {
         this.id = id;
@@ -14,6 +16,14 @@ public class Topic {
         this.description = description;
         this.author = author;
         this.categoryId = categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Topic() {
@@ -51,11 +61,11 @@ public class Topic {
         this.author = author;
     }
 
-    public Comment[] getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Comment[] comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 }

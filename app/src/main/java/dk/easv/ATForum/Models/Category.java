@@ -12,6 +12,14 @@ public class Category implements Serializable {
     public Category() {
     }
 
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getUid() {
         return uid;
     }

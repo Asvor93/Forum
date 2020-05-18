@@ -30,7 +30,6 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        super.getView(position, view, parent);
         ViewHolder holder;;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
