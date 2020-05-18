@@ -251,7 +251,9 @@ public class FirebaseImpl implements IDataAccess {
                         categories.add(category);
 
                     }
-                    callback.onResult(categories);
+                    if (!categories.isEmpty()) {
+                        callback.onResult(categories);
+                    }
                 } else {
                     Log.d(TAG, "get categories failed " + task.getException());
                 }
@@ -384,9 +386,9 @@ public class FirebaseImpl implements IDataAccess {
                     Log.d(TAG, "topic deleted ");
                 } else {
                     Log.d(TAG, "delete topic failed" + task.getException());
-				}
-			}
-		});
+                }
+            }
+        });
     }
 
     @Override
@@ -445,7 +447,6 @@ public class FirebaseImpl implements IDataAccess {
                     String commentMessageString = comment.get("message").toString();
                     User commentAuthor = (User) comment.get("author");
                     String topicId = comment.get("topicId").toString();
-
                     String commentId = task.getResult().getId();
 
                     Comment newComment = new Comment(commentMessageString, commentAuthor, topicId);

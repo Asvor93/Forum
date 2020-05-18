@@ -8,12 +8,12 @@
         android:id="@+id/createComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create a comment here!"
+        android:text="@string/createComment"
         android:layout_alignParentTop="true"/>
     <ListView
         android:id="@+id/comList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_below="@+id/createComment">
     </ListView>
 </RelativeLayout>

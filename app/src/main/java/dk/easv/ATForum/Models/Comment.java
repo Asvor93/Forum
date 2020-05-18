@@ -1,15 +1,16 @@
 package dk.easv.ATForum.Models;
 
-import com.google.firebase.firestore.ServerTimestamp;
 
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+public class Comment implements Serializable {
     private String id;
     private String message;
     private User author;
     private String topicId;
-    @ServerTimestamp Date timestamp;
+    private Date timestamp;
     public Comment() {
     }
 
@@ -66,5 +67,16 @@ public class Comment {
 
     public void setTopicId(String topicId) {
         this.topicId = topicId;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id='" + id + '\'' +
+                ", message='" + message + '\'' +
+                ", author=" + author +
+                ", topicId='" + topicId + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

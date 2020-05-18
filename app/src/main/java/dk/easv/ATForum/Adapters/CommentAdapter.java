@@ -18,7 +18,7 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Posts.EditCategoryActivity;
+
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
     private List<Comment> commentList;
@@ -48,7 +48,9 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         TextView txtMessage = view.findViewById(R.id.tvCommentMessage);
         txtMessage.setText(comment.getMessage());
         TextView txtTimestamp = view.findViewById(R.id.tvTimestamp);
-        txtTimestamp.setText(comment.getTimestamp().toString());
+        if (comment.getTimestamp() != null) {
+            txtTimestamp.setText(comment.getTimestamp().toString());
+        }
         Button editButton = view.findViewById(R.id.btnSubmit);
         editButton.setFocusable(false);
 

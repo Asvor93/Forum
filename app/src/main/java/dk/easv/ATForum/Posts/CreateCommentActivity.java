@@ -1,11 +1,13 @@
 package dk.easv.ATForum.Posts;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.forum.R;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class CreateCommentActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_comment);
-
+        getExtras();
         dataAccess = DataAccessFactory.getInstance();
 
         txtComment = findViewById(R.id.etNewCommentMsg);
@@ -39,6 +41,11 @@ public class CreateCommentActivity extends MenuActivity {
         });
     }
 
+    private void getExtras() {
+        topicId = getIntent().getStringExtra("topicId");
+        Log.d("XYZ", "getExtras: " + topicId);
+    }
+
     private void createComment() {
         final String commentString = txtComment.getText().toString();
 
@@ -46,6 +53,7 @@ public class CreateCommentActivity extends MenuActivity {
         comment.put("message", commentString);
         comment.put("author", currentUser);
         comment.put("topicId", topicId);
+        comment.put("timestamp", FieldValue.serverTimestamp());
 
         dataAccess.createComment(comment, new IDataAccess.IOnResult<Comment>() {
             @Override
