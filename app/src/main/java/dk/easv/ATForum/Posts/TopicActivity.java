@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.Button;
+
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +53,16 @@ public class TopicActivity extends MenuActivity {
                 goToCreateTopic();
             }
         });
+		
+		topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String topicUid = topicList.get(position).getId();
+                Intent commentIntent = new Intent( TopicActivity.this, CommentActivity.class);
+                commentIntent.putExtra("topicUid", topicUid);
+                startActivity(commentIntent);
+            }
+        });
 
     }
 
@@ -57,8 +70,8 @@ public class TopicActivity extends MenuActivity {
         Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
         createTopicIntent.putExtra("catId", catId);
         startActivity(createTopicIntent);
-    }
-
+	}
+    
     private void GetExtras() {
         catId = getIntent().getStringExtra("catId");
     }

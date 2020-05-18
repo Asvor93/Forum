@@ -23,6 +23,7 @@ import java.util.Map;
 
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Models.Comment;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
@@ -329,7 +330,7 @@ public class FirebaseImpl implements IDataAccess {
                     List<DocumentSnapshot> docs = task.getResult().getDocuments();
                     List<Topic> catTopics = new ArrayList<>();
 
-                    if ( docs.size() > 0) {
+                    if (!docs.isEmpty()) {
                         for (int i = 0; i < docs.size(); i++) {
                             Topic topic = docs.get(i).toObject(Topic.class);
                             catTopics.add(topic);
@@ -382,6 +383,28 @@ public class FirebaseImpl implements IDataAccess {
                     Log.d(TAG, "topic deleted ");
                 } else {
                     Log.d(TAG, "delete topic failed" + task.getException());
+				}
+			}
+		}
+
+    public void getComments(String id, final IONCommentsResult callback) {
+        db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<DocumentSnapshot> docs = task.getResult().getDocuments();
+                    List<Comment> topicComments = new ArrayList<>();
+
+                    if (!docs.isEmpty()) {
+                        for (int i = 0; i < docs.size(); i++) {
+                            Comment comment = docs.get(i).toObject(Comment.class);
+                            topicComments.add(comment);
+                        }
+                    }
+                    callback.onResult(topicComments);
+                } else {
+                    Log.d(TAG, "Unable to get the comments from the specified topic, got error: \n"
+                            + task.getException());
                 }
             }
         });
