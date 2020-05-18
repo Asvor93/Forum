@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Models.Comment;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
@@ -40,6 +41,12 @@ public interface IDataAccess {
     void getTopics(String id, IONTopicsResult callback);
 
     void getTopic(String id, IONTopicResult callback);
+
+    void getComments(String id, IONCommentsResult callback);
+
+    interface IONCommentsResult {
+        void onResult(List<Comment> comments);
+    }
 
     interface IONTopicsResult {
         void onResult(List<Topic> topics);

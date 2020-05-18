@@ -2,7 +2,10 @@ package dk.easv.ATForum.Posts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.forum.R;
@@ -38,7 +41,15 @@ public class TopicActivity extends MenuActivity {
                 topicListView.setAdapter(topicAdapter);
             }
         });
-
+        topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String topicUid = topicList.get(position).getId();
+                Intent commentIntent = new Intent( TopicActivity.this, CommentActivity.class);
+                commentIntent.putExtra("topicUid", topicUid);
+                startActivity(commentIntent);
+            }
+        });
     }
 
     private void GetExtras() {
