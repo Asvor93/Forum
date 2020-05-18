@@ -53,7 +53,6 @@ public class CategoryActivity extends MenuActivity {
                 categoryList = categories;
                 categoryAdapter = new CategoryAdapter(CategoryActivity.this, R.layout.category_cell, categoryList);
                 categoryListView.setAdapter(categoryAdapter);
-                Log.d(TAG, "dk.easv.ATForum.Users: " + categoryList.get(0));
             }
         });
 

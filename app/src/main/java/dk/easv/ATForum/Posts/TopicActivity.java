@@ -61,7 +61,7 @@ public class TopicActivity extends MenuActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String topicUid = topicList.get(position).getId();
                 Intent commentIntent = new Intent( TopicActivity.this, CommentActivity.class);
-                commentIntent.putExtra("topicUid", topicUid);
+                commentIntent.putExtra("topicId", topicUid);
                 startActivity(commentIntent);
             }
         });
