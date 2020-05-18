@@ -7,6 +7,7 @@ import com.example.forum.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,12 +18,13 @@ import java.util.List;
 import dk.easv.ATForum.Adapters.CategoryAdapter;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends MenuActivity {
     private static final String TAG = "XYZ";
     private CategoryAdapter categoryAdapter;
     private List<Category> categoryList;
@@ -78,5 +80,13 @@ public class CategoryActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        categoryMenuItem.setVisible(false);
+        categoryMenuItem.setEnabled(false);
+        return true;
     }
 }
