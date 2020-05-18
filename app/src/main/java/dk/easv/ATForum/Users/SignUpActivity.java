@@ -70,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwordSignUp = findViewById(R.id.txtPasswordSignUp);
         passwordSignUp.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordSignUp.setHint("Password");
+        url = getString(R.string.defaultImageLink);
 
         Button btnConfirm = findViewById(R.id.btnConfirmSignUp);
         btnConfirm.setOnClickListener(new View.OnClickListener() {

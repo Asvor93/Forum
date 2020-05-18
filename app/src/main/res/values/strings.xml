@@ -16,5 +16,6 @@
     <string name="edit">Edit</string>
     <string name="topic_name">Topic Name</string>
     <string name="description">Description</string>
+    <string name="defaultImageLink"><![CDATA[https://firebasestorage.googleapis.com/v0/b/at-forum.appspot.com/o/images%2FDefaultImage%2Fqmark.jpg?alt=media&token=27aac01d-dcee-4b9f-be6c-e5db3bf623a2]]></string>
 
 </resources>
