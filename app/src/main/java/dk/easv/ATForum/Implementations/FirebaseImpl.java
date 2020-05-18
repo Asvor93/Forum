@@ -388,6 +388,7 @@ public class FirebaseImpl implements IDataAccess {
 		});
     }
 
+    @Override
     public void getComments(String id, final IONCommentsResult callback) {
         db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
