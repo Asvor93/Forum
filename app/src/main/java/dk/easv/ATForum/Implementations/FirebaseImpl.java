@@ -333,6 +333,7 @@ public class FirebaseImpl implements IDataAccess {
                     if (!docs.isEmpty()) {
                         for (int i = 0; i < docs.size(); i++) {
                             Topic topic = docs.get(i).toObject(Topic.class);
+                            topic.setId(docs.get(i).getId());
                             catTopics.add(topic);
                         }
                     }
@@ -395,7 +396,7 @@ public class FirebaseImpl implements IDataAccess {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    String updateTopicName = topic.get("categoryName").toString();
+                    String updateTopicName = topic.get("topicName").toString();
                     String updateDescription = topic.get("description").toString();
 
                     Topic updatedTopic = new Topic(updateTopicName, updateDescription);
