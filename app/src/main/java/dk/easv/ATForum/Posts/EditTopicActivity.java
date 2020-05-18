@@ -54,14 +54,7 @@ public class EditTopicActivity extends MenuActivity {
         final String id = topic.getId();
         Log.d(TAG, "editTopic: " + id);
 
-        dataAccess.updateTopic(topicMap, id, new IDataAccess.IONTopicResult() {
-            @Override
-            public void onResult(Topic topic) {
-                finish();
-            }
-        });
-
-        dataAccess.updateTopic(topicMap, id, new IDataAccess.IONTopicResult() {
+        dataAccess.updateTopic(topicMap, id, new IDataAccess.IOnResult<Topic>() {
             @Override
             public void onResult(Topic topic) {
                 Toast.makeText(EditTopicActivity.this, "Topic successfully updated", Toast.LENGTH_LONG).show();

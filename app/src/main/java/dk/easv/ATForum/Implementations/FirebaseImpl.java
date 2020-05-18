@@ -389,7 +389,7 @@ public class FirebaseImpl implements IDataAccess {
     }
 
     @Override
-    public void updateTopic(final Map<String, Object> topic, final String id, final IONTopicResult callback) {
+    public void updateTopic(final Map<String, Object> topic, final String id, final IOnResult<Topic> callback) {
         db.collection("topics").document(id)
                 .set(topic, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
