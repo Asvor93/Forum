@@ -1,17 +1,13 @@
 package dk.easv.ATForum.Posts;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
 
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.forum.R;
@@ -22,11 +18,9 @@ import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.MenuActivity;
-import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Topic;
 
 public class TopicActivity extends MenuActivity {
-    private static final String TAG = "XYZ";
     private IDataAccess dataAccess;
     private TopicAdapter topicAdapter;
     private List<Topic> topicList;
@@ -74,9 +68,10 @@ public class TopicActivity extends MenuActivity {
                 topicListView.setLongClickable(true);
                 Topic topic = topicList.get(position);
                 String uid = topic.getId();
+                if (!role.getRoleName().equals("user")) {
                     dataAccess.deleteTopic(uid);
                     Toast.makeText(TopicActivity.this, "Deleted topic with id: " + uid, Toast.LENGTH_SHORT).show();
-
+                }
                 return true;
             }
         });
