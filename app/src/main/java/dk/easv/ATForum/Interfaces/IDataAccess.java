@@ -41,6 +41,10 @@ public interface IDataAccess {
 
     void getTopic(String id, IONTopicResult callback);
 
+    void createTopic(final Map<String, Object> topic, final IONTopicResult callback);
+
+    void deleteTopic(String id);
+
     interface IONTopicsResult {
         void onResult(List<Topic> topics);
     }

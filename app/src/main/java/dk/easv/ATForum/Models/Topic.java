@@ -18,6 +18,13 @@ public class Topic {
         this.categoryId = categoryId;
     }
 
+    public Topic(String topicName, String description, User author, String categoryId) {
+        this.topicName = topicName;
+        this.description = description;
+        this.author = author;
+        this.categoryId = categoryId;
+    }
+
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }

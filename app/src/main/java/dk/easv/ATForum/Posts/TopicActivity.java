@@ -2,8 +2,12 @@ package dk.easv.ATForum.Posts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.forum.R;
 
@@ -39,6 +43,20 @@ public class TopicActivity extends MenuActivity {
             }
         });
 
+        Button btnCreateTopic = findViewById(R.id.createTopic);
+        btnCreateTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCreateTopic();
+            }
+        });
+
+    }
+
+    private void goToCreateTopic() {
+        Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
+        createTopicIntent.putExtra("catId", catId);
+        startActivity(createTopicIntent);
     }
 
     private void GetExtras() {

@@ -6,10 +6,18 @@
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.Posts.TopicActivity">
 
+    <Button
+        android:id="@+id/createTopic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a topic here!"
+        android:layout_alignParentTop="true"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/createTopic"/>
 
 </RelativeLayout>

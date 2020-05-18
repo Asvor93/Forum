@@ -349,4 +349,42 @@ public class FirebaseImpl implements IDataAccess {
 
     }
 
+    @Override
+    public void createTopic(final Map<String, Object> topic, final IONTopicResult callback) {
+        db.collection("topics").add(topic).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    String topicNameString = topic.get("topicName").toString();
+                    String topicDescription = topic.get("description").toString();
+                    User topicAuthor = (User) topic.get("author");
+                    String categoryId = topic.get("categoryId").toString();
+
+                    String topicId = task.getResult().getId();
+
+                    Topic newTopic = new Topic(topicNameString, topicDescription, topicAuthor, categoryId);
+                    newTopic.setId(topicId);
+
+                    callback.onResult(newTopic);
+                } else {
+                    Log.d(TAG, "Failed to create a new topic with message: \n" + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteTopic(String id) {
+        db.collection("topics").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "topic deleted ");
+                } else {
+                    Log.d(TAG, "delete topic failed" + task.getException());
+                }
+            }
+        });
+    }
+
 }
