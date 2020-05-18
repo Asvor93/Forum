@@ -43,11 +43,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         }
 
         final Comment comment = commentList.get(position);
-        // Need to add author bits
+        TextView txtAuthorUsername = view.findViewById(R.id.tvUsername);
         
         TextView txtMessage = view.findViewById(R.id.tvCommentMessage);
         txtMessage.setText(comment.getMessage());
-
+        TextView txtTimestamp = view.findViewById(R.id.tvTimestamp);
+        txtTimestamp.setText(comment.getTimestamp().toString());
         Button editButton = view.findViewById(R.id.btnSubmit);
         editButton.setFocusable(false);
 
