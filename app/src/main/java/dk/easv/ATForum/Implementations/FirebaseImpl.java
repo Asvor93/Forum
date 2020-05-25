@@ -12,12 +12,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -362,9 +364,9 @@ public class FirebaseImpl implements IDataAccess {
                     List<Topic> favoriteTopics = new ArrayList<>();
                     String id = task.getResult().getId();
                     FavoriteTopic favTopic = task.getResult().toObject(FavoriteTopic.class);
-                    Log.d(TAG, "favTopic: " + favTopic);
-                    favTopic.setId(id);
 
+                    favTopic.setUid(id);
+                    Log.d(TAG, "favTopic: " + favTopic);
                     for (Topic topic : favTopic.getFavoriteTopics()) {
                         favoriteTopics.add(topic);
                     }
@@ -374,6 +376,36 @@ public class FirebaseImpl implements IDataAccess {
                     }
                 } else {
                     Log.d(TAG, "get favoriteTopics failed " + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteFavoriteTopic(String id, Topic topic) {
+        db.collection("favoriteTopics").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Favorite topic deleted ");
+                } else {
+                    Log.d(TAG, "delete favorite topic failed" + task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addFavoriteTopic(String userId, Topic topic) {
+        Map<String, Object> topicMap = new HashMap<>();
+        topicMap.put("favoriteTopics", FieldValue.arrayUnion(topic));
+        db.collection("favoriteTopics").document(userId).set(topicMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Favorite topic added ");
+                } else {
+                    Log.d(TAG, "add favorite topic failed" + task.getException());
                 }
             }
         });

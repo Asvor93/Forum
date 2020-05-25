@@ -45,6 +45,10 @@ public interface IDataAccess {
 
     void getFavoriteTopics(String id, IOnResult<List<Topic>> callback);
 
+    void deleteFavoriteTopic(String id, Topic topic);
+
+    void addFavoriteTopic(String userId, Topic topic);
+
     void createTopic(final Map<String, Object> topic, final IOnResult<Topic> callback);
 
     void deleteTopic(String id);

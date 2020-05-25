@@ -43,7 +43,7 @@ public class TopicActivity extends MenuActivity {
             @Override
             public void onResult(List<Topic> topics) {
                 topicList = topics;
-                topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList);
+                topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList, currentUser);
                 topicListView.setAdapter(topicAdapter);
                 Log.d(TAG, "onResult: " + topicList);
             }

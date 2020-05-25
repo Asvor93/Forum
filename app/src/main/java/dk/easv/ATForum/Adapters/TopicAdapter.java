@@ -19,23 +19,31 @@ import com.example.forum.R;
 
 import java.util.List;
 ;
+import dk.easv.ATForum.DataAccessFactory;
+import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Topic;
+import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditCategoryActivity;
 import dk.easv.ATForum.Posts.EditTopicActivity;
 
 public class TopicAdapter extends ArrayAdapter<Topic> {
+    private static final String TAG = "XYZ";
     private List<Topic> topicList;
     private Context context;
+    IDataAccess dataAccess;
+    User currentUser;
 
-    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics) {
+    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser) {
         super(context, resource, topics);
         topicList = topics;
         this.context = context;
+        dataAccess = DataAccessFactory.getInstance();
+        this.currentUser = currentUser;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View view, @NonNull ViewGroup parent) {
         ViewHolder holder;;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
@@ -66,6 +74,16 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
                 context.startActivity(intent);
             }
         });
+
+        Button btnAddToFavorites = view.findViewById(R.id.addFavoriteTopic);
+        btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataAccess.addFavoriteTopic(currentUser.getUid(), topicToEdit);
+                Log.d(TAG, "add to favorite: " + topicToEdit);
+            }
+        });
+
         return view;
     }
 

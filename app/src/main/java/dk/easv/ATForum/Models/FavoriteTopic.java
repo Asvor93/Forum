@@ -3,24 +3,24 @@ package dk.easv.ATForum.Models;
 import java.util.List;
 
 public class FavoriteTopic {
-    private String id;
+    private String uid;
 
     private List<Topic> favoriteTopics;
 
     public FavoriteTopic() {
     }
 
-    public FavoriteTopic(String id, List<Topic> topics) {
-        this.id = id;
+    public FavoriteTopic(String uid, List<Topic> topics) {
+        this.uid = uid;
         this.favoriteTopics = topics;
     }
 
-    public String getId() {
-        return id;
+    public String getUid() {
+        return uid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public List<Topic> getFavoriteTopics() {
@@ -34,7 +34,7 @@ public class FavoriteTopic {
     @Override
     public String toString() {
         return "FavoriteTopic{" +
-                "id='" + id + '\'' +
+                "id='" + uid + '\'' +
                 ", topics=" + favoriteTopics +
                 '}';
     }
