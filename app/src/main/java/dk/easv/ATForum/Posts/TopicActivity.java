@@ -45,7 +45,6 @@ public class TopicActivity extends MenuActivity {
                 topicList = topics;
                 topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList, currentUser);
                 topicListView.setAdapter(topicAdapter);
-                Log.d(TAG, "onResult: " + topicList);
             }
         });
 
