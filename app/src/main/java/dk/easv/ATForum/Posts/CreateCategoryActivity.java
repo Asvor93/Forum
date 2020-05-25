@@ -36,14 +36,6 @@ public class CreateCategoryActivity extends MenuActivity {
                 createCategory();
             }
         });
-
-        Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void createCategory() {

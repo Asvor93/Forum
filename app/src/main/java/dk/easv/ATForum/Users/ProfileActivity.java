@@ -87,15 +87,6 @@ public class ProfileActivity extends MenuActivity {
             }
         });
         setGUI();
-
-        Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(RESULT_CANCELED);
-                finish();
-            }
-        });
     }
 
     @Override

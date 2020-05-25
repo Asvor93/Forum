@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         android:text="@string/favorite_topics"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25dp"/>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/createTopic"
-        android:layout_alignBottom="@+id/header" />
+        android:layout_below="@+id/header"/>
 
     <include layout="@layout/footer"
         android:layout_alignParentBottom="true"

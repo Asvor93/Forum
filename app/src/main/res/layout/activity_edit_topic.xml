@@ -5,10 +5,21 @@
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.Posts.EditTopicActivity">
 
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_topic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginTop="45dp">
 
         <EditText
             android:id="@+id/etEditTopicName"
@@ -22,7 +33,9 @@
             android:id="@+id/etEditTopicDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/description"/>
+            android:autofillHints="Description"
+            android:inputType="text"
+            android:hint="@string/description"/>
         <Button
             android:id="@+id/submitEditTopic"
             android:layout_width="wrap_content"

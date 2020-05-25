@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Forum</string>
-    <string name="name">Name</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
-    <string name="login">Login</string>
     <string name="signUp">Sign Up</string>
     <string name="editProfile">Edit</string>
     <string name="submit">Ok</string>
@@ -13,12 +11,29 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="edit">Edit</string>
-    <string name="topic_name">Topic Name</string>
-    <string name="description">Description</string>
     <string name="defaultImageLink"><![CDATA[https://firebasestorage.googleapis.com/v0/b/at-forum.appspot.com/o/images%2FDefaultImage%2Fqmark.jpg?alt=media&token=27aac01d-dcee-4b9f-be6c-e5db3bf623a2]]></string>
     <string name="createComment">Create a comment here!</string>
     <string name="userImageDescription">UserImage</string>
     <string name="favorite_topics">Favorite Topics</string>
+    <string name="admin_page">Admin Page</string>
+    <string name="categories">Categories</string>
+    <string name="comments">Comments</string>
+    <string name="create_category">Create Category</string>
+    <string name="topic_name">Topic Name</string>
+    <string name="description">Description</string>
+    <string name="edit_category">Edit Category</string>
+    <string name="name">Name</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="message">Message</string>
+    <string name="edit_topic">Edit Topic</string>
+    <string name="login">Login</string>
+    <string name="profile">Profile</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_topic">Create Topic</string>
+    <string name="create_a_topic_here">Create a topic here!</string>
+    <string name="topics">Topics</string>
+    <string name="edit">Edit</string>
+    <string name="add_to_favorite">Add to Favorite</string>
+    <string name="password">Password</string>
 
 </resources>

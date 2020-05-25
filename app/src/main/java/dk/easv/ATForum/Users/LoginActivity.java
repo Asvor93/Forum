@@ -47,15 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
-        Button btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(RESULT_CANCELED);
-                finish();
-            }
-        });
     }
 
     private void login() {

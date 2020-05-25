@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.Posts.TopicActivity"
     android:background="@color/background_material_light">
 
-    <Button
-        android:id="@+id/createTopic"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create a topic here!"
-        android:layout_alignParentTop="true"/>
+        android:text="@string/topics"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/createTopic"/>
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/createTopic"/>
+
+    <Button
+        android:id="@+id/createTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_a_topic_here"
+        android:layout_above="@id/footer"/>
+
+    <include layout="@layout/footer"
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
 
 </RelativeLayout>

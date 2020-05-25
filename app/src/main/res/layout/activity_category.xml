@@ -6,11 +6,29 @@
     tools:context="dk.easv.ATForum.Posts.CategoryActivity"
     android:background="@color/background_material_light">
 
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/categories"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
+
     <ListView
         android:id="@+id/catList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_below="@id/header"
+        android:layout_above="@+id/footer">
     </ListView>
+
+    <include layout="@layout/footer"
+        android:id="@+id/footer"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
 
 </RelativeLayout>

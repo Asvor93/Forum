@@ -5,22 +5,35 @@
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.Posts.CreateTopicActivity">
 
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_topic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginTop="45dp">
 
         <EditText
             android:id="@+id/etNewTopicName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Topic Name"/>
+            android:inputType="text"
+            android:hint="@string/topic_name"/>
 
         <EditText
             android:id="@+id/etNewTopicDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"/>
+            android:inputType="text"
+            android:hint="@string/description"/>
         <Button
             android:id="@+id/submitNewTopic"
             android:layout_width="wrap_content"

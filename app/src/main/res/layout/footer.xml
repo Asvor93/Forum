@@ -8,13 +8,6 @@
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:background="@color/grayTheme">
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="@string/back"/>
-
     </RelativeLayout>
 
 </LinearLayout>

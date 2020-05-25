@@ -5,16 +5,36 @@
     android:layout_height="match_parent"
     tools:context="dk.easv.ATForum.Posts.CommentActivity"
     android:background="@color/background_material_light">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comments"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
+
+
+    <ListView
+        android:id="@+id/comList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/createComment">
+    </ListView>
+
     <Button
         android:id="@+id/createComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/createComment"
-        android:layout_alignParentTop="true"/>
-    <ListView
-        android:id="@+id/comList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/createComment">
-    </ListView>
+        android:layout_above="@id/footer"/>
+
+    <include layout="@layout/footer"
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
 </RelativeLayout>
