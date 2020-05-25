@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dk.easv.ATForum.Posts.CategoryActivity">
+    tools:context="dk.easv.ATForum.Posts.CategoryActivity"
+    android:background="@color/background_material_light">
 
     <ListView
         android:id="@+id/catList"

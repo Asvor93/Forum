@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.forum.R;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class CommentActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        Slidr.attach(this);
 
         commentListView = findViewById(R.id.comList);
         GetExtras();
@@ -50,7 +52,7 @@ public class CommentActivity extends MenuActivity {
                 commentListView.setLongClickable(true);
                 Comment comment = commentList.get(position);
                 String uid = comment.getId();
-                
+
                 dataAccess.deleteComment(uid);
                 Toast.makeText(CommentActivity.this, "Deleted comment with id: " + uid, Toast.LENGTH_SHORT).show();
 

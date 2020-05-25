@@ -3,6 +3,7 @@ package dk.easv.ATForum.Posts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.forum.R;
+import com.r0adkll.slidr.Slidr;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class CategoryActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+
+        Slidr.attach(this);
 
         categoryListView = findViewById(R.id.catList);
 
