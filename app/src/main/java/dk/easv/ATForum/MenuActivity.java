@@ -136,6 +136,7 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.profileMenu:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 intent.putExtra("currentUser", currentUser);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivityForResult(intent, 3);
                 return true;
             case R.id.loginMenu:
@@ -157,6 +158,7 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             case R.id.categoryMenu:
                 Intent categoryIntent = new Intent(this, CategoryActivity.class);
+                categoryIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(categoryIntent);
                 return true;
             case R.id.createCatMenu:

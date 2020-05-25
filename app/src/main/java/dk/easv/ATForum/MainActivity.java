@@ -12,6 +12,7 @@ import com.example.forum.R;
 
 import java.util.List;
 
+import dk.easv.ATForum.Adapters.FavoriteTopicAdapter;
 import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Topic;
@@ -19,7 +20,7 @@ import dk.easv.ATForum.Models.Topic;
 public class MainActivity extends MenuActivity {
     private static final String TAG = "XYZ";
     IDataAccess dataAccess;
-    private TopicAdapter topicAdapter;
+    private FavoriteTopicAdapter favoriteTopicAdapter;
     private List<Topic> favTopicList;
     private ListView topicListView;
 
@@ -29,8 +30,6 @@ public class MainActivity extends MenuActivity {
         setContentView(R.layout.activity_main);
 
         dataAccess = DataAccessFactory.getInstance();
-
-        Log.d(TAG, "currentUser: " + currentUser);
 
         topicListView = findViewById(R.id.list);
 
@@ -53,15 +52,14 @@ public class MainActivity extends MenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (currentUser != null) {
             Log.d(TAG, "currentUser: " + currentUser);
             dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
                 @Override
                 public void onResult(List<Topic> favoriteTopics) {
                     favTopicList = favoriteTopics;
-                    topicAdapter = new TopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList, currentUser);
-                    topicListView.setAdapter(topicAdapter);
+                    favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
+                    topicListView.setAdapter(favoriteTopicAdapter);
                     Log.d(TAG, "favTopicList: " + favTopicList);
                 }
             });

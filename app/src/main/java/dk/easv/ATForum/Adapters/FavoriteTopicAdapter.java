@@ -23,29 +23,23 @@ import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditTopicActivity;
 
-public class TopicAdapter extends ArrayAdapter<Topic> {
+public class FavoriteTopicAdapter extends ArrayAdapter<Topic> {
     private static final String TAG = "XYZ";
     private List<Topic> topicList;
-    private Context context;
-    private IDataAccess dataAccess;
-    private User currentUser;
 
-    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser) {
+    public FavoriteTopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics) {
         super(context, resource, topics);
         topicList = topics;
-        this.context = context;
-        dataAccess = DataAccessFactory.getInstance();
-        this.currentUser = currentUser;
     }
 
     @NonNull
     @Override
     public View getView(final int position, @Nullable View view, @NonNull ViewGroup parent) {
-        ViewHolder holder;
+        ViewHolder holder;;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = li.inflate(R.layout.topic_cell, null);
+            view = li.inflate(R.layout.favorite_topic_cell, null);
             holder = new ViewHolder();
             holder.txtAuthorName = view.findViewById(R.id.tvAuthorName);
             holder.txtTopicDesc = view.findViewById(R.id.tvTopicDescription);
@@ -61,24 +55,6 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         holder.txtTopicDesc.setText(topic.getDescription());
         holder.txtTopicName.setText(topic.getTopicName());
 
-        holder.editButton = view.findViewById(R.id.goToEditTopic);
-        holder.editButton.setFocusable(false);
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, EditTopicActivity.class);
-                intent.putExtra("topic", topic);
-                context.startActivity(intent);
-            }
-        });
-        holder.btnAddToFavorites = view.findViewById(R.id.addFavoriteTopic);
-        holder.btnAddToFavorites.setFocusable(false);
-        holder.btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataAccess.addFavoriteTopic(currentUser.getUid(), topic);
-            }
-        });
 
         return view;
     }
@@ -87,7 +63,5 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         TextView txtAuthorName;
         TextView txtTopicDesc;
         TextView txtTopicName;
-        Button editButton;
-        Button btnAddToFavorites;
     }
 }

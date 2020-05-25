@@ -362,15 +362,14 @@ public class FirebaseImpl implements IDataAccess {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     List<Topic> favoriteTopics = new ArrayList<>();
-                    String id = task.getResult().getId();
+
                     FavoriteTopic favTopic = task.getResult().toObject(FavoriteTopic.class);
+                    if (favTopic != null) {
+                        String id = task.getResult().getId();
+                        favTopic.setUid(id);
 
-                    favTopic.setUid(id);
-                    Log.d(TAG, "favTopic: " + favTopic);
-                    for (Topic topic : favTopic.getFavoriteTopics()) {
-                        favoriteTopics.add(topic);
+                        favoriteTopics.addAll(favTopic.getFavoriteTopics());
                     }
-
                     if (!favoriteTopics.isEmpty()) {
                         callback.onResult(favoriteTopics);
                     }
@@ -383,7 +382,7 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void deleteFavoriteTopic(String id, Topic topic) {
-        db.collection("favoriteTopics").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection("favoriteTopics").document(id).update("favoriteTopics", FieldValue.arrayRemove(topic)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
