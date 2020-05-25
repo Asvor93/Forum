@@ -2,24 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/categoryMenu" android:title="Categories"
+    <item android:id="@+id/categoryMenu" android:title="@string/categories"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/profileMenu" android:title="Profile"
+    <item android:id="@+id/profileMenu" android:title="@string/profile"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/loginMenu" android:title="Login"
+    <item android:id="@+id/loginMenu" android:title="@string/login"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/logoutMenu" android:title="Logout"
+    <item android:id="@+id/logoutMenu" android:title="@string/logout"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/signUpMenu" android:title="Sign Up"
+    <item android:id="@+id/signUpMenu" android:title="@string/signUp"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/adminPageMenu" android:title="Admin Page"
+    <item android:id="@+id/adminPageMenu" android:title="@string/admin_page"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/createCatMenu" android:title="Create Category"
+    <item android:id="@+id/createCatMenu" android:title="@string/create_category"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/mainPage" android:title="@string/main_page"
         app:showAsAction="never"/>
 </menu>

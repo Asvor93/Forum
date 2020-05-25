@@ -67,19 +67,10 @@ public class MainActivity extends MenuActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
        super.onPrepareOptionsMenu(menu);
+       mainPageMenuItem.setVisible(false);
+       mainPageMenuItem.setEnabled(false);
         return true;
-    }
-
-    @Override
-    public void invalidateOptionsMenu() {
-        super.invalidateOptionsMenu();
     }
 }

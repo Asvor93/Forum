@@ -35,5 +35,7 @@
     <string name="edit">Edit</string>
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="password">Password</string>
+    <string name="logout">Logout</string>
+    <string name="main_page">Main Page</string>
 
 </resources>

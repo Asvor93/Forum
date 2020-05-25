@@ -27,7 +27,9 @@ public class MenuActivity extends AppCompatActivity {
     public static User currentUser;
     public static Role role;
     IDataAccess dataAccess;
-    public MenuItem profileMenuItem, adminMenuItem, signUpMenuItem, loginMenuItem, logoutMenuItem, categoryMenuItem, createCatMenuItem;
+    public MenuItem profileMenuItem, adminMenuItem, signUpMenuItem,
+            loginMenuItem, logoutMenuItem, categoryMenuItem,
+            createCatMenuItem, mainPageMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MenuActivity extends AppCompatActivity {
         loginMenuItem = menu.findItem(R.id.loginMenu);
         categoryMenuItem = menu.findItem(R.id.categoryMenu);
         createCatMenuItem = menu.findItem(R.id.createCatMenu);
+        mainPageMenuItem = menu.findItem(R.id.mainPage);
 
         return true;
     }
@@ -164,6 +167,10 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.createCatMenu:
                 Intent createCatIntent = new Intent(this, CreateCategoryActivity.class);
                 startActivity(createCatIntent);
+                return true;
+            case R.id.mainPage:
+                Intent mainPageIntent = new Intent(this, MainActivity.class);
+                startActivity(mainPageIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
