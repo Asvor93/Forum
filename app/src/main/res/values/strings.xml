@@ -37,5 +37,6 @@
     <string name="password">Password</string>
     <string name="logout">Logout</string>
     <string name="main_page">Main Page</string>
+    <string name="main_page_des">Choose a favorite topic to show it here!</string>
 
 </resources>

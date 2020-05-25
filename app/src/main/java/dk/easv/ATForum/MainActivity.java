@@ -28,36 +28,39 @@ public class MainActivity extends MenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_page);
+
+        if (currentUser != null) {
+            setContentView(R.layout.activity_main);
+
 
         dataAccess = DataAccessFactory.getInstance();
 
         topicListView = findViewById(R.id.list);
 
-        topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String topicUid = favTopicList.get(position).getId();
-                Intent commentIntent = new Intent( MainActivity.this, CommentActivity.class);
-                commentIntent.putExtra("topicId", topicUid);
-                startActivity(commentIntent);
-            }
-        });
 
-        topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                topicListView.setLongClickable(true);
-                Topic topic = favTopicList.get(position);
-                String uid = currentUser.getUid();
-                if (currentUser != null) {
-
+            topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String topicUid = favTopicList.get(position).getId();
+                    Intent commentIntent = new Intent(MainActivity.this, CommentActivity.class);
+                    commentIntent.putExtra("topicId", topicUid);
+                    startActivity(commentIntent);
                 }
-                dataAccess.deleteFavoriteTopic(uid, topic);
+            });
+
+            topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    topicListView.setLongClickable(true);
+                    Topic topic = favTopicList.get(position);
+                    String uid = currentUser.getUid();
+                    dataAccess.deleteFavoriteTopic(uid, topic);
                     Toast.makeText(MainActivity.this, "Deleted Favorite topic with id: " + uid, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -79,9 +82,9 @@ public class MainActivity extends MenuActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-       super.onPrepareOptionsMenu(menu);
-       mainPageMenuItem.setVisible(false);
-       mainPageMenuItem.setEnabled(false);
+        super.onPrepareOptionsMenu(menu);
+        mainPageMenuItem.setVisible(false);
+        mainPageMenuItem.setEnabled(false);
         return true;
     }
 }
