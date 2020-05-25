@@ -24,6 +24,7 @@ import java.util.Map;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Comment;
+import dk.easv.ATForum.Models.FavoriteTopic;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
@@ -350,7 +351,32 @@ public class FirebaseImpl implements IDataAccess {
 
     @Override
     public void getTopic(String id, IOnResult<Topic> callback) {
+    }
 
+    @Override
+    public void getFavoriteTopics(String id, final IOnResult<List<Topic>> callback) {
+        db.collection("favoriteTopics").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<Topic> favoriteTopics = new ArrayList<>();
+                    String id = task.getResult().getId();
+                    FavoriteTopic favTopic = task.getResult().toObject(FavoriteTopic.class);
+                    Log.d(TAG, "favTopic: " + favTopic);
+                    favTopic.setId(id);
+
+                    for (Topic topic : favTopic.getFavoriteTopics()) {
+                        favoriteTopics.add(topic);
+                    }
+
+                    if (!favoriteTopics.isEmpty()) {
+                        callback.onResult(favoriteTopics);
+                    }
+                } else {
+                    Log.d(TAG, "get favoriteTopics failed " + task.getException());
+                }
+            }
+        });
     }
 
     @Override

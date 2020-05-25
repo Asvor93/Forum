@@ -5,6 +5,7 @@ import java.util.Map;
 
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Comment;
+import dk.easv.ATForum.Models.FavoriteTopic;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
@@ -41,6 +42,8 @@ public interface IDataAccess {
     void getTopics(String id, IOnResult<List<Topic>> callback);
 
     void getTopic(String id, IOnResult<Topic> callback);
+
+    void getFavoriteTopics(String id, IOnResult<List<Topic>> callback);
 
     void createTopic(final Map<String, Object> topic, final IOnResult<Topic> callback);
 

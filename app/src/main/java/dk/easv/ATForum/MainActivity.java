@@ -1,27 +1,57 @@
 package dk.easv.ATForum;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.example.forum.R;
 
+import java.util.List;
+
+import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.Models.Role;
-import dk.easv.ATForum.Models.User;
+import dk.easv.ATForum.Models.FavoriteTopic;
+import dk.easv.ATForum.Models.Topic;
+import dk.easv.ATForum.Posts.TopicActivity;
 
 public class MainActivity extends MenuActivity {
     private static final String TAG = "XYZ";
+    IDataAccess dataAccess;
+    private TopicAdapter topicAdapter;
+    private List<Topic> favTopicList;
+    private ListView topicListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dataAccess = DataAccessFactory.getInstance();
+
+        Log.d(TAG, "currentUser: " + currentUser);
+
+        topicListView = findViewById(R.id.list);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (super.currentUser != null) {
+            Log.d(TAG, "currentUser: " + currentUser);
+            dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
+                @Override
+                public void onResult(List<Topic> favoriteTopics) {
+                    favTopicList = favoriteTopics;
+                    topicAdapter = new TopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
+                    topicListView.setAdapter(topicAdapter);
+                    Log.d(TAG, "favTopicList: " + favTopicList);
+                }
+            });
+        }
     }
 
     @Override
