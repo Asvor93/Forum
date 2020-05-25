@@ -10,7 +10,7 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite Topics"
+        android:text="@string/favorite_topics"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/createTopic"
-        android:layout_alignTop="@+id/header" />
+        android:layout_alignBottom="@+id/header" />
 
     <include layout="@layout/footer"
         android:layout_alignParentBottom="true"

@@ -19,5 +19,6 @@
     <string name="defaultImageLink"><![CDATA[https://firebasestorage.googleapis.com/v0/b/at-forum.appspot.com/o/images%2FDefaultImage%2Fqmark.jpg?alt=media&token=27aac01d-dcee-4b9f-be6c-e5db3bf623a2]]></string>
     <string name="createComment">Create a comment here!</string>
     <string name="userImageDescription">UserImage</string>
+    <string name="favorite_topics">Favorite Topics</string>
 
 </resources>

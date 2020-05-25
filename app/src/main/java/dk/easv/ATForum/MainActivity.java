@@ -14,12 +14,7 @@ import java.util.List;
 
 import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.Models.Category;
-import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Models.FavoriteTopic;
 import dk.easv.ATForum.Models.Topic;
-import dk.easv.ATForum.Posts.CategoryActivity;
-import dk.easv.ATForum.Posts.TopicActivity;
 
 public class MainActivity extends MenuActivity {
     private static final String TAG = "XYZ";
