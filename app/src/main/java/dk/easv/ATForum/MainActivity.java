@@ -1,5 +1,6 @@
 package dk.easv.ATForum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,9 +14,9 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Adapters.FavoriteTopicAdapter;
-import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Topic;
+import dk.easv.ATForum.Posts.CommentActivity;
 
 public class MainActivity extends MenuActivity {
     private static final String TAG = "XYZ";
@@ -32,6 +33,16 @@ public class MainActivity extends MenuActivity {
         dataAccess = DataAccessFactory.getInstance();
 
         topicListView = findViewById(R.id.list);
+
+        topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String topicUid = favTopicList.get(position).getId();
+                Intent commentIntent = new Intent( MainActivity.this, CommentActivity.class);
+                commentIntent.putExtra("topicId", topicUid);
+                startActivity(commentIntent);
+            }
+        });
 
         topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

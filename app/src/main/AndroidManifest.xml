@@ -12,7 +12,8 @@
         <activity android:name="dk.easv.ATForum.Posts.EditCommentActivity"></activity>
         <activity android:name="dk.easv.ATForum.Posts.CreateCommentActivity" />
         <activity android:name="dk.easv.ATForum.Posts.EditTopicActivity" />
-        <activity android:name="dk.easv.ATForum.Posts.CreateTopicActivity" />
+        <activity android:name="dk.easv.ATForum.Posts.CreateTopicActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
         <activity android:name="dk.easv.ATForum.Posts.CommentActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
         <activity android:name="dk.easv.ATForum.Posts.TopicActivity"
