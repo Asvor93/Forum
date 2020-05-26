@@ -1,7 +1,5 @@
 package dk.easv.ATForum.Posts;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +18,15 @@ import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Models.Topic;
 
 public class EditCommentActivity extends MenuActivity {
-
+    // The interface that handles data access
     IDataAccess dataAccess;
+
+    // The view that contains the message
     EditText txtMessage;
+
+    // The comment being edited
     Comment comment;
 
     @Override
@@ -50,6 +51,8 @@ public class EditCommentActivity extends MenuActivity {
         });
     }
 
+    // Handles editing the comment. Builds a map based on the EditText views
+    // and sends this as a parameter to the EditComment method along with the comments id
     private void editComment() {
         final String messageString = txtMessage.getText().toString();
 
@@ -58,7 +61,6 @@ public class EditCommentActivity extends MenuActivity {
         commentMap.put("timestamp", FieldValue.serverTimestamp());
 
         final String id = comment.getId();
-        Log.d("XYZ", "editComment: " + id);
 
         dataAccess.editComment(commentMap, id, new IDataAccess.IOnResult<Comment>() {
             @Override
@@ -69,6 +71,7 @@ public class EditCommentActivity extends MenuActivity {
         });
     }
 
+    // Gets extra and sets the gui
     private void setGUI() {
         comment = (Comment) getIntent().getSerializableExtra("comment");
 
