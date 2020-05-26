@@ -54,7 +54,7 @@ public class CategoryActivity extends MenuActivity {
             @Override
             public void onResult(List<Category> categories) {
                 categoryList = categories;
-                categoryAdapter = new CategoryAdapter(CategoryActivity.this, R.layout.category_cell, categoryList);
+                categoryAdapter = new CategoryAdapter(CategoryActivity.this, R.layout.category_cell, categoryList, currentUser);
                 categoryListView.setAdapter(categoryAdapter);
             }
         });

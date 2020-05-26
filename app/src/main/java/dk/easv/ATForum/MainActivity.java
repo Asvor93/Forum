@@ -2,8 +2,6 @@ package dk.easv.ATForum;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -89,5 +87,10 @@ public class MainActivity extends MenuActivity {
         mainPageMenuItem.setVisible(false);
         mainPageMenuItem.setEnabled(false);
         return true;
+    }
+
+    private void fillList() {
+        favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
+        topicListView.setAdapter(favoriteTopicAdapter);
     }
 }
