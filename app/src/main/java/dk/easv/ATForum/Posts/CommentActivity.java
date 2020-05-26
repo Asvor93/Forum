@@ -43,7 +43,7 @@ public class CommentActivity extends MenuActivity {
             @Override
             public void onResult(List<Comment> comments) {
                 commentList = comments;
-                commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments);
+                commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments, currentUser);
                 commentListView.setAdapter(commentAdapter);
             }
         });
@@ -69,6 +69,10 @@ public class CommentActivity extends MenuActivity {
                 goToCreateComment();
             }
         });
+
+        if (currentUser == null) {
+            btnGoToCreateComment.setVisibility(View.GONE);
+        }
     }
 
     private void goToCreateComment() {

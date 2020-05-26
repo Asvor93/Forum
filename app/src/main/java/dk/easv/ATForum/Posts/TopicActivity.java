@@ -15,9 +15,11 @@ import com.r0adkll.slidr.Slidr;
 
 import java.util.List;
 
+import dk.easv.ATForum.Adapters.FavoriteTopicAdapter;
 import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.MainActivity;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
@@ -46,7 +48,6 @@ public class TopicActivity extends MenuActivity {
             }
         });
 
-
         Button btnCreateTopic = findViewById(R.id.createTopic);
         btnCreateTopic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,10 @@ public class TopicActivity extends MenuActivity {
                 goToCreateTopic();
             }
         });
+
+        if (currentUser == null) {
+            btnCreateTopic.setVisibility(View.GONE);
+        }
 		
 		topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,6 +80,8 @@ public class TopicActivity extends MenuActivity {
                     dataAccess.deleteTopic(uid);
                     Toast.makeText(TopicActivity.this, "Deleted topic with id: " + topic.getTopicName(), Toast.LENGTH_SHORT).show();
                 }
+                topicList.remove(position);
+                topicAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -90,4 +97,5 @@ public class TopicActivity extends MenuActivity {
     private void GetExtras() {
         catId = getIntent().getStringExtra("catId");
     }
+
 }

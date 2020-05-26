@@ -32,10 +32,13 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     // The context which instantiated the adapter, used for starting the EditComment activity
     private Context context;
 
-    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments) {
+    private User currentUser;
+
+    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments, User currentUser) {
         super(context, resource, comments);
         commentList = comments;
         this.context = context;
+        this.currentUser = currentUser;
     }
 
     // Gets a view based on the layout that is inflated and displays the relevant comments
@@ -78,6 +81,9 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         });
         holder.editButton.setFocusable(false);
 
+        if (currentUser == null) {
+            holder.editButton.setVisibility(View.GONE);
+        }
         return view;
     }
 

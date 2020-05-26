@@ -62,6 +62,8 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         holder.txtTopicDesc.setText(topic.getDescription());
         holder.txtTopicName.setText(topic.getTopicName());
 
+
+
         holder.editButton = view.findViewById(R.id.goToEditTopic);
         holder.editButton.setFocusable(false);
         holder.editButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,7 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
                 context.startActivity(intent);
             }
         });
+
         holder.btnAddToFavorites = view.findViewById(R.id.addFavoriteTopic);
         holder.btnAddToFavorites.setFocusable(false);
         holder.btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,11 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
                 dataAccess.addFavoriteTopic(currentUser.getUid(), topic);
             }
         });
+
+        if (currentUser == null) {
+            holder.editButton.setVisibility(View.GONE);
+            holder.btnAddToFavorites.setVisibility(View.GONE);
+        }
 
         return view;
     }

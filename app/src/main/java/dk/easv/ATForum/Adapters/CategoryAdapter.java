@@ -15,6 +15,7 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditCategoryActivity;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
@@ -24,10 +25,13 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     // The context which instantiated the adapter, used for starting the EditCategory activity
     private Context context;
 
-    public CategoryAdapter(Context context, int resource, List<Category> categoryList) {
+    private User currentUser;
+
+    public CategoryAdapter(Context context, int resource, List<Category> categoryList, User currentUser) {
         super(context, resource, categoryList);
         this.categoryList = categoryList;
         this.context = context;
+        this.currentUser = currentUser;
     }
 
     // Gets a view based on the layout that is inflated and displays the categories
@@ -63,6 +67,10 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
                 context.startActivity(intent);
             }
         });
+
+        if (currentUser == null) {
+            holder.editButton.setVisibility(View.GONE);
+        }
         return view;
     }
 
