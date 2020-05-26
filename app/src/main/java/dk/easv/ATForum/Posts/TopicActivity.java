@@ -15,19 +15,26 @@ import com.r0adkll.slidr.Slidr;
 
 import java.util.List;
 
-import dk.easv.ATForum.Adapters.FavoriteTopicAdapter;
 import dk.easv.ATForum.Adapters.TopicAdapter;
 import dk.easv.ATForum.DataAccessFactory;
-import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.MainActivity;
+import dk.easv.ATForum.Interfaces.IDataAccess;;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class TopicActivity extends MenuActivity {
+    // The interface that handles data access
     private IDataAccess dataAccess;
+
+    // The adapter that manages the views of the list view
     private TopicAdapter topicAdapter;
+
+    // The list that populates the adapter
     private List<Topic> topicList;
+
+    // The list view that shows all our
     private ListView topicListView;
+
+    // The id of the category that opened this activity
     private String catId;
 
     @Override
@@ -39,6 +46,8 @@ public class TopicActivity extends MenuActivity {
         topicListView = findViewById(R.id.list);
 
         dataAccess = DataAccessFactory.getInstance();
+
+        // Gets the topics from the database and sets them in the onResult callback
         dataAccess.getTopics(catId, new IDataAccess.IOnResult<List<Topic>>() {
             @Override
             public void onResult(List<Topic> topics) {
@@ -59,7 +68,8 @@ public class TopicActivity extends MenuActivity {
         if (currentUser == null) {
             btnCreateTopic.setVisibility(View.GONE);
         }
-		
+
+        // Opens up the comment activity based on which topic is clicked on
 		topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,6 +80,7 @@ public class TopicActivity extends MenuActivity {
             }
         });
 
+        // Handles deleting topic based on position. Only admins and super admins can delete topics
 		topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,12 +99,14 @@ public class TopicActivity extends MenuActivity {
 
     }
 
+    // Starts create activity
     private void goToCreateTopic() {
         Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
         createTopicIntent.putExtra("catId", catId);
         startActivity(createTopicIntent);
 	}
-    
+
+	// Gets the id from the intent
     private void GetExtras() {
         catId = getIntent().getStringExtra("catId");
     }
