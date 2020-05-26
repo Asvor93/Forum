@@ -23,10 +23,19 @@ import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class MenuActivity extends AppCompatActivity {
+    // Tag for logging
     private static final String TAG = "XYZ";
+
+    // The current logged in user
     public static User currentUser;
+
+    // The role of the current logged in user
     public static Role role;
+
+    // Used access the database
     IDataAccess dataAccess;
+
+    // The various menu items that are used
     public MenuItem profileMenuItem, adminMenuItem, signUpMenuItem,
             loginMenuItem, logoutMenuItem, categoryMenuItem,
             createCatMenuItem, mainPageMenuItem;
@@ -180,6 +189,7 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
+    // Logs out the user and sets the fields pertaining user to null
     private void logout() {
         dataAccess.logout();
         currentUser = null;
@@ -188,6 +198,7 @@ public class MenuActivity extends AppCompatActivity {
         profileMenuItem.setEnabled(false);
     }
 
+    // Receives the result from the intents
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -196,7 +207,6 @@ public class MenuActivity extends AppCompatActivity {
             role = (Role) data.getExtras().getSerializable("role");
             profileMenuItem.setVisible(true);
             profileMenuItem.setEnabled(true);
-            Log.d(TAG, "onActivityResult Main: " + currentUser.getUid());
 
         } else if (resultCode == RESULT_CANCELED) {
             if (currentUser == null) {
