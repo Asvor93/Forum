@@ -28,11 +28,7 @@ public class MainActivity extends MenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page);
-
-        if (currentUser != null) {
-            setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_main);
 
         dataAccess = DataAccessFactory.getInstance();
 
@@ -61,9 +57,7 @@ public class MainActivity extends MenuActivity {
                 }
             });
         }
-    }
 
-    @Override
     protected void onResume() {
         super.onResume();
         if (currentUser != null) {
