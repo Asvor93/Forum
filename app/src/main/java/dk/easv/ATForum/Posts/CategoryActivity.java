@@ -21,8 +21,6 @@ import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Category;
-import dk.easv.ATForum.Models.Role;
-import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 
 public class CategoryActivity extends MenuActivity {
@@ -30,8 +28,6 @@ public class CategoryActivity extends MenuActivity {
     private CategoryAdapter categoryAdapter;
     private List<Category> categoryList;
     private ListView categoryListView;
-    private Role role;
-    private User currentUser;
 
     private IDataAccess dataAccess;
 
@@ -44,8 +40,6 @@ public class CategoryActivity extends MenuActivity {
 
         categoryListView = findViewById(R.id.catList);
 
-        role = (Role) getIntent().getSerializableExtra("role");
-        Log.d(TAG, "onCreateView: " + role);
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
         dataAccess = DataAccessFactory.getInstance();
