@@ -32,8 +32,13 @@ import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 
 public class FirebaseImpl implements IDataAccess {
+    // Tag used for logging
     private static final String TAG = "XYZ";
+
+    // The instance of firebase firestore, which is used to access the firestore database
     private FirebaseFirestore db;
+
+    // The instance of firebase auth which is used for accessing the authentication portion of firebase
     private FirebaseAuth firebaseAuth;
     private static String userUid;
 
@@ -42,6 +47,9 @@ public class FirebaseImpl implements IDataAccess {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
+    // Creates an authentication user in the database with the password and email received in the parameters
+    // Upon successful creating of the auth user a new call to the database creates a document containing further information of the user
+    // Uses a callback to return the newly created user
     @Override
     public void createUser(final Map<String, Object> user, String password, final IOnResult<User> callback) {
         final String emailString = user.get("email").toString();
@@ -78,6 +86,7 @@ public class FirebaseImpl implements IDataAccess {
                 });
     }
 
+    // Gets all users from the database and returns all except for the user calling the method in a callback
     @Override
     public void getAllUsers(final String uid, final IOnResult<List<User>> callback) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -100,6 +109,8 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Updates user using a values from a map, the user to be updated depends on the uid parameter
+    // Returns the altered user in a callback
     @Override
     public void updateUser(final Map<String, Object> user, final String uid,
                            final IOnResult<User> callback) {
@@ -124,6 +135,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Deletes a user based on an id
     @Override
     public void deleteUser(String id) {
         db.collection("users").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -138,6 +150,9 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Sets a role for the user with the matching uid based on the role in the map.
+    // Used for the initial creation of a user.
+    // the new role is returned by a callback
     @Override
     public void createRole(Map<String, Object> role, final String uid, final IOnResult<Role> callback) {
         db.collection("roles").document(uid).set(role).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -154,6 +169,8 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Gets all roles in the roles collection and returns them in a callback.
+    // Leaves out the role of the one calling the method. Used primarily by admins and superAdmin
     @Override
     public void getAllRoles(final IOnResult<List<Role>> callback) {
 
@@ -175,6 +192,8 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Signs in to firebase authentication and also get extra information from the database based on the uid
+    // Returns the logged in user in a callback
     @Override
     public void login(String email, String password, final IOnResult<User> callback) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -213,6 +232,7 @@ public class FirebaseImpl implements IDataAccess {
                 });
     }
 
+    // Gets the role of the user with the uid matching the parameter and returns it in a callback
     @Override
     public void getRole(final String uid, final IOnResult<Role> callback) {
         db.collection("roles")
@@ -236,11 +256,13 @@ public class FirebaseImpl implements IDataAccess {
                 });
     }
 
+    // logs out the user
     @Override
     public void logout() {
         firebaseAuth.signOut();
     }
 
+    // Gets all categories and returns them in a callback
     @Override
     public void getAllCategories(final IOnResult<List<Category>> callback) {
         db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -264,6 +286,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Deletes a category based on an id
     @Override
     public void deleteCategory(String id) {
         db.collection("categories").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -278,6 +301,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Creates a category based on the map category and returns it in a callback
     @Override
     public void createCategory(final Map<String, Object> category, final IOnResult<Category> callback) {
         db.collection("categories").add(category).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -299,6 +323,8 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Edits the category with the corresponding id based on the values in the category map
+    // Returns the category with a callback
     @Override
     public void editCategory(final Map<String, Object> category, final String id, final IOnResult<Category> callback) {
         db.collection("categories").document(id)
@@ -321,11 +347,8 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
-    @Override
-    public void getCategory(String id) {
-
-    }
-
+    // Gets all topics with a categoryId that corresponds to the id in it's parameters.
+    // Returns the results in a callback
     @Override
     public void getTopics(String id, final IOnResult<List<Topic>> callback) {
         db.collection("topics").whereEqualTo("categoryId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -351,10 +374,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
-    @Override
-    public void getTopic(String id, IOnResult<Topic> callback) {
-    }
-
+    // Gets all favorite topics based on the id of the user and returns them in a callback
     @Override
     public void getFavoriteTopics(String id, final IOnResult<List<Topic>> callback) {
         db.collection("favoriteTopics").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -380,6 +400,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Removes a topic from favorite topics from the user with the corresponding id
     @Override
     public void deleteFavoriteTopic(String id, Topic topic) {
         db.collection("favoriteTopics").document(id).update("favoriteTopics", FieldValue.arrayRemove(topic)).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -394,6 +415,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Adds a topic to favorite topic for the user with the corresponding id
     @Override
     public void addFavoriteTopic(String userId, Topic topic) {
         Map<String, Object> topicMap = new HashMap<>();
@@ -410,6 +432,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Creates a topic based on the values extracted from the topic map and returns it in a callback
     @Override
     public void createTopic(final Map<String, Object> topic, final IOnResult<Topic> callback) {
         db.collection("topics").add(topic).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -434,6 +457,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Deletes a topic based on the id parameter
     @Override
     public void deleteTopic(String id) {
         db.collection("topics").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -448,6 +472,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Updates the topic with the corresponding id based on the topic map and returns it in a callback
     @Override
     public void updateTopic(final Map<String, Object> topic, final String id, final IOnResult<Topic> callback) {
         db.collection("topics").document(id)
@@ -470,6 +495,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Gets all comments for the topic with the corresponding id and returns the result in a callback
     @Override
     public void getComments(String id, final IOnResult<List<Comment>> callback) {
         db.collection("comments").whereEqualTo("topicId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -495,6 +521,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Creates a comment based on the values received in the comment map and returns it in a callback
     @Override
     public void createComment(final Map<String, Object> comment, final IOnResult<Comment> callback) {
         db.collection("comments").add(comment).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -517,6 +544,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Edits the comment with the corresponding id based on the comment map and returns it in a callback
     @Override
     public void editComment(final Map<String, Object> comment, final String id, final IOnResult<Comment> callback) {
         db.collection("comments").document(id)
@@ -538,6 +566,7 @@ public class FirebaseImpl implements IDataAccess {
         });
     }
 
+    // Deletes the comment with the corresponding id
     @Override
     public void deleteComment(String id) {
         db.collection("comments").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
