@@ -3,6 +3,7 @@ package dk.easv.ATForum;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,7 +34,6 @@ public class MainActivity extends MenuActivity {
         dataAccess = DataAccessFactory.getInstance();
 
         topicListView = findViewById(R.id.list);
-
 
             topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
