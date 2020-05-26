@@ -30,16 +30,29 @@ import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class SignUpActivity extends AppCompatActivity {
-
+    // Tag used for logging
     private static final String TAG = "XYZ";
+
+    // Request code used when starting the camera intent
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
+
+    // Edits text views used when creating a new user
     EditText nameSignUp, emailSignUp, usernameSignUp, passwordSignUp;
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore db;
+
+    // Holds the current image for the new user. Default image if none has been taken.
+    // also has an onClickListener attached.
     ImageView image;
+
+    // Url string for the image. Contains a reference to the default picture in the firestore storage if no new picture is taken
     String url;
+
+    // Interface for handling of uploading images
     IUploadManager uploadImg;
+
+    // DataAccess interface for handling calls to the database
     private IDataAccess dataAccess;
+
+    // Checks if the app is currently uploading an image. Prevents the signUp method from proceeding if false
     private boolean uploadingImg = false;
 
     @Override
@@ -47,8 +60,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
         dataAccess = DataAccessFactory.getInstance();
         uploadImg = new UploadManagerImpl();
 
@@ -81,10 +92,10 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // Opens the camera intent expecting a result
     private void openCameraUsingBitmap() {
         // create Intent to take a picture
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP);
@@ -92,6 +103,8 @@ public class SignUpActivity extends AppCompatActivity {
             Log.d(TAG, "camera app could NOT be started");
     }
 
+    // Sign up formula for the user. Method first calls the createUser method on the dataAccess interface
+    // and then calls the createRole method on the interface. The results are returned through a callback for each method
     private void signUp() {
         if (!uploadingImg) {
             final String emailString = emailSignUp.getText().toString();
@@ -128,6 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    // Handles getting results from activities started for result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
