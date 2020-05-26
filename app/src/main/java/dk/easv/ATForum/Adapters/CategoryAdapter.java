@@ -39,7 +39,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             view = inflater.inflate(R.layout.category_cell, parent, false);
             holder = new CategoryViewHolder();
-            holder.editButton.findViewById(R.id.submitEdit);
+            holder.editButton = view.findViewById(R.id.goToEditCategory);
             holder.txtCatName = view.findViewById(R.id.tvCategoryName);
             holder.txtCatDescription = view.findViewById(R.id.tvCatDescription);
             view.setTag(holder);
