@@ -390,9 +390,8 @@ public class FirebaseImpl implements IDataAccess {
 
                         favoriteTopics.addAll(favTopic.getFavoriteTopics());
                     }
-                    if (!favoriteTopics.isEmpty()) {
-                        callback.onResult(favoriteTopics);
-                    }
+                    callback.onResult(favoriteTopics);
+
                 } else {
                     Log.d(TAG, "get favoriteTopics failed " + task.getException());
                 }
