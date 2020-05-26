@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Comment;
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditCommentActivity;
 import dk.easv.ATForum.Posts.EditTopicActivity;
@@ -34,11 +35,14 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
     private User currentUser;
 
-    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments, User currentUser) {
+    private Role role;
+
+    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments, User currentUser, Role role) {
         super(context, resource, comments);
         commentList = comments;
         this.context = context;
         this.currentUser = currentUser;
+        this.role = role;
     }
 
     // Gets a view based on the layout that is inflated and displays the relevant comments

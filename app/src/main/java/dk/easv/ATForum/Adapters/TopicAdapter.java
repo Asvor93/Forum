@@ -19,6 +19,7 @@ import java.util.List;
 
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditTopicActivity;
@@ -29,13 +30,15 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
     private Context context;
     private IDataAccess dataAccess;
     private User currentUser;
+    private Role role;
 
-    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser) {
+    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser, Role role) {
         super(context, resource, topics);
         topicList = topics;
         this.context = context;
         dataAccess = DataAccessFactory.getInstance();
         this.currentUser = currentUser;
+        this.role = role;
     }
 
     // Gets a view based on the layout that is inflated and displays the topics
@@ -62,7 +65,16 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         holder.txtTopicDesc.setText(topic.getDescription());
         holder.txtTopicName.setText(topic.getTopicName());
 
+        holder.btnAddToFavorites = view.findViewById(R.id.addFavoriteTopic);
+        holder.btnAddToFavorites.setFocusable(false);
+        holder.btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataAccess.addFavoriteTopic(currentUser.getUid(), topic);
+            }
+        });
 
+        Log.d(TAG, "Role : " + role.getRoleName());
 
         holder.editButton = view.findViewById(R.id.goToEditTopic);
         holder.editButton.setFocusable(false);
@@ -75,14 +87,10 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             }
         });
 
-        holder.btnAddToFavorites = view.findViewById(R.id.addFavoriteTopic);
-        holder.btnAddToFavorites.setFocusable(false);
-        holder.btnAddToFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataAccess.addFavoriteTopic(currentUser.getUid(), topic);
-            }
-        });
+        if (!currentUser.getUid().equals(role.getUid())) {
+            holder.editButton.setVisibility(View.GONE);
+        }
+
 
         if (currentUser == null) {
             holder.editButton.setVisibility(View.GONE);

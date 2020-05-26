@@ -2,6 +2,7 @@ package dk.easv.ATForum.Posts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -24,6 +25,7 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class TopicActivity extends MenuActivity {
+    private static final String TAG = "XYZ";
     private IDataAccess dataAccess;
     private TopicAdapter topicAdapter;
     private List<Topic> topicList;
@@ -37,13 +39,13 @@ public class TopicActivity extends MenuActivity {
         Slidr.attach(this);
         GetExtras();
         topicListView = findViewById(R.id.list);
-
+        Log.d(TAG, "Role topic activity: " + role.getRoleName());
         dataAccess = DataAccessFactory.getInstance();
         dataAccess.getTopics(catId, new IDataAccess.IOnResult<List<Topic>>() {
             @Override
             public void onResult(List<Topic> topics) {
                 topicList = topics;
-                topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList, currentUser);
+                topicAdapter = new TopicAdapter(TopicActivity.this, R.layout.topic_cell, topicList, currentUser, role);
                 topicListView.setAdapter(topicAdapter);
             }
         });
