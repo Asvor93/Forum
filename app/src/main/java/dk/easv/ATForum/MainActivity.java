@@ -29,11 +29,21 @@ public class MainActivity extends MenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if (currentUser == null) {
+            setContentView(R.layout.home_page);
+        }
 
-        dataAccess = DataAccessFactory.getInstance();
+    }
 
-        topicListView = findViewById(R.id.list);
+    protected void onResume() {
+        super.onResume();
+
+        if (currentUser != null) {
+            setContentView(R.layout.activity_main);
+
+            dataAccess = DataAccessFactory.getInstance();
+
+            topicListView = findViewById(R.id.list);
 
             topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -56,12 +66,7 @@ public class MainActivity extends MenuActivity {
                     return true;
                 }
             });
-        }
 
-    protected void onResume() {
-        super.onResume();
-        if (currentUser != null) {
-            Log.d(TAG, "currentUser: " + currentUser);
             dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
                 @Override
                 public void onResult(List<Topic> favoriteTopics) {
@@ -69,9 +74,12 @@ public class MainActivity extends MenuActivity {
                         favTopicList = favoriteTopics;
                         favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
                         topicListView.setAdapter(favoriteTopicAdapter);
+                    } else {
+                        setContentView(R.layout.home_page);
                     }
                 }
             });
+
         }
     }
 

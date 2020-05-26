@@ -148,6 +148,9 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             case R.id.logoutMenu:
                 logout();
+                Intent logoutIntent = new Intent(this, MainActivity.class);
+                logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(logoutIntent);
                 return true;
             case R.id.signUpMenu:
                 Intent signUpIntent = new Intent(this, SignUpActivity.class);
