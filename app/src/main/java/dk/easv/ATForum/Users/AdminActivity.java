@@ -21,13 +21,22 @@ import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Adapters.UserAdapter;
 
 public class AdminActivity extends MenuActivity {
-
+    // Tag used for logging
     private static final String TAG = "XYZ";
+
+    // The adapter that manages the list view
     UserAdapter userAdapter;
+
+    // List of all user roles
     List<Role> roleList;
+
+    // List of all users
     List<User> userList;
+
+    // The list view that shows all the users
     ListView userListView;
 
+    // The interface that facilitates data access
     private IDataAccess dataAccess;
 
     @Override
@@ -58,6 +67,7 @@ public class AdminActivity extends MenuActivity {
             }
         });
 
+        // On long click method that handles deleting the user and role
         userListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
