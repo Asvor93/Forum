@@ -20,10 +20,13 @@ import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 
 public class LoginActivity extends AppCompatActivity {
+    // Tag for logging
     private static final String TAG = "XYZ";
+
+    // Views for login inputs
     EditText loginEmail, loginPassword;
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore db;
+
+    // Interface to interact with the database
     private IDataAccess dataAccess;
 
     @Override
@@ -33,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Slidr.attach(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
         dataAccess = DataAccessFactory.getInstance();
 
         loginEmail = findViewById(R.id.txtEmail);
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Handles logging in and getting the role of the logged in user
     private void login() {
         String emailString = loginEmail.getText().toString();
         String passwordString = loginPassword.getText().toString();
