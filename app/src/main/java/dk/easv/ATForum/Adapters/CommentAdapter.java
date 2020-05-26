@@ -74,6 +74,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             holder.txtTimestamp.setText(comment.getTimestamp().toString());
         }
 
+
         // Click event that is placed on each view
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +86,9 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         });
         holder.editButton.setFocusable(false);
 
+        if (!currentUser.getUid().equals(role.getUid())) {
+            holder.editButton.setVisibility(View.GONE);
+        }
         if (currentUser == null) {
             holder.editButton.setVisibility(View.GONE);
         }

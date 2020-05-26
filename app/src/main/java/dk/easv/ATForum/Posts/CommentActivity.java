@@ -43,7 +43,7 @@ public class CommentActivity extends MenuActivity {
             @Override
             public void onResult(List<Comment> comments) {
                 commentList = comments;
-                commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments, currentUser);
+                commentAdapter = new CommentAdapter(CommentActivity.this, R.layout.comment_cell, comments, currentUser, role);
                 commentListView.setAdapter(commentAdapter);
             }
         });
