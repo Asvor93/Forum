@@ -26,9 +26,11 @@ import dk.easv.ATForum.Posts.EditTopicActivity;
 
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
+    // The list containing the comments that is sent with the constructor
     private List<Comment> commentList;
+
+    // The context which instantiated the adapter, used for starting the EditComment activity
     private Context context;
-    private User commentUser;
 
     public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments) {
         super(context, resource, comments);
@@ -36,35 +38,37 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         this.context = context;
     }
 
-
+    // Gets a view based on the layout that is inflated and displays the relevant comments
     @Override
     public View getView(int position, View view, ViewGroup parent) {
+        CommentViewHolder holder;
         if (view == null) {
-
             LayoutInflater inflater = LayoutInflater.from(getContext());
-
             view = inflater.inflate(R.layout.comment_cell, parent, false);
-
+            holder = new CommentViewHolder();
+            holder.editButton = view.findViewById(R.id.btnSubmit);
+            holder.txtTimestamp = view.findViewById(R.id.tvTimestamp);
+            holder.txtMessage = view.findViewById(R.id.tvCommentMessage);
+            holder.userPicture = view.findViewById(R.id.ivUserPicture);
+            holder.txtAuthorUsername = view.findViewById(R.id.tvUsername);
+            view.setTag(holder);
         } else {
+            holder = (CommentViewHolder) view.getTag();
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
         final Comment comment = commentList.get(position);
-        commentUser = comment.getAuthor();
-        TextView txtAuthorUsername = view.findViewById(R.id.tvUsername);
-        ImageView userPicture = view.findViewById(R.id.ivUserPicture);
-        TextView txtMessage = view.findViewById(R.id.tvCommentMessage);
-        TextView txtTimestamp = view.findViewById(R.id.tvTimestamp);
-        Button editButton = view.findViewById(R.id.btnSubmit);
+        User commentUser = comment.getAuthor();
 
-        txtMessage.setText(comment.getMessage());
-        Picasso.get().load(commentUser.getPhotoURL()).resize(150,150).into(userPicture);
-        txtAuthorUsername.setText(commentUser.getUsername());
+        holder.txtMessage.setText(comment.getMessage());
+        Picasso.get().load(commentUser.getPhotoURL()).resize(150, 150).into(holder.userPicture);
+        holder.txtAuthorUsername.setText(commentUser.getUsername());
         if (comment.getTimestamp() != null) {
-            txtTimestamp.setText(comment.getTimestamp().toString());
+            holder.txtTimestamp.setText(comment.getTimestamp().toString());
         }
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        // Click event that is placed on each view
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EditCommentActivity.class);
@@ -72,8 +76,17 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                 context.startActivity(intent);
             }
         });
-        editButton.setFocusable(false);
+        holder.editButton.setFocusable(false);
 
         return view;
+    }
+
+    // Used to store each view for recycling
+    static class CommentViewHolder {
+        TextView txtMessage;
+        TextView txtAuthorUsername;
+        TextView txtTimestamp;
+        Button editButton;
+        ImageView userPicture;
     }
 }

@@ -24,10 +24,16 @@ import dk.easv.ATForum.Models.User;
 
 
 public class UserAdapter extends ArrayAdapter<User> {
-
+    // A list of users
     private List<User> userList;
+
+    // A list of roles
     private List<Role> roleList;
+
+    // The data access interface that is used to carry out actions on the database
     private IDataAccess dataAccess;
+
+    // The role of the current user
     private Role userRole;
 
     public UserAdapter(Context context, int resource, List<User> userList, List<Role> roleList,
@@ -39,21 +45,22 @@ public class UserAdapter extends ArrayAdapter<User> {
         dataAccess = DataAccessFactory.getInstance();
     }
 
+    // Gets a view based on the layout that is inflated and displays the users
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
+        UserViewHolder holder;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.cell, null);
-            holder = new ViewHolder();
+            holder = new UserViewHolder();
             holder.btnEditRole = view.findViewById(R.id.btnEditRole);
             holder.imgUserPic = view.findViewById(R.id.imgUserPicture);
             holder.txtEmail = view.findViewById(R.id.tvUserEmail);
             holder.txtUsername = view.findViewById(R.id.tvUsername);
             view.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (UserViewHolder) view.getTag();
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
@@ -62,7 +69,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         final String uid = user.getUid();
 
         holder.btnEditRole.setFocusable(false);
-
+        // Conditions for the buttons related to admin actions
         if (userRole.getRoleName().equals("superAdmin")) {
             if (role.getRoleName().equals("admin")) {
                 holder.btnEditRole.setEnabled(true);
@@ -114,7 +121,8 @@ public class UserAdapter extends ArrayAdapter<User> {
         return view;
     }
 
-    static class ViewHolder {
+    // Used to store each view for recycling
+    static class UserViewHolder {
         TextView txtUsername;
         TextView txtEmail;
         ImageView imgUserPic;

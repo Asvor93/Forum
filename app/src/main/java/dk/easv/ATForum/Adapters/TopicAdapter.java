@@ -38,21 +38,22 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         this.currentUser = currentUser;
     }
 
+    // Gets a view based on the layout that is inflated and displays the topics
     @NonNull
     @Override
     public View getView(final int position, @Nullable View view, @NonNull ViewGroup parent) {
-        ViewHolder holder;
+        TopicViewHolder holder;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
                     getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.topic_cell, null);
-            holder = new ViewHolder();
+            holder = new TopicViewHolder();
             holder.txtAuthorName = view.findViewById(R.id.tvAuthorName);
             holder.txtTopicDesc = view.findViewById(R.id.tvTopicDescription);
             holder.txtTopicName = view.findViewById(R.id.tvTopicName);
             view.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (TopicViewHolder) view.getTag();
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
@@ -83,7 +84,8 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         return view;
     }
 
-    static class ViewHolder {
+    // Used to store each view for recycling
+    static class TopicViewHolder {
         TextView txtAuthorName;
         TextView txtTopicDesc;
         TextView txtTopicName;

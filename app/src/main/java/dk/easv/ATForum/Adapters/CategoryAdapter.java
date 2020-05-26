@@ -18,7 +18,10 @@ import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Posts.EditCategoryActivity;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
+    // The list containing the categories
     private List<Category> categoryList;
+
+    // The context which instantiated the adapter, used for starting the EditCategory activity
     private Context context;
 
     public CategoryAdapter(Context context, int resource, List<Category> categoryList) {
@@ -27,28 +30,32 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         this.context = context;
     }
 
-
+    // Gets a view based on the layout that is inflated and displays the categories
     @Override
     public View getView(int position, View view, ViewGroup parent) {
+        CategoryViewHolder holder;
         if (view == null) {
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
-
             view = inflater.inflate(R.layout.category_cell, parent, false);
+            holder = new CategoryViewHolder();
+            holder.editButton.findViewById(R.id.submitEdit);
+            holder.txtCatName = view.findViewById(R.id.tvCategoryName);
+            holder.txtCatDescription = view.findViewById(R.id.tvCatDescription);
+            view.setTag(holder);
 
         } else {
+            holder = (CategoryViewHolder) view.getTag();
             Log.d("XYZ", "Position: " + position + " View recycled");
         }
 
         final Category cat = categoryList.get(position);
-        TextView txtCatName = view.findViewById(R.id.tvCategoryName);
-        txtCatName.setText("Category Name: " + cat.getCategoryName());
-        TextView txtCatDescription = view.findViewById(R.id.tvCatDescription);
-        txtCatDescription.setText("Description: " + cat.getDescription());
+        holder.txtCatName.setText("Category Name: " + cat.getCategoryName());
+        holder.txtCatDescription.setText("Description: " + cat.getDescription());
 
-        Button editButton = view.findViewById(R.id.submitEdit);
-        editButton.setFocusable(false);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        // Click event that is placed on each view
+        holder.editButton.setFocusable(false);
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EditCategoryActivity.class);
@@ -57,5 +64,12 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             }
         });
         return view;
+    }
+
+    // Used to store each view for recycling
+    static class CategoryViewHolder {
+        TextView txtCatName;
+        TextView txtCatDescription;
+        Button editButton;
     }
 }
