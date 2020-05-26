@@ -19,9 +19,16 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class EditTopicActivity extends MenuActivity {
+    // Tag used for logging
     private static final String TAG = "XYZ";
+
+    // Interface used to accessing the database
     IDataAccess dataAccess;
+
+    // The views used for input when changing the topic
     EditText txtTopicName, txtTopicDescription;
+
+    // The topic that is being edited
     Topic topic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,7 @@ public class EditTopicActivity extends MenuActivity {
         });
     }
 
+    // Finalizes the edit
     private void editTopic() {
         final String topicNameString = txtTopicName.getText().toString();
         final String topicDescriptionString = txtTopicDescription.getText().toString();
@@ -66,6 +74,7 @@ public class EditTopicActivity extends MenuActivity {
         });
     }
 
+    // Gets the extra from the activity that started the intent uses it to set the gui
     private void setGUI() {
         topic = (Topic) getIntent().getSerializableExtra("topic");
 

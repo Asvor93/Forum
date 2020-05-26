@@ -21,7 +21,6 @@ import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Category;
-import dk.easv.ATForum.Models.User;
 
 public class CategoryActivity extends MenuActivity {
     private static final String TAG = "XYZ";
@@ -35,12 +34,9 @@ public class CategoryActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-
         Slidr.attach(this);
 
         categoryListView = findViewById(R.id.catList);
-
-        currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
         dataAccess = DataAccessFactory.getInstance();
 
