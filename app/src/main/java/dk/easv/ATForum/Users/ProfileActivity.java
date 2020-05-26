@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.forum.R;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.r0adkll.slidr.Slidr;
 import com.squareup.picasso.Picasso;
 
@@ -31,17 +29,28 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.User;
 
 public class ProfileActivity extends MenuActivity {
-
+    // Tag for logging
     private static final String TAG = "XYZ";
+
+    // Request code for camera intent
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
+
+    // Views for showing user information
     EditText username, email, name;
+
+    // View for showing user image
     ImageView imgProfile;
-    FirebaseFirestore db;
-    FirebaseStorage fbStorage;
+
+    // The url of the picture that is taken when taking a new picture
     String url;
-    User user;
+
+    // The interface that manages uploading images to the database
     IUploadManager uploadImg;
+
+    // A boolean to switch between editing and viewing
     boolean editing;
+
+    // The interface that controls data access
     private IDataAccess dataAccess;
 
     @Override
@@ -52,8 +61,6 @@ public class ProfileActivity extends MenuActivity {
         Slidr.attach(this);
 
         uploadImg = new UploadManagerImpl();
-        fbStorage = FirebaseStorage.getInstance();
-        db = FirebaseFirestore.getInstance();
         dataAccess = DataAccessFactory.getInstance();
         final Button okButton = findViewById(R.id.btnEditOk);
         okButton.setVisibility(View.INVISIBLE);
@@ -72,11 +79,9 @@ public class ProfileActivity extends MenuActivity {
         });
         editing = false;
         username = findViewById(R.id.txtProfileUsername);
-        //   username.setEnabled(false);
         username.setFocusable(false);
         username.setFocusableInTouchMode(false);
         email = findViewById(R.id.txtProfileEmail);
-        //  email.setEnabled(false);
         email.setFocusable(false);
         email.setFocusableInTouchMode(false);
         name = findViewById(R.id.txtName);
@@ -101,15 +106,18 @@ public class ProfileActivity extends MenuActivity {
         return true;
     }
 
+    // Submits the changes made while editing, does not close down the intent.
     private void submitEdit() {
         final String newUsername = username.getText().toString();
         final String newName = name.getText().toString();
         Map<String, Object> updatedUser = new HashMap<>();
-        updatedUser.put("email", user.getEmail());
+        updatedUser.put("email", currentUser.getEmail());
         updatedUser.put("name", newName);
         updatedUser.put("username", newUsername);
         updatedUser.put("photoURL", url);
-        final String uid = user.getUid();
+        final String uid = currentUser.getUid();
+
+        // Method call and callback for updating the current user
         dataAccess.updateUser(updatedUser, uid, new IDataAccess.IOnResult<User>() {
             @Override
             public void onResult(User user) {
@@ -117,11 +125,12 @@ public class ProfileActivity extends MenuActivity {
                 editResult.putExtra("currentUser", user);
                 setResult(RESULT_OK, editResult);
                 toggleEditable((Button) findViewById(R.id.btnEditOk), (Button) findViewById(R.id.btnEditProfile));
-                Toast.makeText(ProfileActivity.this, "User successfully updated",Toast.LENGTH_LONG ).show();
+                Toast.makeText(ProfileActivity.this, "User successfully updated", Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    // Handles switching between edit and view
     private void toggleEditable(Button okButton, Button v) {
         if (!editing) {
             editing = true;
@@ -144,21 +153,21 @@ public class ProfileActivity extends MenuActivity {
         }
     }
 
-
+    // Gets extras and sets the gui accordingly
     private void setGUI() {
-        user = (User) getIntent().getSerializableExtra("currentUser");
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
-        email.setText(user.getEmail());
-        username.setText(user.getUsername());
-        name.setText(user.getName());
-        url = user.getPhotoURL();
-        Picasso.get().load(user.getPhotoURL()).into(imgProfile);
+        email.setText(currentUser.getEmail());
+        username.setText(currentUser.getUsername());
+        name.setText(currentUser.getName());
+        url = currentUser.getPhotoURL();
+        Picasso.get().load(currentUser.getPhotoURL()).into(imgProfile);
     }
 
+    // Opens up the camera intent
     private void openCameraUsingBitmap() {
         // create Intent to take a picture
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP);
@@ -166,6 +175,7 @@ public class ProfileActivity extends MenuActivity {
             Log.d(TAG, "camera app could NOT be started");
     }
 
+    // Receives result the camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
