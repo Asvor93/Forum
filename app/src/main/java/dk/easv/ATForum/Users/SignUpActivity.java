@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.forum.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +60,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Slidr.attach(this);
 
         dataAccess = DataAccessFactory.getInstance();
         uploadImg = new UploadManagerImpl();

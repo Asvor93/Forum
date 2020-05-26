@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.forum.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.r0adkll.slidr.Slidr;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -47,6 +48,9 @@ public class ProfileActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Slidr.attach(this);
+
         uploadImg = new UploadManagerImpl();
         fbStorage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();

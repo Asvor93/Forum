@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.forum.R;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,8 @@ public class CreateCategoryActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_category);
+
+        Slidr.attach(this);
 
         dataAccess = DataAccessFactory.getInstance();
 

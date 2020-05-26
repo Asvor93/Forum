@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.example.forum.R;
 import com.google.firebase.firestore.FieldValue;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class CreateCommentActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_comment);
+
+        Slidr.attach(this);
         getExtras();
         dataAccess = DataAccessFactory.getInstance();
 

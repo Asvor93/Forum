@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.forum.R;
+import com.r0adkll.slidr.Slidr;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -29,6 +30,8 @@ public class EditCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_category);
+
+        Slidr.attach(this);
 
         dataAccess = DataAccessFactory.getInstance();
 

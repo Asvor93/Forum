@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.forum.R;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class AdminActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        Slidr.attach(this);
 
         userListView = findViewById(R.id.listUsers);
 
