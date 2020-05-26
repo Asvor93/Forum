@@ -65,10 +65,11 @@ public class MainActivity extends MenuActivity {
             dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
                 @Override
                 public void onResult(List<Topic> favoriteTopics) {
-                    favTopicList = favoriteTopics;
-                    favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
-                    topicListView.setAdapter(favoriteTopicAdapter);
-                    Log.d(TAG, "favTopicList: " + favTopicList);
+                    if (!favoriteTopics.isEmpty()) {
+                        favTopicList = favoriteTopics;
+                        favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
+                        topicListView.setAdapter(favoriteTopicAdapter);
+                    }
                 }
             });
         }
