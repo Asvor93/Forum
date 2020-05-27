@@ -2,9 +2,13 @@ package dk.easv.ATForum.Users;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -20,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.r0adkll.slidr.Slidr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Request code used when starting the camera intent
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
+    private static final int PERMISSION_REQUEST_CODE = 101;
 
     // Edits text views used when creating a new user
     EditText nameSignUp, emailSignUp, usernameSignUp, passwordSignUp;
@@ -60,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        checkPermissions();
         Slidr.attach(this);
 
         dataAccess = DataAccessFactory.getInstance();
@@ -95,7 +101,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    // Opens the camera intent expecting a result
+    /**
+     * Opens the camera intent expecting a result
+     */
     private void openCameraUsingBitmap() {
         // create Intent to take a picture
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -106,8 +114,10 @@ public class SignUpActivity extends AppCompatActivity {
             Log.d(TAG, "camera app could NOT be started");
     }
 
-    // Sign up formula for the user. Method first calls the createUser method on the dataAccess interface
-    // and then calls the createRole method on the interface. The results are returned through a callback for each method
+    /**
+     * Sign up formula for the user. Method first calls the createUser method on the dataAccess interface
+     * and then calls the createRole method on the interface. The results are returned through a callback for each method
+     */
     private void signUp() {
         if (!uploadingImg) {
             final String emailString = emailSignUp.getText().toString();
@@ -133,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onResult(Role role) {
                             result.putExtra("role", role);
                             setResult(RESULT_OK, result);
-                            Toast.makeText(SignUpActivity.this, "User successfully created",Toast.LENGTH_LONG ).show();
+                            Toast.makeText(SignUpActivity.this, "User successfully created", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     });
@@ -144,7 +154,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    // Handles getting results from activities started for result
+
+    /**
+     * Handles getting results from activities started for result
+     * @param requestCode The code assigned to the intent that in finished
+     * @param resultCode The result code received from the intent that is finished
+     * @param data The data received from the finished intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -165,6 +181,21 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Handles permissions
+     */
+    private void checkPermissions() {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return;
+
+        ArrayList<String> permissions = new ArrayList<String>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            permissions.add(Manifest.permission.CAMERA);
+
+        if (permissions.size() > 0) {
+            ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_CODE);
         }
     }
 }

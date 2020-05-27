@@ -84,14 +84,18 @@ public class CommentActivity extends MenuActivity {
         }
     }
 
-    // Starts the CreateComment activity and puts the topic id as an extra
+    /**
+     * Starts the CreateComment activity and puts the topic id as an extra
+     */
     private void goToCreateComment() {
         Intent createCommentIntent = new Intent(CommentActivity.this, CreateCommentActivity.class);
         createCommentIntent.putExtra("topicId", topicId);
         startActivity(createCommentIntent);
     }
 
-    // Gets the topic id from the intent that started the activity
+    /**
+     * Gets the topic id from the intent that started the activity
+     */
     private void GetExtras() {
         topicId = getIntent().getStringExtra("topicId");
     }

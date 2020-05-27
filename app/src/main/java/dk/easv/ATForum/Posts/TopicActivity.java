@@ -74,18 +74,18 @@ public class TopicActivity extends MenuActivity {
         }
 
         // Opens up the comment activity based on which topic is clicked on
-		topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String topicUid = topicList.get(position).getId();
-                Intent commentIntent = new Intent( TopicActivity.this, CommentActivity.class);
+                Intent commentIntent = new Intent(TopicActivity.this, CommentActivity.class);
                 commentIntent.putExtra("topicId", topicUid);
                 startActivity(commentIntent);
             }
         });
 
         // Handles deleting topic based on position. Only admins and super admins can delete topics
-		topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        topicListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 topicListView.setLongClickable(true);
@@ -103,14 +103,18 @@ public class TopicActivity extends MenuActivity {
 
     }
 
-    // Starts create activity
+    /**
+     * Starts create activity
+     */
     private void goToCreateTopic() {
         Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
         createTopicIntent.putExtra("catId", catId);
         startActivity(createTopicIntent);
-	}
+    }
 
-	// Gets the id from the intent
+    /**
+     * Gets the id from the intent that started the activity
+     */
     private void GetExtras() {
         catId = getIntent().getStringExtra("catId");
     }

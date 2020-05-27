@@ -48,7 +48,9 @@ public class CreateTopicActivity extends MenuActivity {
         });
     }
 
-    // Creates a topic based on the edit views
+    /**
+     * Creates a topic based on the edit views
+     */
     private void createTopic() {
         final String topicNameString = etTopicName.getText().toString();
         final String topicDescriptionString = etDescription.getText().toString();
@@ -68,7 +70,9 @@ public class CreateTopicActivity extends MenuActivity {
 
     }
 
-    // Gets the category id from the starting intent
+    /**
+     * Gets the category id from the starting intent
+     */
     private void getExtras() {
         catId = getIntent().getStringExtra("catId");
     }
