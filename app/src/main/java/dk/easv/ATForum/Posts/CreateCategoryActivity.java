@@ -17,7 +17,10 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Category;
 
 public class CreateCategoryActivity extends MenuActivity {
+    // The interface to access the database
     IDataAccess dataAccess;
+
+    // The views that contains the text to edit
     EditText txtCatName, txtCatDescription;
 
     @Override
@@ -41,6 +44,7 @@ public class CreateCategoryActivity extends MenuActivity {
         });
     }
 
+    // Calls the createCategory method on the dataAccess interface and then closes the CreateCategory intent when it is finished
     private void createCategory() {
         final String catNameString = txtCatName.getText().toString();
         final String catDescriptionString = txtCatDescription.getText().toString();
