@@ -26,6 +26,9 @@ public class TopicActivity extends MenuActivity {
     // Tag used for logging
     private static final String TAG = "XYZ";
 
+    // Request code for creating a topic
+    private static final int TOPIC_CREATE_REQUEST_CODE = 5;
+
     // The interface that handles data access
     private IDataAccess dataAccess;
 
@@ -109,7 +112,7 @@ public class TopicActivity extends MenuActivity {
     private void goToCreateTopic() {
         Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
         createTopicIntent.putExtra("catId", catId);
-        startActivityForResult(createTopicIntent, 5);
+        startActivityForResult(createTopicIntent, TOPIC_CREATE_REQUEST_CODE);
     }
 
     /**
@@ -122,7 +125,7 @@ public class TopicActivity extends MenuActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && requestCode == 5) {
+        if (data != null && requestCode == TOPIC_CREATE_REQUEST_CODE) {
             Topic t = (Topic) data.getExtras().getSerializable("newTopic");
             if (t != null) {
                 topicList.add(t);

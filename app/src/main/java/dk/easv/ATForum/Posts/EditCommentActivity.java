@@ -1,5 +1,6 @@
 package dk.easv.ATForum.Posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class EditCommentActivity extends MenuActivity {
 
     // The comment being edited
     Comment comment;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,9 @@ public class EditCommentActivity extends MenuActivity {
             @Override
             public void onResult(Comment comment) {
                 Toast.makeText(EditCommentActivity.this, "Comment successfully updated", Toast.LENGTH_LONG).show();
+                Intent result = new Intent();
+                result.putExtra("newComment", comment);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });
@@ -77,7 +82,7 @@ public class EditCommentActivity extends MenuActivity {
      */
     private void setGUI() {
         comment = (Comment) getIntent().getSerializableExtra("comment");
-
+        position = getIntent().getIntExtra("position", -1);
         txtMessage.setText(comment.getMessage());
     }
 }
