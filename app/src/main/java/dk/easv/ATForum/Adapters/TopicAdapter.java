@@ -30,15 +30,13 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
     private Context context;
     private IDataAccess dataAccess;
     private User currentUser;
-    private Role role;
 
-    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser, Role role) {
+    public TopicAdapter(@NonNull Context context, int resource, @NonNull List<Topic> topics, User currentUser) {
         super(context, resource, topics);
         topicList = topics;
         this.context = context;
         dataAccess = DataAccessFactory.getInstance();
         this.currentUser = currentUser;
-        this.role = role;
     }
 
     // Gets a view based on the layout that is inflated and displays the topics
@@ -74,8 +72,6 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             }
         });
 
-        Log.d(TAG, "Role : " + role.getRoleName());
-
         holder.editButton = view.findViewById(R.id.goToEditTopic);
         holder.editButton.setFocusable(false);
         holder.editButton.setOnClickListener(new View.OnClickListener() {
@@ -87,13 +83,13 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             }
         });
 
-        if (!currentUser.getUid().equals(role.getUid())) {
-            holder.editButton.setVisibility(View.GONE);
+        holder.editButton.setVisibility(View.GONE);
+        if (currentUser.getUid().equals(topic.getAuthor().getUid())) {
+            holder.editButton.setVisibility(View.VISIBLE);
         }
 
 
         if (currentUser == null) {
-            holder.editButton.setVisibility(View.GONE);
             holder.btnAddToFavorites.setVisibility(View.GONE);
         }
 

@@ -27,6 +27,7 @@ import dk.easv.ATForum.Posts.EditTopicActivity;
 
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
+    private static final String TAG = "XYZ";
     // The list containing the comments that is sent with the constructor
     private List<Comment> commentList;
 
@@ -35,14 +36,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
     private User currentUser;
 
-    private Role role;
 
-    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments, User currentUser, Role role) {
+    public CommentAdapter(@NonNull Context context, int resource, @NonNull List<Comment> comments, User currentUser) {
         super(context, resource, comments);
         commentList = comments;
         this.context = context;
         this.currentUser = currentUser;
-        this.role = role;
     }
 
     // Gets a view based on the layout that is inflated and displays the relevant comments
@@ -86,11 +85,9 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         });
         holder.editButton.setFocusable(false);
 
-        if (!currentUser.getUid().equals(role.getUid())) {
-            holder.editButton.setVisibility(View.GONE);
-        }
-        if (currentUser == null) {
-            holder.editButton.setVisibility(View.GONE);
+        holder.editButton.setVisibility(View.GONE);
+        if (currentUser.getUid().equals(comment.getAuthor().getUid())) {
+            holder.editButton.setVisibility(View.VISIBLE);
         }
         return view;
     }
