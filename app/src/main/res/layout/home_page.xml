@@ -20,4 +20,9 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
+
+    <include layout="@layout/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"/>
 </RelativeLayout>
