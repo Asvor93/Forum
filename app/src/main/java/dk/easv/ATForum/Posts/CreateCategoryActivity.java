@@ -44,7 +44,9 @@ public class CreateCategoryActivity extends MenuActivity {
         });
     }
 
-    // Calls the createCategory method on the dataAccess interface and then closes the CreateCategory intent when it is finished
+    /**
+     * Calls the createCategory method on the dataAccess interface and then closes the CreateCategory intent when it is finished
+     */
     private void createCategory() {
         final String catNameString = txtCatName.getText().toString();
         final String catDescriptionString = txtCatDescription.getText().toString();

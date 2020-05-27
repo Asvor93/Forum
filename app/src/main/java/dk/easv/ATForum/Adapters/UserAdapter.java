@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.forum.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     // Gets a view based on the layout that is inflated and displays the users
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         UserViewHolder holder;
         if (view == null) {
             LayoutInflater li = (LayoutInflater)
@@ -78,12 +79,12 @@ public class UserAdapter extends ArrayAdapter<User> {
                 holder.btnEditRole.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String, Object> role = new HashMap<>();
-                        role.put("roleName", "user");
-                        dataAccess.createRole(role, uid, new IDataAccess.IOnResult<Role>() {
+                        Map<String, Object> newRole = new HashMap<>();
+                        newRole.put("roleName", "user");
+                        dataAccess.createRole(newRole, uid, new IDataAccess.IOnResult<Role>() {
                             @Override
-                            public void onResult(Role role) {
-                                role.setRoleName(role.getRoleName());
+                            public void onResult(Role result) {
+                                role.setRoleName(result.getRoleName());
                             }
                         });
                     }
@@ -95,12 +96,12 @@ public class UserAdapter extends ArrayAdapter<User> {
                 holder.btnEditRole.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String, Object> role = new HashMap<>();
-                        role.put("roleName", "admin");
-                        dataAccess.createRole(role, uid, new IDataAccess.IOnResult<Role>() {
+                        Map<String, Object> newRole = new HashMap<>();
+                        newRole.put("roleName", "admin");
+                        dataAccess.createRole(newRole, uid, new IDataAccess.IOnResult<Role>() {
                             @Override
-                            public void onResult(Role role) {
-                                role.setRoleName(role.getRoleName());
+                            public void onResult(Role result) {
+                                role.setRoleName(result.getRoleName());
                             }
                         });
                     }

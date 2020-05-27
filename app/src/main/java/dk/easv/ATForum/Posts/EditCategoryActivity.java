@@ -54,8 +54,10 @@ public class EditCategoryActivity extends AppCompatActivity {
         });
     }
 
-    // Takes the text from the edit views and puts them in a map and calls the editCategory method
-    // in the dataAccess interface
+    /**
+     * Takes the text from the edit views and puts them in a map and calls the editCategory method
+     * in the dataAccess interface
+     */
     private void editCategory() {
         final String catNameString = txtCatName.getText().toString();
         final String catDescriptionString = txtCatDescription.getText().toString();
@@ -76,7 +78,9 @@ public class EditCategoryActivity extends AppCompatActivity {
 
     }
 
-    // Sets the GUI with the current information of the category
+    /**
+     * Sets the GUI with the current information of the category
+     */
     private void setGUI() {
         category = (Category) getIntent().getSerializableExtra("category");
 

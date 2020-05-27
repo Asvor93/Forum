@@ -53,7 +53,10 @@ public class EditTopicActivity extends MenuActivity {
         });
     }
 
-    // Finalizes the edit
+    /**
+     * Finalizes the edit by getting the relevant data
+     * and using it to call the updateTopic method of the dataAccess interface
+     */
     private void editTopic() {
         final String topicNameString = txtTopicName.getText().toString();
         final String topicDescriptionString = txtTopicDescription.getText().toString();
@@ -74,7 +77,9 @@ public class EditTopicActivity extends MenuActivity {
         });
     }
 
-    // Gets the extra from the activity that started the intent uses it to set the gui
+    /**
+     * Gets the extra from the activity that started the intent uses it to set the gui
+     */
     private void setGUI() {
         topic = (Topic) getIntent().getSerializableExtra("topic");
 

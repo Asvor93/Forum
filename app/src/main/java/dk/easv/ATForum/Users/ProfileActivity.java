@@ -1,9 +1,13 @@
 package dk.easv.ATForum.Users;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -18,6 +22,7 @@ import com.example.forum.R;
 import com.r0adkll.slidr.Slidr;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +39,9 @@ public class ProfileActivity extends MenuActivity {
 
     // Request code for camera intent
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_BITMAP = 100;
+
+    // Request code for the permissions
+    private static final int PERMISSION_REQUEST_CODE = 101;
 
     // Views for showing user information
     EditText username, email, name;
@@ -57,7 +65,7 @@ public class ProfileActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        checkPermissions();
         Slidr.attach(this);
 
         uploadImg = new UploadManagerImpl();
@@ -106,7 +114,9 @@ public class ProfileActivity extends MenuActivity {
         return true;
     }
 
-    // Submits the changes made while editing, does not close down the intent.
+    /**
+     * Creates a map for the updated user and uses it as a parameter for the updateUser method of the dataAccess interface
+     */
     private void submitEdit() {
         final String newUsername = username.getText().toString();
         final String newName = name.getText().toString();
@@ -130,14 +140,19 @@ public class ProfileActivity extends MenuActivity {
         });
     }
 
-    // Handles switching between edit and view
+    /**
+     * Handles switching between edit and view by switching visibility on the ok button
+     * and changing the text on the toggle button
+     *
+     * @param okButton The submit button for edit
+     * @param v        The toggle button
+     */
     private void toggleEditable(Button okButton, Button v) {
         if (!editing) {
             editing = true;
             okButton.setVisibility(View.VISIBLE);
             v.setText("Cancel");
             username.setFocusable(true);
-            //  username.setEnabled(true);
             username.setFocusableInTouchMode(true);
             name.setFocusable(true);
             name.setFocusableInTouchMode(true);
@@ -146,14 +161,15 @@ public class ProfileActivity extends MenuActivity {
             okButton.setVisibility(View.INVISIBLE);
             v.setText("Edit");
             username.setFocusable(false);
-            //  username.setEnabled(true);
             username.setFocusableInTouchMode(false);
             name.setFocusable(false);
             name.setFocusableInTouchMode(false);
         }
     }
 
-    // Gets extras and sets the gui accordingly
+    /**
+     * Gets extras and sets the gui accordingly
+     */
     private void setGUI() {
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
@@ -164,7 +180,9 @@ public class ProfileActivity extends MenuActivity {
         Picasso.get().load(currentUser.getPhotoURL()).into(imgProfile);
     }
 
-    // Opens up the camera intent
+    /**
+     * Opens up the camera intent
+     */
     private void openCameraUsingBitmap() {
         // create Intent to take a picture
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -175,7 +193,7 @@ public class ProfileActivity extends MenuActivity {
             Log.d(TAG, "camera app could NOT be started");
     }
 
-    // Receives result the camera
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -194,6 +212,21 @@ public class ProfileActivity extends MenuActivity {
             Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Handles permissions
+     */
+    private void checkPermissions() {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return;
+
+        ArrayList<String> permissions = new ArrayList<String>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            permissions.add(Manifest.permission.CAMERA);
+
+        if (permissions.size() > 0) {
+            ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_CODE);
         }
     }
 

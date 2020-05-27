@@ -53,7 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Handles logging in and getting the role of the logged in user
+    /**
+     * Handles logging in and getting the role of the logged in user by calling the dataAccess interface
+     */
     private void login() {
         String emailString = loginEmail.getText().toString();
         String passwordString = loginPassword.getText().toString();

@@ -48,13 +48,17 @@ public class CreateCommentActivity extends MenuActivity {
         });
     }
 
-    // Gets the topic id related to the comment
+    /**
+     * Gets the topic id related to the comment
+     */
     private void getExtras() {
         topicId = getIntent().getStringExtra("topicId");
         Log.d("XYZ", "getExtras: " + topicId);
     }
 
-    // Calls the database to create a comment and then finishes when it is done
+    /**
+     * Calls the database to create a comment and then calls finish() when it is done
+     */
     private void createComment() {
         final String commentString = txtComment.getText().toString();
 

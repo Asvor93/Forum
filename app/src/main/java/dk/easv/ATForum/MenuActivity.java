@@ -115,7 +115,6 @@ public class MenuActivity extends AppCompatActivity {
                     createCatMenuItem.setVisible(true);
                     createCatMenuItem.setEnabled(true);
                 }
-
             }
 
             if (signUpMenuItem != null) {
@@ -189,7 +188,9 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    // Logs out the user and sets the fields pertaining user to null
+    /**
+     * Logs out the user and sets the fields pertaining user to null
+     */
     private void logout() {
         dataAccess.logout();
         currentUser = null;

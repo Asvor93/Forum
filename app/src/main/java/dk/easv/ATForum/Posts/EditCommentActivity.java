@@ -50,8 +50,10 @@ public class EditCommentActivity extends MenuActivity {
         });
     }
 
-    // Handles editing the comment. Builds a map based on the EditText views
-    // and sends this as a parameter to the EditComment method along with the comments id
+    /**
+     * Handles editing the comment. Builds a map based on the EditText views
+     * and sends this as a parameter to the EditComment method along with the comments id
+     */
     private void editComment() {
         final String messageString = txtMessage.getText().toString();
 
@@ -70,7 +72,9 @@ public class EditCommentActivity extends MenuActivity {
         });
     }
 
-    // Gets extra and sets the gui
+    /**
+     * Gets extra and sets the gui
+     */
     private void setGUI() {
         comment = (Comment) getIntent().getSerializableExtra("comment");
 
