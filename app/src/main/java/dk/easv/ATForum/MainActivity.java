@@ -55,6 +55,19 @@ public class MainActivity extends MenuActivity {
 
             topicListView = findViewById(R.id.list);
 
+            dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
+                @Override
+                public void onResult(List<Topic> favoriteTopics) {
+                    if (!favoriteTopics.isEmpty()) {
+                        favTopicList = favoriteTopics;
+                        favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
+                        topicListView.setAdapter(favoriteTopicAdapter);
+                    } else {
+                        setContentView(R.layout.home_page);
+                    }
+                }
+            });
+
             topicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,23 +85,13 @@ public class MainActivity extends MenuActivity {
                     Topic topic = favTopicList.get(position);
                     String uid = currentUser.getUid();
                     dataAccess.deleteFavoriteTopic(uid, topic);
+                    favTopicList.remove(position);
+                    favoriteTopicAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this, "Deleted Favorite topic with id: " + uid, Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
 
-            dataAccess.getFavoriteTopics(currentUser.getUid(), new IDataAccess.IOnResult<List<Topic>>() {
-                @Override
-                public void onResult(List<Topic> favoriteTopics) {
-                    if (!favoriteTopics.isEmpty()) {
-                        favTopicList = favoriteTopics;
-                        favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
-                        topicListView.setAdapter(favoriteTopicAdapter);
-                    } else {
-                        setContentView(R.layout.home_page);
-                    }
-                }
-            });
 
         }
     }

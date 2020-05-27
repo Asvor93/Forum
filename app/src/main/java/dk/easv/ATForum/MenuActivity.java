@@ -209,8 +209,11 @@ public class MenuActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            currentUser = (User) data.getExtras().getSerializable("currentUser");
-            role = (Role) data.getExtras().getSerializable("role");
+            if (requestCode == 1) {
+                currentUser = (User) data.getExtras().getSerializable("currentUser");
+                role = (Role) data.getExtras().getSerializable("role");
+            }
+
             profileMenuItem.setVisible(true);
             profileMenuItem.setEnabled(true);
 

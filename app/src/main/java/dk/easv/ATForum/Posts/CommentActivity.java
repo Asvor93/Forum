@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.core.app.NotificationManagerCompat;
-
 import com.example.forum.R;
 import com.r0adkll.slidr.Slidr;
 
@@ -24,6 +22,10 @@ import dk.easv.ATForum.Models.Comment;
 
 
 public class CommentActivity extends MenuActivity {
+
+    private static final int COMMENT_CREATE_REQUEST_CODE = 6;
+    private static final int COMMENT_UPDATE_REQUEST_CODE = 7;
+
     // The id of the topic
     private String topicId;
 
@@ -98,5 +100,28 @@ public class CommentActivity extends MenuActivity {
      */
     private void GetExtras() {
         topicId = getIntent().getStringExtra("topicId");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+
+            Comment c = (Comment) data.getExtras().getSerializable("newComment");
+            if (c != null) {
+                if (requestCode == COMMENT_CREATE_REQUEST_CODE) {
+                    commentList.add(c);
+                    commentAdapter.notifyDataSetChanged();
+                } else if (requestCode == COMMENT_UPDATE_REQUEST_CODE) {
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    commentList.set(position, c);
+                    commentAdapter.notifyDataSetChanged();
+                }
+                }
+            }
+
+
+        }
     }
 }

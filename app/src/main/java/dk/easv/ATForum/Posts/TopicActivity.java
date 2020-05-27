@@ -93,7 +93,7 @@ public class TopicActivity extends MenuActivity {
                 String uid = topic.getId();
                 if (!role.getRoleName().equals("user")) {
                     dataAccess.deleteTopic(uid);
-                    Toast.makeText(TopicActivity.this, "Deleted topic with id: " + topic.getTopicName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TopicActivity.this, "Deleted topic with name: " + topic.getTopicName(), Toast.LENGTH_SHORT).show();
                 }
                 topicList.remove(position);
                 topicAdapter.notifyDataSetChanged();
@@ -109,7 +109,7 @@ public class TopicActivity extends MenuActivity {
     private void goToCreateTopic() {
         Intent createTopicIntent = new Intent(TopicActivity.this, CreateTopicActivity.class);
         createTopicIntent.putExtra("catId", catId);
-        startActivity(createTopicIntent);
+        startActivityForResult(createTopicIntent, 5);
     }
 
     /**
@@ -119,4 +119,15 @@ public class TopicActivity extends MenuActivity {
         catId = getIntent().getStringExtra("catId");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == 5) {
+            Topic t = (Topic) data.getExtras().getSerializable("newTopic");
+            if (t != null) {
+                topicList.add(t);
+                topicAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 }

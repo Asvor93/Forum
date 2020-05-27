@@ -1,5 +1,6 @@
 package dk.easv.ATForum.Posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,6 +65,9 @@ public class CreateTopicActivity extends MenuActivity {
         dataAccess.createTopic(topic, new IDataAccess.IOnResult<Topic>() {
             @Override
             public void onResult(Topic topic) {
+                Intent result = new Intent();
+                result.putExtra("newTopic", topic);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });
