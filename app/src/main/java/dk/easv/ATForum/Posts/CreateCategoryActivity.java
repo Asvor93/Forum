@@ -1,5 +1,6 @@
 package dk.easv.ATForum.Posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +59,9 @@ public class CreateCategoryActivity extends MenuActivity {
         dataAccess.createCategory(category, new IDataAccess.IOnResult<Category>() {
             @Override
             public void onResult(Category category) {
+                Intent result = new Intent();
+                result.putExtra("newCategory", category);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });

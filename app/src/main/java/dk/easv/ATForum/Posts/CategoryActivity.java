@@ -23,6 +23,8 @@ public class CategoryActivity extends MenuActivity {
     // Tag for logging
     private static final String TAG = "XYZ";
 
+    private static final int CATEGORY_CREATE_REQUEST = 9;
+
     // The adapter for the categories
     private CategoryAdapter categoryAdapter;
 
@@ -90,5 +92,17 @@ public class CategoryActivity extends MenuActivity {
         categoryMenuItem.setVisible(false);
         categoryMenuItem.setEnabled(false);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == CATEGORY_CREATE_REQUEST) {
+            Category cat = (Category) data.getExtras().getSerializable("newCategory");
+            if (cat != null) {
+                categoryList.add(cat);
+                categoryAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }
