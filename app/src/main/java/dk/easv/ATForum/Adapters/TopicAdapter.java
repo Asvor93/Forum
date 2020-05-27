@@ -19,7 +19,6 @@ import java.util.List;
 
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
-import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditTopicActivity;

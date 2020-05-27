@@ -20,14 +20,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditCommentActivity;
-import dk.easv.ATForum.Posts.EditTopicActivity;
 
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
     private static final String TAG = "XYZ";
+
     // The list containing the comments that is sent with the constructor
     private List<Comment> commentList;
 

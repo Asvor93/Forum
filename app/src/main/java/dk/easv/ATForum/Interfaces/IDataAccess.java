@@ -5,7 +5,6 @@ import java.util.Map;
 
 import dk.easv.ATForum.Models.Category;
 import dk.easv.ATForum.Models.Comment;
-import dk.easv.ATForum.Models.FavoriteTopic;
 import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Models.User;

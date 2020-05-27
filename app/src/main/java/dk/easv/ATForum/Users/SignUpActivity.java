@@ -20,8 +20,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.forum.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;

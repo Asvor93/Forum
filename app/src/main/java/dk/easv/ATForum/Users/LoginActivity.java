@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.forum.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.r0adkll.slidr.Slidr;
 
 import dk.easv.ATForum.DataAccessFactory;

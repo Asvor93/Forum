@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.forum.R;
 import com.r0adkll.slidr.Slidr;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +17,6 @@ import java.util.Map;
 import dk.easv.ATForum.DataAccessFactory;
 import dk.easv.ATForum.Interfaces.IDataAccess;
 import dk.easv.ATForum.Models.Category;
-import dk.easv.ATForum.Models.User;
-import dk.easv.ATForum.Users.ProfileActivity;
 
 public class EditCategoryActivity extends AppCompatActivity {
     // The interface used to access the database
