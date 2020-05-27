@@ -74,8 +74,10 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
         holder.editButton.setVisibility(View.GONE);
 
-        if (!role.getRoleName().equals("user")) {
-            holder.editButton.setVisibility(View.VISIBLE);
+        if (role != null) {
+            if (!role.getRoleName().equals("user")) {
+                holder.editButton.setVisibility(View.VISIBLE);
+            }
         }
 
         return view;
