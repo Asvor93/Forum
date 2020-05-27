@@ -15,6 +15,7 @@ import com.example.forum.R;
 import java.util.List;
 
 import dk.easv.ATForum.Models.Category;
+import dk.easv.ATForum.Models.Role;
 import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Posts.EditCategoryActivity;
 
@@ -27,11 +28,14 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
     private User currentUser;
 
-    public CategoryAdapter(Context context, int resource, List<Category> categoryList, User currentUser) {
+    private Role role;
+
+    public CategoryAdapter(Context context, int resource, List<Category> categoryList, User currentUser, Role role) {
         super(context, resource, categoryList);
         this.categoryList = categoryList;
         this.context = context;
         this.currentUser = currentUser;
+        this.role = role;
     }
 
     // Gets a view based on the layout that is inflated and displays the categories
@@ -68,9 +72,12 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             }
         });
 
-        if (currentUser == null) {
-            holder.editButton.setVisibility(View.GONE);
+        holder.editButton.setVisibility(View.GONE);
+
+        if (!role.getRoleName().equals("user")) {
+            holder.editButton.setVisibility(View.VISIBLE);
         }
+
         return view;
     }
 
