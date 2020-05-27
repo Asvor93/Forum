@@ -22,7 +22,7 @@ import dk.easv.ATForum.Models.Category;
 public class CategoryActivity extends MenuActivity {
     // Tag for logging
     private static final String TAG = "XYZ";
-
+    // Request code for creating a category
     private static final int CATEGORY_CREATE_REQUEST = 9;
 
     // The adapter for the categories

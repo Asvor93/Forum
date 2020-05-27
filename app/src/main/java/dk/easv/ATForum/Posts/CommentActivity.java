@@ -22,9 +22,8 @@ import dk.easv.ATForum.Models.Comment;
 
 
 public class CommentActivity extends MenuActivity {
-
-    private static final int COMMENT_CREATE_REQUEST_CODE = 6;
-    private static final int COMMENT_UPDATE_REQUEST_CODE = 7;
+    // Request code for creating a comment
+    private static final int COMMENT_CREATE_REQUEST_CODE = 7;
 
     // The id of the topic
     private String topicId;
@@ -92,7 +91,7 @@ public class CommentActivity extends MenuActivity {
     private void goToCreateComment() {
         Intent createCommentIntent = new Intent(CommentActivity.this, CreateCommentActivity.class);
         createCommentIntent.putExtra("topicId", topicId);
-        startActivity(createCommentIntent);
+        startActivityForResult(createCommentIntent, COMMENT_CREATE_REQUEST_CODE);
     }
 
     /**
@@ -106,18 +105,11 @@ public class CommentActivity extends MenuActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
-
             Comment c = (Comment) data.getExtras().getSerializable("newComment");
             if (c != null) {
                 if (requestCode == COMMENT_CREATE_REQUEST_CODE) {
                     commentList.add(c);
                     commentAdapter.notifyDataSetChanged();
-                } else if (requestCode == COMMENT_UPDATE_REQUEST_CODE) {
-                int position = data.getIntExtra("position", -1);
-                if (position != -1) {
-                    commentList.set(position, c);
-                    commentAdapter.notifyDataSetChanged();
-                }
                 }
             }
 

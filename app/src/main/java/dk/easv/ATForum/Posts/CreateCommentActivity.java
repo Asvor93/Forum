@@ -1,5 +1,6 @@
 package dk.easv.ATForum.Posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,7 +54,6 @@ public class CreateCommentActivity extends MenuActivity {
      */
     private void getExtras() {
         topicId = getIntent().getStringExtra("topicId");
-        Log.d("XYZ", "getExtras: " + topicId);
     }
 
     /**
@@ -71,6 +71,9 @@ public class CreateCommentActivity extends MenuActivity {
         dataAccess.createComment(comment, new IDataAccess.IOnResult<Comment>() {
             @Override
             public void onResult(Comment comment) {
+                Intent result = new Intent();
+                result.putExtra("newComment", comment);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });

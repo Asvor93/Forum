@@ -26,6 +26,8 @@ public class MenuActivity extends AppCompatActivity {
     // Tag for logging
     private static final String TAG = "XYZ";
 
+    private static final int CATEGORY_CREATE_REQUEST = 9;
+
     // The current logged in user
     public static User currentUser;
 
@@ -182,7 +184,7 @@ public class MenuActivity extends AppCompatActivity {
                 return true;
             case R.id.createCatMenu:
                 Intent createCatIntent = new Intent(this, CreateCategoryActivity.class);
-                startActivity(createCatIntent);
+                startActivityForResult(createCatIntent, CATEGORY_CREATE_REQUEST);
                 return true;
             case R.id.mainPage:
                 Intent mainPageIntent = new Intent(this, MainActivity.class);
