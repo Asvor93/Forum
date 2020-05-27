@@ -18,12 +18,23 @@ import dk.easv.ATForum.Models.Topic;
 import dk.easv.ATForum.Posts.CommentActivity;
 
 public class MainActivity extends MenuActivity {
+    // Tag used for logging
     private static final String TAG = "XYZ";
+
+    // The interface that facilitates data access
     IDataAccess dataAccess;
+
+    // The adapter for the favorite topics
     private FavoriteTopicAdapter favoriteTopicAdapter;
+
+    // The list of favorite topics for the current user
     private List<Topic> favTopicList;
+
+    // Shows the current user's favorite topics
     private ListView topicListView;
 
+
+    // Sets the contentView for when there is no current user by default
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,7 @@ public class MainActivity extends MenuActivity {
 
     }
 
+    // Switches between the contentViews depending on whether there is any favorite topics or not
     protected void onResume() {
         super.onResume();
 
@@ -87,10 +99,5 @@ public class MainActivity extends MenuActivity {
         mainPageMenuItem.setVisible(false);
         mainPageMenuItem.setEnabled(false);
         return true;
-    }
-
-    private void fillList() {
-        favoriteTopicAdapter = new FavoriteTopicAdapter(MainActivity.this, R.layout.topic_cell, favTopicList);
-        topicListView.setAdapter(favoriteTopicAdapter);
     }
 }

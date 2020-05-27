@@ -26,9 +26,17 @@ import dk.easv.ATForum.Models.Comment;
 public class CommentActivity extends MenuActivity {
     // The id of the topic
     private String topicId;
+
+    // The interface that handles data access
     private IDataAccess dataAccess;
+
+    // The adapter for the comments
     private CommentAdapter commentAdapter;
+
+    // The list that the adapter uses
     private List<Comment> commentList;
+
+    // The listView that holds all comments
     private ListView commentListView;
 
     @Override
@@ -76,12 +84,14 @@ public class CommentActivity extends MenuActivity {
         }
     }
 
+    // Starts the CreateComment activity and puts the topic id as an extra
     private void goToCreateComment() {
         Intent createCommentIntent = new Intent(CommentActivity.this, CreateCommentActivity.class);
         createCommentIntent.putExtra("topicId", topicId);
         startActivity(createCommentIntent);
     }
 
+    // Gets the topic id from the intent that started the activity
     private void GetExtras() {
         topicId = getIntent().getStringExtra("topicId");
     }
