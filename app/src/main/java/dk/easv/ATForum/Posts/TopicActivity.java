@@ -23,11 +23,10 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class TopicActivity extends MenuActivity {
-
+    // Tag used for logging
     private static final String TAG = "XYZ";
 
     // The interface that handles data access
-
     private IDataAccess dataAccess;
 
     // The adapter that manages the views of the list view

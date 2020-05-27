@@ -22,8 +22,13 @@ import dk.easv.ATForum.Models.User;
 import dk.easv.ATForum.Users.ProfileActivity;
 
 public class EditCategoryActivity extends AppCompatActivity {
+    // The interface used to access the database
     IDataAccess dataAccess;
+
+    // The views used to edit the category
     EditText txtCatName, txtCatDescription;
+
+    // The category to edit
     Category category;
 
     @Override
@@ -49,6 +54,8 @@ public class EditCategoryActivity extends AppCompatActivity {
         });
     }
 
+    // Takes the text from the edit views and puts them in a map and calls the editCategory method
+    // in the dataAccess interface
     private void editCategory() {
         final String catNameString = txtCatName.getText().toString();
         final String catDescriptionString = txtCatDescription.getText().toString();
@@ -69,6 +76,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
     }
 
+    // Sets the GUI with the current information of the category
     private void setGUI() {
         category = (Category) getIntent().getSerializableExtra("category");
 

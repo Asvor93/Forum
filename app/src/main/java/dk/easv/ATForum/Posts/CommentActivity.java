@@ -24,6 +24,7 @@ import dk.easv.ATForum.Models.Comment;
 
 
 public class CommentActivity extends MenuActivity {
+    // The id of the topic
     private String topicId;
     private IDataAccess dataAccess;
     private CommentAdapter commentAdapter;

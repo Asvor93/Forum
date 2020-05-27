@@ -19,9 +19,13 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Comment;
 
 public class CreateCommentActivity extends MenuActivity {
-
+    // The interface to facilitate data access
     IDataAccess dataAccess;
+
+    // Contains the text to edit
     EditText txtComment;
+
+    // The id of the topic that the comment is linked to
     String topicId;
 
     @Override
@@ -44,11 +48,13 @@ public class CreateCommentActivity extends MenuActivity {
         });
     }
 
+    // Gets the topic id related to the comment
     private void getExtras() {
         topicId = getIntent().getStringExtra("topicId");
         Log.d("XYZ", "getExtras: " + topicId);
     }
 
+    // Calls the database to create a comment and then finishes when it is done
     private void createComment() {
         final String commentString = txtComment.getText().toString();
 

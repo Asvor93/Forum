@@ -17,10 +17,13 @@ import dk.easv.ATForum.MenuActivity;
 import dk.easv.ATForum.Models.Topic;
 
 public class CreateTopicActivity extends MenuActivity {
-
+    // The views for editing the topic
     EditText etTopicName, etDescription;
+
+    // The interface for accessing the database
     IDataAccess dataAccess;
 
+    // The id of the category the chosen topic is associated with
     String catId;
 
     @Override
@@ -45,6 +48,7 @@ public class CreateTopicActivity extends MenuActivity {
         });
     }
 
+    // Creates a topic based on the edit views
     private void createTopic() {
         final String topicNameString = etTopicName.getText().toString();
         final String topicDescriptionString = etDescription.getText().toString();
@@ -64,6 +68,7 @@ public class CreateTopicActivity extends MenuActivity {
 
     }
 
+    // Gets the category id from the starting intent
     private void getExtras() {
         catId = getIntent().getStringExtra("catId");
     }
