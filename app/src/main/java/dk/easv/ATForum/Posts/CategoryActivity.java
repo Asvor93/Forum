@@ -77,6 +77,8 @@ public class CategoryActivity extends MenuActivity {
                     dataAccess.deleteCategory(uid);
                     Toast.makeText(CategoryActivity.this, "Deleted category with id: " + uid, Toast.LENGTH_SHORT).show();
                 }
+                categoryList.remove(position);
+                categoryAdapter.notifyDataSetChanged();
                 return true;
             }
         });
