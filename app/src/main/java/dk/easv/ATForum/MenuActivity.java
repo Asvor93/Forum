@@ -116,6 +116,9 @@ public class MenuActivity extends AppCompatActivity {
                     createCatMenuItem.setEnabled(true);
                 }
 
+            } else {
+                adminMenuItem.setVisible(false);
+                adminMenuItem.setEnabled(false);
             }
 
             if (signUpMenuItem != null) {
